@@ -72,7 +72,7 @@ public class App
  public static void main(String[] args) {
      // Create new Application
      App a = new App();
-
+     System.out.println("tejdgskhflsdjg;lsdg';TONYrob");
      a.connect();
 
      // Get Employee
@@ -106,6 +106,7 @@ public class App
 
     public Employee getEmployee(int ID)
     {
+        System.out.println("here");
         try {
 
             // Statement stmt = con.createStatement();
@@ -116,10 +117,10 @@ public class App
                     + "WHERE emp_no = " + ID;
 
             Statement stmt = con.createStatement();
-            Statement conn = con.createStatement();
+            // Statement conn = con.createStatement();
 
             // Execute SQL statement
-            ResultSet rset = conn.executeQuery(strSelect);
+            ResultSet rset = stmt.executeQuery(strSelect);
 
             // Return new employee if valid.
             // Check one is returned
