@@ -127,15 +127,38 @@ public class App
 
                     + " order by d.dept_no desc , e.last_name ASC";
 
-
-             */
-            String strSelect = "SELECT e.emp_no, e.first_name, e.last_name,  d.dept_no , s.salary" // ", d.from_date , d.to_date "
+            Issue 3
+             String strSelect = "SELECT e.emp_no, e.first_name, e.last_name,  d.dept_no , s.salary" // ", d.from_date , d.to_date "
                     + " FROM employees e "
                     + " JOIN dept_emp d on d.emp_no = e.emp_no"
                      + " JOIN salaries s on s.emp_no = e.emp_no and s.from_date =  d.from_date "
                     + " WHERE   d.to_date = '9999-01-01' "
                     + " AND d.dept_no = 'd001' "
                     + " order by d.dept_no desc , e.last_name ASC";
+
+            Issue 4
+            String strSelect = "SELECT t.title, e.emp_no, e.first_name, e.last_name,  d.dept_no , s.salary" // ", d.from_date , d.to_date "
+                    + " FROM employees e "
+                    + " JOIN titles t on t.emp_no =  e.emp_no"
+                    + " JOIN dept_emp d on d.emp_no = e.emp_no"
+                     + " JOIN salaries s on s.emp_no = e.emp_no and s.from_date =  d.from_date "
+                    + " WHERE   d.to_date = '9999-01-01' "
+                    + " AND t.title = 'Senior Engineer' "
+                    + " order by d.dept_no desc , e.last_name ASC";
+             */
+
+            // SELECT STATEMENT
+
+            String strSelect = "SELECT t.title, e.emp_no, e.first_name, e.last_name,  d.dept_no , s.salary" // ", d.from_date , d.to_date "
+                    + " FROM employees e "
+                    + " JOIN titles t on t.emp_no =  e.emp_no"
+                    + " JOIN dept_emp d on d.emp_no = e.emp_no"
+                    + " JOIN salaries s on s.emp_no = e.emp_no and s.from_date =  d.from_date "
+                    + " WHERE   d.to_date = '9999-01-01' "
+                    + " AND t.title = 'Senior Engineer' "
+                    + " order by d.dept_no desc , e.last_name ASC";
+
+
 
 
             Statement stmt = con.createStatement();
@@ -146,18 +169,19 @@ public class App
             // Return new employee if valid.
             // Check one is returned
             System.out.println(
-                    "Emp No:" +"\t" +" FirstName:" +"\t" + " Surname:" +"\t"  + "Dept:" +"\t"  + "Salary:"  );
+                    "Title:" +"\t" +"Emp No:" +"\t" +" FirstName:" +"\t" + " Surname:" +"\t"  + "Dept:" +"\t"  + "Salary:"  );
             while (rset.next())
             {
                 Employee emp = new Employee();
+                emp.title = rset.getString("title");
                 emp.emp_no = rset.getInt("emp_no");
                 emp.first_name = rset.getString("first_name");
                 emp.last_name = rset.getString("last_name");
                 emp.dept_name = rset.getString("dept_no");
                 emp.salary = rset.getInt("salary");
 
-                System.out.println(emp.emp_no + "\t" + emp.first_name + "\t" +  emp.last_name + "\t" +  emp.dept_name  + "\t" +  emp.salary + "\n");
-                String newRES = emp.emp_no + "\t " + emp.first_name + "\t " +  emp.last_name + "\t " +  emp.dept_name + "\t" +  emp.salary+ "\n";
+                System.out.println(emp.title + "\t" +emp.emp_no + "\t" + emp.first_name + "\t" +  emp.last_name + "\t" +  emp.dept_name  + "\t" +  emp.salary + "\n");
+                String newRES = emp.title + "\t " + emp.first_name + "\t " +  emp.last_name + "\t " +  emp.dept_name + "\t" +  emp.salary+ "\n";
 
                 results = results + newRES;
             }
