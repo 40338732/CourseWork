@@ -76,15 +76,14 @@ public class App
      a.connect();
 
      // Get Employee
-    // Employee emp =
-             a.getEmployee2(255530);
+    String Results =  a.getEmployee2(255530);
 
      // Get saleries
      //a.displayEmployeeSalaries(emp);
 
 
      // Display results
-     //a.displayEmployee(emp);
+    // a.displayEmployee(emp);
 
      // Disconnect from database
      a.disconnect();
@@ -92,19 +91,19 @@ public class App
 
 
 
-    public void displayEmployee(Employee emp)
+    public void displayEmployee(String emp)
     {
 
         if (emp != null)
         {
             System.out.println(
-                    emp.emp_no + " "
-                            + emp.first_name + " "
-                            + emp.last_name + "\n"
+                    emp+ "\n");
+                            /*
                             + emp.title + "\n"
                             + "Salary:" + emp.salary + "\n"
                             + emp.dept_name + "\n"
                             + "Manager: " + emp.manager + "\n");
+                            */
         }
     }
 
@@ -113,7 +112,7 @@ public class App
     {
 
     }
-    public Employee getEmployee2(int ID)
+    public String getEmployee2(int ID)
     {
         System.out.println("here");
         try {
@@ -124,39 +123,50 @@ public class App
                     + " JOIN titles t on t.emp_no = e.emp_no"
                     + " JOIN salaries s on s.emp_no = e.emp_no and s.from_date =  t.from_date "
                     + " WHERE   t.to_date = '9999-01-01' ";
-             */
-            String strSelect = "SELECT e.emp_no, e.first_name, e.last_name,  t.title, t.from_date , t.to_date , s.salary "
+
+             Issue 2
+             String strSelect = "SELECT e.emp_no, e.first_name, e.last_name,  d.dept_no " // ", d.from_date , d.to_date "
                     + " FROM employees e "
-                    + " JOIN titles t on t.emp_no = e.emp_no"
-                    + " JOIN salaries s on s.emp_no = e.emp_no and s.from_date =  t.from_date "
-                    + " WHERE   t.to_date = '9999-01-01' ";
+                    + " JOIN dept_emp d on d.emp_no = e.emp_no"
+                   //  + " JOIN salaries s on s.emp_no = e.emp_no and s.from_date =  t.from_date "
+                    + " WHERE   d.to_date = '9999-01-01' "
+
+                    + " order by d.dept_no desc , e.last_name ASC";
+
+
+             */
+            String strSelect = "SELECT e.emp_no, e.first_name, e.last_name,  d.dept_no " // ", d.from_date , d.to_date "
+                    + " FROM employees e "
+                    + " JOIN dept_emp d on d.emp_no = e.emp_no"
+                   //  + " JOIN salaries s on s.emp_no = e.emp_no and s.from_date =  t.from_date "
+                    + " WHERE   d.to_date = '9999-01-01' "
+
+                    + " order by d.dept_no desc , e.last_name ASC";
+
+
             Statement stmt = con.createStatement();
             // Statement conn = con.createStatement();
-
+            String results  = "";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return new employee if valid.
             // Check one is returned
             System.out.println(
-                    "Emp No:" +"\t" +" FirstName:" +"\t" + " Surname:" +"\t"  + "title" + "\t" + "from Date" + "\t" + "to Date"+ "\t" + "salary");
+                    "Emp No:" +"\t" +" FirstName:" +"\t" + " Surname:" +"\t"  + "Dept"  );
             while (rset.next())
             {
                 Employee emp = new Employee();
                 emp.emp_no = rset.getInt("emp_no");
                 emp.first_name = rset.getString("first_name");
                 emp.last_name = rset.getString("last_name");
-                emp.title = rset.getString("title");
-                emp.fromdate = rset.getDate("from_date");
-                emp.todate = rset.getDate("to_date");
-                emp.salary = rset.getInt("salary");
+                emp.dept_name = rset.getString("dept_no");
 
+                System.out.println(emp.emp_no + "\t" + emp.first_name + "\t" +  emp.last_name + "\t" +  emp.dept_name + "\n");
+                String newRES = emp.emp_no + "\t " + emp.first_name + "\t " +  emp.last_name + "\t " +  emp.dept_name + "\n";
 
-                System.out.println(
-                     emp.emp_no  +"\t" +
-                        emp.first_name + "\t" + emp.last_name +"\t" + emp.title + "\t" + emp.fromdate + "\t" + emp.todate + "\t" + emp.salary+ "\n");
-
+                results = results + newRES;
             }
-            return null;
+            return results;
 
         }
         catch (Exception e)
