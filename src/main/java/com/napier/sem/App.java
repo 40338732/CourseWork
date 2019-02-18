@@ -97,13 +97,8 @@ public class App
         if (emp != null)
         {
             System.out.println(
-                    emp+ "\n");
-                            /*
-                            + emp.title + "\n"
-                            + "Salary:" + emp.salary + "\n"
-                            + emp.dept_name + "\n"
-                            + "Manager: " + emp.manager + "\n");
-                            */
+                    emp + "\n");
+
         }
     }
 
@@ -114,7 +109,6 @@ public class App
     }
     public String getEmployee2(int ID)
     {
-        System.out.println("here");
         try {
             // Create string for SQL statement
             /*   ISSUE 1
@@ -135,12 +129,12 @@ public class App
 
 
              */
-            String strSelect = "SELECT e.emp_no, e.first_name, e.last_name,  d.dept_no " // ", d.from_date , d.to_date "
+            String strSelect = "SELECT e.emp_no, e.first_name, e.last_name,  d.dept_no , s.salary" // ", d.from_date , d.to_date "
                     + " FROM employees e "
                     + " JOIN dept_emp d on d.emp_no = e.emp_no"
-                   //  + " JOIN salaries s on s.emp_no = e.emp_no and s.from_date =  t.from_date "
+                     + " JOIN salaries s on s.emp_no = e.emp_no and s.from_date =  d.from_date "
                     + " WHERE   d.to_date = '9999-01-01' "
-
+                    + " AND d.dept_no = 'd001' "
                     + " order by d.dept_no desc , e.last_name ASC";
 
 
@@ -152,7 +146,7 @@ public class App
             // Return new employee if valid.
             // Check one is returned
             System.out.println(
-                    "Emp No:" +"\t" +" FirstName:" +"\t" + " Surname:" +"\t"  + "Dept"  );
+                    "Emp No:" +"\t" +" FirstName:" +"\t" + " Surname:" +"\t"  + "Dept:" +"\t"  + "Salary:"  );
             while (rset.next())
             {
                 Employee emp = new Employee();
@@ -160,9 +154,10 @@ public class App
                 emp.first_name = rset.getString("first_name");
                 emp.last_name = rset.getString("last_name");
                 emp.dept_name = rset.getString("dept_no");
+                emp.salary = rset.getInt("salary");
 
-                System.out.println(emp.emp_no + "\t" + emp.first_name + "\t" +  emp.last_name + "\t" +  emp.dept_name + "\n");
-                String newRES = emp.emp_no + "\t " + emp.first_name + "\t " +  emp.last_name + "\t " +  emp.dept_name + "\n";
+                System.out.println(emp.emp_no + "\t" + emp.first_name + "\t" +  emp.last_name + "\t" +  emp.dept_name  + "\t" +  emp.salary + "\n");
+                String newRES = emp.emp_no + "\t " + emp.first_name + "\t " +  emp.last_name + "\t " +  emp.dept_name + "\t" +  emp.salary+ "\n";
 
                 results = results + newRES;
             }
