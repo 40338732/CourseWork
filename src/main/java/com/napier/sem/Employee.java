@@ -1,5 +1,6 @@
 package com.napier.sem;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -49,7 +50,10 @@ public class Employee
     public String manager;
 
 
-    }
+    public Date fromdate; // title from date
+
+    public Date todate; // title from date
+}
 
 
 

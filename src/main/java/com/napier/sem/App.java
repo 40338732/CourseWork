@@ -72,14 +72,19 @@ public class App
  public static void main(String[] args) {
      // Create new Application
      App a = new App();
-     System.out.println("tejdgskhflsdjg;lsdg';TONYrob");
+     System.out.println("version 2");
      a.connect();
 
      // Get Employee
-     Employee emp = a.getEmployee(255530);
+    // Employee emp =
+             a.getEmployee2(255530);
+
+     // Get saleries
+     //a.displayEmployeeSalaries(emp);
+
 
      // Display results
-     a.displayEmployee(emp);
+     //a.displayEmployee(emp);
 
      // Disconnect from database
      a.disconnect();
@@ -104,34 +109,113 @@ public class App
     }
 
 
+    public void displayEmployeeSalaries( )
+    {
+
+    }
+    public Employee getEmployee2(int ID)
+    {
+        System.out.println("here");
+        try {
+            // Create string for SQL statement
+            /*   ISSUE 1
+            String strSelect = "SELECT e.emp_no, e.first_name, e.last_name,  t.title, t.from_date , t.to_date , s.salary "
+                    + " FROM employees e "
+                    + " JOIN titles t on t.emp_no = e.emp_no"
+                    + " JOIN salaries s on s.emp_no = e.emp_no and s.from_date =  t.from_date "
+                    + " WHERE   t.to_date = '9999-01-01' ";
+             */
+            String strSelect = "SELECT e.emp_no, e.first_name, e.last_name,  t.title, t.from_date , t.to_date , s.salary "
+                    + " FROM employees e "
+                    + " JOIN titles t on t.emp_no = e.emp_no"
+                    + " JOIN salaries s on s.emp_no = e.emp_no and s.from_date =  t.from_date "
+                    + " WHERE   t.to_date = '9999-01-01' ";
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            System.out.println(
+                    "Emp No:" +"\t" +" FirstName:" +"\t" + " Surname:" +"\t"  + "title" + "\t" + "from Date" + "\t" + "to Date"+ "\t" + "salary");
+            while (rset.next())
+            {
+                Employee emp = new Employee();
+                emp.emp_no = rset.getInt("emp_no");
+                emp.first_name = rset.getString("first_name");
+                emp.last_name = rset.getString("last_name");
+                emp.title = rset.getString("title");
+                emp.fromdate = rset.getDate("from_date");
+                emp.todate = rset.getDate("to_date");
+                emp.salary = rset.getInt("salary");
+
+
+                System.out.println(
+                     emp.emp_no  +"\t" +
+                        emp.first_name + "\t" + emp.last_name +"\t" + emp.title + "\t" + emp.fromdate + "\t" + emp.todate + "\t" + emp.salary+ "\n");
+
+            }
+            return null;
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get employee details");
+            return null;
+        }
+    }
+
     public Employee getEmployee(int ID)
     {
         System.out.println("here");
         try {
 
             // Statement stmt = con.createStatement();
+            /*
+            String strSelect = "SELECT e.emp_no, e.first_name, e.last_name, s.salary  "
+                    + "FROM employees e, salaries s "
+                    + "WHERE e.emp_no = s.emp_no";
 
-            // Create string for SQL statement
+
             String strSelect = "SELECT emp_no, first_name, last_name "
                     + "FROM employees "
                     + "WHERE emp_no = " + ID;
+
+                String strSelect = "SELECT e.emp_no, e.first_name, e.last_name, s.salary  "
+                    + "FROM employees e JOIN salaries s  "
+                    + "ON e.emp_no = s.emp_no ";
+            */
+
+            // Create string for SQL statement
+            String strSelect = "SELECT emp_no, first_name, last_name "
+                    + "FROM employees ";
+                //    + "WHERE emp_no = " + ID;
+
+                   //     FROM tutorials_tbl a LEFT JOIN tcount_tbl b
+                  //  -> ON a.tutorial_author = b.tutorial_author;
+                   // + "WHERE e.emp_no = s.emp_no";
 
             Statement stmt = con.createStatement();
             // Statement conn = con.createStatement();
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-
+            System.out.println("Count " + rset);
             // Return new employee if valid.
             // Check one is returned
-            //
+
             if (rset.next())
             {
                 Employee emp = new Employee();
                 emp.emp_no = rset.getInt("emp_no");
                 emp.first_name = rset.getString("first_name");
                 emp.last_name = rset.getString("last_name");
-                return emp;
+               // emp.salary = rset.getInt( "salary");
+                System.out.println(
+                emp.emp_no + " " + emp.first_name + " " + emp.last_name +" " + emp.title +" "+ "Salary:" + emp.salary + "\n");
+                return null;
             }
             else
             {
