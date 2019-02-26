@@ -4,5 +4,9 @@ public class world {
 
     public String name;
 
+    public String population;
+
+
+
 
 }
