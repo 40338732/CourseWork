@@ -1,8 +1,6 @@
 package com.napier.sem;
 
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 public class Employee
 {
@@ -41,13 +39,13 @@ public class Employee
      * Employee's current department
      */
 
-    public String dept_name;
+    public Department dept;
 
     /**
      * Employee's manager
      */
 
-    public String manager;
+    public Employee manager;
 
 
     public Date fromdate; // title from date

@@ -164,8 +164,8 @@ public class world {
     public Float Percentage;
 
 
-    public String population;
-
+    public String Population;
+    public String Name;
 
 
 
