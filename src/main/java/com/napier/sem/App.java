@@ -76,7 +76,7 @@ public class App {
         String Results = "";
 
 
-        Results = getReport11();
+        Results = getReport9();
 
         // Display results
         app.displayResults(Results);
@@ -85,8 +85,8 @@ public class App {
         app.disconnect();
     }
 
-    // REPORT 11: All the cities in a district organised by largest population to smallest
-    public static String getReport11()
+    // REPORT 9: All the cities in a region organised by largest population to smallest.
+    public static String getReport9()
     {
         String results = "";
         try
