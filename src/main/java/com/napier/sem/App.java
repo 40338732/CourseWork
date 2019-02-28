@@ -70,7 +70,9 @@ public class App {
         app.connect();
 
         String Results = "";
-        Results = getReport1();
+
+
+        Results = getReport5(10);
 
         // Display results
         app.displayResults(Results);
@@ -79,16 +81,21 @@ public class App {
         app.disconnect();
     }
 
-    // REPORT 1 : All the countries in the world organised by largest population to smallest.
-    public static String getReport1()
+    // REPORT 5 : The top N populated countries in a continent where N is provided by the user.
+    public static String getReport5(Integer num)
     {
         String results = "";
         try
         {
 
             // SELECT STATEMENT
+            // https://docs.microsoft.com/en-us/sql/t-sql/statements/create-partition-function-transact-sql?view=sql-server-2017
 
-            String strSelect = "SELECT Name, Population FROM country ORDER BY Population DESC ";
+            String strSelect = "WITH RowSETS AS ( SELECT Continent, Name , Population," +
+             " ROW_NUMBER() over (PARTITION BY CONTINENT ORDER BY Population DESC) AS RowNum " +
+                    " from country )" +
+
+            " select * from RowSETS where RowNum <= " + num ;
 
             Statement stmt = con.createStatement();
             // Statement conn = con.createStatement();
@@ -99,19 +106,20 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "Name:" + "\t" + "Population:");
+            System.out.println( "Continent:" + "\t" +"Name:" + "\t" + "Population:");
 
             while (rset.next())
             {
                 world wd = new world();
 
                 // Fields to be shown
-                wd.Name = rset.getString("name");
-                wd.Population = rset.getString("population");
+                wd.Continent = rset.getString("Continent");
+                wd.Name = rset.getString("Name");
+                wd.Population = rset.getString("Population");
 
 
-                System.out.println( wd.Name + "\t" + wd.Population );
-                String newRES =  wd.Name + "\t" + wd.Population +"\n";
+                System.out.println( wd.Continent + "\t" + wd.Name + "\t" + wd.Population );
+                String newRES =  wd.Continent + "\t" + wd.Name + "\t" + wd.Population +"\n";
 
                 // Build Results
                 results = results + newRES;
