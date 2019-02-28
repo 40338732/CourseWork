@@ -85,7 +85,7 @@ public class App {
         app.disconnect();
     }
 
-    // REPORT 17:  All the capital cities in the world organised by largest population to smallest.
+    // REPORT 17: fixed All the capital cities in the world organised by largest population to smallest.
     public static String getReport17()
     {
         String results = "";
