@@ -76,7 +76,7 @@ public class App {
         String Results = "";
 
 
-        Results = getReport7();
+        Results = getReport9();
 
         // Display results
         app.displayResults(Results);
@@ -85,8 +85,8 @@ public class App {
         app.disconnect();
     }
 
-    // REPORT 7 : All the cities in the world organised by largest population to smallest.
-    public static String getReport7()
+    // REPORT 9 : All the cities in a region organised by largest population to smallest.
+    public static String getReport9()
     {
         String results = "";
         try
@@ -94,9 +94,14 @@ public class App {
 
             // SELECT STATEMENT
 
-            String strSelect = "SELECT  Name, Population" +
-                " FROM            city" +
-                " ORDER BY Population DESC" ;
+            String strSelect = "SELECT " +
+                    "Region, " +
+                    "city.Name, " +
+                    "city.Population " +
+
+                    "FROM city " +
+                    "JOIN country on code = CountryCode " +
+                    "ORDER BY Region, Population DESC" ;
 
 
             Statement stmt = con.createStatement();
@@ -108,20 +113,20 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "Name:" + "\t" + "Population:");
+            System.out.println( "Region" + "\t" + "Name:" + "\t" + "Population:");
 
             while (rset.next())
             {
                 world wd = new world();
 
                 // Fields to be shown
-
+                wd.Region = rset.getString("Region");
                 wd.Name = rset.getString("Name");
                 wd.Population = rset.getString("Population");
 
 
-                System.out.println( wd.Name + "\t" + wd.Population );
-                String newRES =   wd.Name + "\t" + wd.Population +"\n";
+                System.out.println( wd.Region + "\t" +wd.Name + "\t" + wd.Population );
+                String newRES =   wd.Region + "\t" +wd.Name + "\t" + wd.Population +"\n";
 
                 // Build Results
                 results = results + newRES;
