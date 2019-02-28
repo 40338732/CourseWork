@@ -85,7 +85,7 @@ public class App {
         app.disconnect();
     }
 
-    // REPORT 9: All the cities in a region organised by largest population to smallest.
+    // REPORT 11: All the cities in a district organised by largest population to smallest
     public static String getReport9()
     {
         String results = "";
@@ -93,15 +93,13 @@ public class App {
         {
 
             // SELECT STATEMENT
-
-            String strSelect = "SELECT " +
-                    "Region, " +
+            // All the cities in a district organised by largest population to smallest
+            String strSelect =
+                    "SELECT District, " +
                     "city.Name, " +
                     "city.Population " +
-
-                    "FROM city " +
-                    "JOIN country on code = CountryCode " +
-                    "ORDER BY Region, Population DESC" ;
+                    "FROM city\n" +
+                    "ORDER BY District, Population DESC" ;
 
 
             Statement stmt = con.createStatement();
@@ -120,13 +118,13 @@ public class App {
                 world wd = new world();
 
                 // Fields to be shown
-                wd.Region = rset.getString("Region");
+                wd.District = rset.getString("District");
                 wd.Name = rset.getString("Name");
                 wd.Population = rset.getString("Population");
 
 
-                System.out.println( wd.Region + "\t" +wd.Name + "\t" + wd.Population );
-                String newRES =   wd.Region + "\t" +wd.Name + "\t" + wd.Population +"\n";
+                System.out.println( wd.District + "\t" +wd.Name + "\t" + wd.Population );
+                String newRES =   wd.District + "\t" +wd.Name + "\t" + wd.Population +"\n";
 
                 // Build Results
                 results = results + newRES;
