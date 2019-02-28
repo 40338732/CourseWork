@@ -76,26 +76,27 @@ public class App {
         String Results = "";
 
 
-        Results = getReport17();
+        Results = getReport2();
 
         // Display results
-        app.displayResults(Results);
+//        app.displayResults(Results);
 
         // Disconnect from database
         app.disconnect();
     }
 
-    // REPORT 17: fixed All the capital cities in the world organised by largest population to smallest.
-    public static String getReport17()
+    // REPORT 2: list all the countries in a continent organised by largest population to smallest.
+    public static String getReport2()
     {
         String results = "";
         try
         {
 
             // SELECT STATEMENT
-            String strSelect = "SELECT city.name, city.Population " +
-            " FROM country join city on city.ID = country.Capital " +
-            " ORDER BY city.Population DESC ";
+            String strSelect = "SELECT Continent, country.Name, Population " +
+                                " FROM country " +
+                                " WHERE Continent='Europe' " +
+                                " ORDER BY Population DESC ";
 
 
             Statement stmt = con.createStatement();
@@ -107,7 +108,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "" + "\t" + "City:" + "\t" + "Population:" );
+            System.out.println( "\n" + "Country:" + "\t" + "Population:" );
 
             while (rset.next())
             {
@@ -138,14 +139,14 @@ public class App {
 
 
     // DON'T CHANGE
-    public void displayResults(String results)
-    {
-        if (results != null) {
-            System.out.println(
-                    results + "\n");
-
-        }
-    }
+//    public void displayResults(String results)
+//    {
+//        if (results != null) {
+//            System.out.println(
+//                    results + "\n");
+//
+//        }
+//    }
 }
 
 
