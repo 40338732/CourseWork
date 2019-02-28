@@ -8,11 +8,8 @@ public class App {
      * Connection to MySQL database.
      */
 
+
     private static Connection con = null;
-
-    public ArrayList<Employee> allSalaries;
-
-
 
     public void connect() {
         try {
@@ -52,9 +49,6 @@ public class App {
      * * Disconnect from the MySQL database.
      */
 
-
-
-
     public void disconnect() {
         if (con != null) {
             try {
@@ -69,63 +63,59 @@ public class App {
 
     public static  void main(String[] args) {
         // Create new Application
-        App a = new App();
+        App app = new App();
         System.out.println("version 2");
-        a.connect();
+        app.connect();
 
-        // Get Employee
-        //String Results = a.getEmployee2(255530);
-        String Results = getReport2();
-        // Get saleries
-        //a.displayEmployeeSalaries(emp);
+        // Create variable to hold the data returned
+        String Results = "";
 
+        // Get World Data for report 3
+        Results = getReport3();
 
         // Display results
-        // a.displayEmployee(emp);
+        app.displayResults(Results);
 
         // Disconnect from database
-        a.disconnect();
+        app.disconnect();
     }
 
-    public static String getReport2()
+    // REPORT 3 : All the countries in a region organised by largest population to smallest.
+    public static String getReport3()
     {
         String results = "";
         try
         {
+            // SELECT STATEMENT - THIS GETS CHANGED
 
-            // SELECT STATEMENT
-
-            String strSelect = "SELECT continent, name, population  FROM country \n" +
-                    " group by continent, name, population \n" +
-                    " ORDER BY continent, population DESC ";
+            String strSelect = "SELECT Region, name As Name, Population " +
+            " FROM country  group by Region, name, Population " +
+            " order by Region, Population DESC";
 
             Statement stmt = con.createStatement();
-            // Statement conn = con.createStatement();
 
             // Execute SQL statement
             stmt.executeQuery(strSelect);
 
-
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            // Return new employee if valid.
             // Check one is returned
-            System.out.println( "Continent:" + "\t" +  "Name:" + "\t" + "Population:"); // +"\t" +"Emp No:" +"\t" +" FirstName:" +"\t" + " Surname:" +"\t"  + "Dept:" +"\t"  + "Salary:"  );
+            System.out.println( "Region"  +"\t" + "Name:" + "\t" + "Population:");
 
             while (rset.next())
             {
                 world wd = new world();
 
-                wd.Continent = rset.getString("continent");
+               // wd.Continent = rset.getString("continent");
                 wd.Name = rset.getString("name");
                 wd.Population = rset.getString("population");
-
-                System.out.println(wd.Continent + "\t" +wd.Name + "\t" + wd.Population);
-                String newRES = wd.Continent + "\t" + wd.Name + "\t" + wd.Population;
+                wd.Region = rset.getString("region");
+                System.out.println( wd.Region + "\t" +wd.Name + "\t" + wd.Population + "\n" );
+                String newRES = wd.Region + "\t" +wd.Name + "\t" + wd.Population + "\n";
 
                 results = results + newRES;
-            }
 
+            }
 
         }
         catch (Exception e)
@@ -137,176 +127,16 @@ public class App {
         return results;
     }
 
-    public void displayEmployee(String emp) {
 
-        if (emp != null) {
+    // Method used to display the results from the queries
+    public void displayResults(String results) {
+
+        if (results != null) {
             System.out.println(
-                    emp + "\n");
-
+                    results + "\n");
         }
     }
 
-
-    public void displayEmployeeSalaries() {
-
-    }
-
-
-    String results = "";
-    // Report 2 - All the countries in a continent organised by largest population to smallest.
-
-
-
-
-
-
-
-/*
-
-    public String getEmployee2(int ID) {
-        try {
-            // Create string for SQL statement
-            /*   ISSUE 1
-            String strSelect = "SELECT e.emp_no, e.first_name, e.last_name,  t.title, t.from_date , t.to_date , s.salary "
-                    + " FROM employees e "
-                    + " JOIN titles t on t.emp_no = e.emp_no"
-                    + " JOIN salaries s on s.emp_no = e.emp_no and s.from_date =  t.from_date "
-                    + " WHERE   t.to_date = '9999-01-01' ";
-
-             Issue 2
-             String strSelect = "SELECT e.emp_no, e.first_name, e.last_name,  d.dept_no " // ", d.from_date , d.to_date "
-                    + " FROM employees e "
-                    + " JOIN dept_emp d on d.emp_no = e.emp_no"
-                   //  + " JOIN salaries s on s.emp_no = e.emp_no and s.from_date =  t.from_date "
-                    + " WHERE   d.to_date = '9999-01-01' "
-
-                    + " order by d.dept_no desc , e.last_name ASC";
-
-            Issue 3
-             String strSelect = "SELECT e.emp_no, e.first_name, e.last_name,  d.dept_no , s.salary" // ", d.from_date , d.to_date "
-                    + " FROM employees e "
-                    + " JOIN dept_emp d on d.emp_no = e.emp_no"
-                     + " JOIN salaries s on s.emp_no = e.emp_no and s.from_date =  d.from_date "
-                    + " WHERE   d.to_date = '9999-01-01' "
-                    + " AND d.dept_no = 'd001' "
-                    + " order by d.dept_no desc , e.last_name ASC";
-
-            Issue 4
-            String strSelect = "SELECT t.title, e.emp_no, e.first_name, e.last_name,  d.dept_no , s.salary" // ", d.from_date , d.to_date "
-                    + " FROM employees e "
-                    + " JOIN titles t on t.emp_no =  e.emp_no"
-                    + " JOIN dept_emp d on d.emp_no = e.emp_no"
-                     + " JOIN salaries s on s.emp_no = e.emp_no and s.from_date =  d.from_date "
-                    + " WHERE   d.to_date = '9999-01-01' "
-                    + " AND t.title = 'Senior Engineer' "
-                    + " order by d.dept_no desc , e.last_name ASC";
-
-
-            // SELECT STATEMENT
-
-            String strSelect = "SELECT name, population from city order by name DESC";
-
-            Statement stmt = con.createStatement();
-            // Statement conn = con.createStatement();
-            String results = "";
-            // Execute SQL statement
-            stmt.executeQuery(strSelect);
-
-
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            // Return new employee if valid.
-            // Check one is returned
-            System.out.println(
-                    "Name:" + "\t" + "Population:"); // +"\t" +"Emp No:" +"\t" +" FirstName:" +"\t" + " Surname:" +"\t"  + "Dept:" +"\t"  + "Salary:"  );
-            while (rset.next()) {
-                world wd = new world();
-
-                wd.name = rset.getString("name");
-                wd.population = rset.getString("population");
-
-                System.out.println(wd.name + "\t" + wd.population);
-                String newRES = wd.name + "\t" + wd.population;
-
-                results = results + newRES;
-            }
-            return results;
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
-            return null;
-        }
-    }
-*/
-
-
-    public Employee getEmployee(int ID) {
-        System.out.println("here");
-        try {
-
-            // Statement stmt = con.createStatement();
-            /*
-            String strSelect = "SELECT e.emp_no, e.first_name, e.last_name, s.salary  "
-                    + "FROM employees e, salaries s "
-                    + "WHERE e.emp_no = s.emp_no";
-
-
-            String strSelect = "SELECT emp_no, first_name, last_name "
-                    + "FROM employees "
-                    + "WHERE emp_no = " + ID;
-
-                String strSelect = "SELECT e.emp_no, e.first_name, e.last_name, s.salary  "
-                    + "FROM employees e JOIN salaries s  "
-                    + "ON e.emp_no = s.emp_no ";
-            */
-
-            // Create string for SQL statement
-            String strSelect = "SELECT emp_no, first_name, last_name "
-                    + "FROM employees ";
-            //    + "WHERE emp_no = " + ID;
-
-            //     FROM tutorials_tbl a LEFT JOIN tcount_tbl b
-            //  -> ON a.tutorial_author = b.tutorial_author;
-            // + "WHERE e.emp_no = s.emp_no";
-
-            Statement stmt = con.createStatement();
-            // Statement conn = con.createStatement();
-
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            System.out.println("Count " + rset);
-            // Return new employee if valid.
-            // Check one is returned
-
-            if (rset.next()) {
-                Employee emp = new Employee();
-                emp.emp_no = rset.getInt("emp_no");
-                emp.first_name = rset.getString("first_name");
-                emp.last_name = rset.getString("last_name");
-                // emp.salary = rset.getInt( "salary");
-                System.out.println(
-                        emp.emp_no + " " + emp.first_name + " " + emp.last_name + " " + emp.title + " " + "Salary:" + emp.salary + "\n");
-                return null;
-            } else {
-                return null;
-            }
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get employee details");
-            return null;
-        }
-    }
-
-    public Department getDepartment(String dep_no) {
-        return null;
-    }
-
-    public ArrayList<Employee> getSalariesByDepartment(Department dept)
-    {
-        return null;
-    }
 }
 
 
