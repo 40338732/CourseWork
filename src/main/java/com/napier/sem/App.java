@@ -76,7 +76,7 @@ public class App {
         String Results = "";
 
 
-        Results = getReport15(10);
+        Results = getReport17();
 
         // Display results
         app.displayResults(Results);
@@ -85,19 +85,17 @@ public class App {
         app.disconnect();
     }
 
-    // REPORT 15: The top N populated cities in a country where N is provided by the user.
-    public static String getReport15(Integer num)
+    // REPORT 17:  All the capital cities in the world organised by largest population to smallest.
+    public static String getReport17()
     {
         String results = "";
         try
         {
 
             // SELECT STATEMENT
-            String strSelect = "WITH RowSETS AS (" +
-                    " SELECT country.Name as 'Country', city.Name, city.Population,  ROW_NUMBER() over " +
-                    " ( PARTITION BY country.Name ORDER BY city.Population DESC ) AS RowNum " +
-                    " from country, city where city.CountryCode = country.Code ) " +
-                    " select * from RowSETS where RowNum <=" + num;
+            String strSelect = "SELECT city.name, city.Population " +
+            " FROM country join city on city.ID = country.Capital " +
+            " ORDER BY city.Population DESC ";
 
 
             Statement stmt = con.createStatement();
@@ -109,21 +107,21 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "" + "\t" + "Country:" + "\t" + "Population:" + "\t" + "RowNum");
+            System.out.println( "" + "\t" + "City:" + "\t" + "Population:" );
 
             while (rset.next())
             {
                 world wd = new world();
 
                 // Fields to be shown
-                wd.Country = rset.getString("Country");
+               // wd.Country = rset.getString("Country");
                 wd.Name = rset.getString("Name");
                 wd.Population = rset.getString("Population");
 
 
 
-                System.out.println( wd.Country + "\t" +wd.Name + "\t" + wd.Population );
-                String newRES =   wd.Country + "\t" +wd.Name + "\t" + wd.Population +"\n";
+                System.out.println( wd.Name + "\t" + wd.Population );
+                String newRES =   wd.Name + "\t" + wd.Population +"\n";
 
                 // Build Results
                 results = results + newRES;
