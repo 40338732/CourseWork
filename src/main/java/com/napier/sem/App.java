@@ -76,7 +76,7 @@ public class App {
         String Results = "";
 
 
-        Results = getReport23();
+        Results = getReport25();
 
         // Display results
         app.displayResults(Results);
@@ -85,23 +85,23 @@ public class App {
         app.disconnect();
     }
 
-    // REPORT 23: As a service user I want to produce a report listing the population of people,
-    // people living in cities, and people not living in cities in each continent
+    // 25. As a service user I want to produce a report listing the population of people,
+    // people living in cities, and people not living in cities in each country
 
-    public static String getReport23()
+
+    public static String getReport25()
     {
         String results = "";
         try
         {
 
             // SELECT STATEMENT
-            String strSelect = "select Continent as Continent,  "+
-            " SUM(cast(country.Population AS UNSIGNED INTEGER )) As total ,  "+
-            " SUM(city.Population) as city ,  "+
-            " SUM( country.Population - city.Population ) as urban"+
-            " from city join country on  country.Code = city.CountryCode "+
-            " group by continent "+
-            " order by continent ASC ";
+            String strSelect = "select country.Name as 'Country', SUM(city.Population) AS City , " +
+                    " country.Population - SUM(city.Population) as Urban  , country.Population AS Total " +
+                    " from city " +
+                    " inner join country on country.Code = city.CountryCode " +
+                    " where countryCode = city.CountryCode " +
+                    " group by  country.Population, country.Name ";
 
 
             Statement stmt = con.createStatement();
@@ -112,14 +112,14 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "Continent" + "\t" + "total:" + "\t" + "city:" + "Urban" );
+            System.out.println( "Country" + "\t" + "Total:" + "\t" + "City:" + "\t" +  "Urban:" );
 
             while (rset.next())
             {
                 world wd = new world();
 
                 // Fields to be shown
-                wd.Continent = rset.getString("Continent");
+                wd.Country = rset.getString("Country");
                 wd.total = rset.getString("total");
                 wd.city = rset.getString("city");
                 wd.urban = rset.getString("urban");
@@ -128,8 +128,8 @@ public class App {
 
 
 
-                System.out.println( wd.Continent + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban );
-                String newRES =     wd.Continent + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban +"\n";
+                System.out.println( wd.Country + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban );
+                String newRES =     wd.Country + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban +"\n";
 
                 // Build Results
                 results = results + newRES;
