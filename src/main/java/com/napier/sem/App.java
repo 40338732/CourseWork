@@ -76,7 +76,7 @@ public class App {
         String Results = "";
 
 
-        Results = getReport21( 10 );
+        Results = getReport23();
 
         // Display results
         app.displayResults(Results);
@@ -85,22 +85,23 @@ public class App {
         app.disconnect();
     }
 
-    // REPORT 21: As a service user I want to produce a report listing the top N populated
-    // capital cities in a continent where N is provided by the user
+    // REPORT 23: As a service user I want to produce a report listing the population of people,
+    // people living in cities, and people not living in cities in each continent
 
-    public static String getReport21( Integer num)
+    public static String getReport23()
     {
         String results = "";
         try
         {
 
             // SELECT STATEMENT
-            String strSelect = " WITH RowSETS AS ( " +
-                    " SELECT country.Continent , city.Name , " +
-                    " city.Population, " +
-                    " ROW_NUMBER() over (PARTITION BY country.Continent ORDER BY city.Population DESC) AS RowNum " +
-                    " from country, city where city.CountryCode = country.Code) " +
-                    " select * from RowSETS where RowNum <= " + num ;
+            String strSelect = "select Continent as Continent,  "+
+            " SUM(cast(country.Population AS UNSIGNED INTEGER )) As total ,  "+
+            " SUM(city.Population) as city ,  "+
+            " SUM( country.Population - city.Population ) as urban"+
+            " from city join country on  country.Code = city.CountryCode "+
+            " group by continent "+
+            " order by continent ASC ";
 
 
             Statement stmt = con.createStatement();
@@ -111,7 +112,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "Continent" + "\t" + "City:" + "\t" + "Population:" );
+            System.out.println( "Continent" + "\t" + "total:" + "\t" + "city:" + "Urban" );
 
             while (rset.next())
             {
@@ -119,13 +120,16 @@ public class App {
 
                 // Fields to be shown
                 wd.Continent = rset.getString("Continent");
-                wd.Name = rset.getString("Name");
-                wd.Population = rset.getString("Population");
+                wd.total = rset.getString("total");
+                wd.city = rset.getString("city");
+                wd.urban = rset.getString("urban");
+               //// wd.Name = rset.getString("Name");
+              //  wd.Population = rset.getString("Population");
 
 
 
-                System.out.println( wd.Continent + "\t" + wd.Name + "\t" + wd.Population );
-                String newRES =     wd.Continent + "\t" + wd.Name + "\t" + wd.Population +"\n";
+                System.out.println( wd.Continent + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban );
+                String newRES =     wd.Continent + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban +"\n";
 
                 // Build Results
                 results = results + newRES;
