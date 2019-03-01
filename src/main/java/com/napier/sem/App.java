@@ -76,7 +76,7 @@ public class App {
         String Results = "";
 
 
-        Results = getReport17();
+        Results = getReport21( 10 );
 
         // Display results
         app.displayResults(Results);
@@ -85,21 +85,25 @@ public class App {
         app.disconnect();
     }
 
-    // REPORT 17: fixed All the capital cities in the world organised by largest population to smallest.
-    public static String getReport17()
+    // REPORT 21: As a service user I want to produce a report listing the top N populated
+    // capital cities in a continent where N is provided by the user
+
+    public static String getReport21( Integer num)
     {
         String results = "";
         try
         {
 
             // SELECT STATEMENT
-            String strSelect = "SELECT city.name, city.Population " +
-            " FROM country join city on city.ID = country.Capital " +
-            " ORDER BY city.Population DESC ";
+            String strSelect = " WITH RowSETS AS ( " +
+                    " SELECT country.Continent , city.Name , " +
+                    " city.Population, " +
+                    " ROW_NUMBER() over (PARTITION BY country.Continent ORDER BY city.Population DESC) AS RowNum " +
+                    " from country, city where city.CountryCode = country.Code) " +
+                    " select * from RowSETS where RowNum <= " + num ;
 
 
             Statement stmt = con.createStatement();
-            // Statement conn = con.createStatement();
 
             // Execute SQL statement
             stmt.executeQuery(strSelect);
@@ -107,21 +111,21 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "" + "\t" + "City:" + "\t" + "Population:" );
+            System.out.println( "Continent" + "\t" + "City:" + "\t" + "Population:" );
 
             while (rset.next())
             {
                 world wd = new world();
 
                 // Fields to be shown
-               // wd.Country = rset.getString("Country");
+                wd.Continent = rset.getString("Continent");
                 wd.Name = rset.getString("Name");
                 wd.Population = rset.getString("Population");
 
 
 
-                System.out.println( wd.Name + "\t" + wd.Population );
-                String newRES =   wd.Name + "\t" + wd.Population +"\n";
+                System.out.println( wd.Continent + "\t" + wd.Name + "\t" + wd.Population );
+                String newRES =     wd.Continent + "\t" + wd.Name + "\t" + wd.Population +"\n";
 
                 // Build Results
                 results = results + newRES;
