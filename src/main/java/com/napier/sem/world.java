@@ -91,7 +91,7 @@ public class world {
      * Country's Capital
      */
 
-    public int Capital;
+    public String Capital;
 
     /**
      * Country's Code 2
@@ -166,7 +166,7 @@ public class world {
 
     public String Population;
     public String Name;
-
+    public  String Capital1;
 
 
 }

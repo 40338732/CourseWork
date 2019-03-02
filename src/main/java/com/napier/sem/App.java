@@ -87,8 +87,12 @@ public class App {
         {
 
             // SELECT STATEMENT
+            // R1 - All the countries in the world organised by largest population to smallest.
 
-            String strSelect = "SELECT Name, Population FROM country ORDER BY Population DESC ";
+
+            String strSelect = "SELECT Code, country.Name, Continent, Region, country.Population, (SELECT name FROM city WHERE ID = Capital) as Capital " +
+                    "            FROM country\n" +
+                    "            ORDER BY country.Population DESC ";
 
             Statement stmt = con.createStatement();
             // Statement conn = con.createStatement();
@@ -99,19 +103,23 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "Name:" + "\t" + "Population:");
+            System.out.println( "Code:" + "\t" +"Name:" + "\t" + "Continent:" + "\t" + "Region:" + "\t" + "Population:"  + "\t" +  "Capital:" );
 
             while (rset.next())
             {
                 world wd = new world();
 
                 // Fields to be shown
+                wd.Code = rset.getString("Code");
                 wd.Name = rset.getString("name");
-                wd.Population = rset.getString("population");
+                wd.Continent = rset.getString("Continent");
+                wd.Region = rset.getString("Region");
+                wd.Population = rset.getString("Population");
+                wd.Capital = rset.getString("Capital");
 
 
-                System.out.println( wd.Name + "\t" + wd.Population );
-                String newRES =  wd.Name + "\t" + wd.Population +"\n";
+                System.out.println( wd.Code + "\t" + wd.Name  + "\t" + wd.Continent  + "\t" + wd.Region  + "\t" + wd.Population  + "\t" + wd.Capital);
+                String newRES =  wd.Code + "\t" + wd.Name  + "\t" + wd.Continent  + "\t" + wd.Region  + "\t" + wd.Population  + "\t" + wd.Capital;
 
                 // Build Results
                 results = results + newRES;
