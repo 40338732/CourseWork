@@ -88,9 +88,10 @@ public class App {
         {
             // SELECT STATEMENT - THIS GETS CHANGED
 
-            String strSelect = "SELECT Region, name As Name, Population " +
-            " FROM country  group by Region, name, Population " +
+            String strSelect = "SELECT Region,Code, country.Name, Continent,  country.Population, (SELECT name FROM city WHERE ID = Capital) as Capital " +
+            " FROM country  group by Region, Code, country.Name, Continent, country.Population,Capital " +
             " order by Region, Population DESC";
+
 
             Statement stmt = con.createStatement();
 
@@ -100,18 +101,20 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "Region"  +"\t" + "Name:" + "\t" + "Population:");
+            System.out.println( "Code"  +"\t" + "Name:" + "\t" + "Continent:" + "\t" + "Region:" + "\t" + "Population:" + "\t" + "Capital:");
 
             while (rset.next())
             {
                 world wd = new world();
+                wd.Code = rset.getString("Code");
+                wd.Name = rset.getString("Name");
+                wd.Continent = rset.getString("Continent");
+                wd.Region = rset.getString("Region");
+                wd.Population = rset.getString("Population");
+                wd.Capital = rset.getString("Capital");
 
-               // wd.Continent = rset.getString("continent");
-                wd.Name = rset.getString("name");
-                wd.Population = rset.getString("population");
-                wd.Region = rset.getString("region");
-                System.out.println( wd.Region + "\t" +wd.Name + "\t" + wd.Population + "\n" );
-                String newRES = wd.Region + "\t" +wd.Name + "\t" + wd.Population + "\n";
+                System.out.println( wd.Code + "\t" +wd.Name + "\t" +wd.Continent + "\t" +wd.Region + "\t" +wd.Population + "\t" + wd.Capital + "\n" );
+                String newRES = wd.Code + "\t" +wd.Name + "\t" +wd.Continent + "\t" +wd.Region + "\t" +wd.Population + "\t" + wd.Capital + "\n";
 
                 results = results + newRES;
 
