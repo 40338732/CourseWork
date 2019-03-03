@@ -76,7 +76,7 @@ public class App {
         String Results = "";
 
 
-        Results = getReport8();
+        Results = getReport10();
 
         // Display results
 //        app.displayResults(Results);
@@ -85,8 +85,8 @@ public class App {
         app.disconnect();
     }
 
-    // REPORT 8: produce a report listing all the cities in a continent organised by largest population to smallest
-    public static String getReport8()
+    // REPORT 10: produce a report listing all the cities in a country organised by largest population to smallest
+    public static String getReport10()
     {
         // Create user input variable
         // int userInput = 7;
@@ -96,10 +96,10 @@ public class App {
         {
 
             // SELECT STATEMENT
-            String strSelect = "SELECT Continent, city.Name, city.Population " +
+            String strSelect = "SELECT city.Name, city.Population " +
                                 " FROM city " +
                                 " JOIN country ON city.CountryCode=country.Code " +
-                                " WHERE Continent = 'Africa' " +
+                                " WHERE country.Name = 'United Kingdom' " +
                                 " ORDER BY city.Population DESC ";
 
 
@@ -112,7 +112,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "\n" + "*** Cities in Africa ordered by population: ***" );
+            System.out.println( "\n" + "*** Cities in the UK ordered by population: ***" );
             System.out.println( "City:" + "\t" + "Population:" );
 
             while (rset.next())
