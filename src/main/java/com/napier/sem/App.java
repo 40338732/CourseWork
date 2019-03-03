@@ -76,7 +76,7 @@ public class App {
         String Results = "";
 
 
-        Results = getReport4();
+        Results = getReport6();
 
         // Display results
 //        app.displayResults(Results);
@@ -85,8 +85,8 @@ public class App {
         app.disconnect();
     }
 
-    // REPORT 4: produce a report listing the top N populated countries in the world where N is provided by the user
-    public static String getReport4()
+    // REPORT 6: produce a report listing the top N populated countries in a region where N is provided by the user
+    public static String getReport6()
     {
         // Create user input variable
         int userInput = 7;
@@ -96,8 +96,9 @@ public class App {
         {
 
             // SELECT STATEMENT
-            String strSelect = "SELECT Name, Population " +
+            String strSelect = "SELECT Name, Region, Population " +
                                 " FROM country " +
+                                " WHERE region = 'Middle East' " +
                                 " ORDER BY Population DESC " +
                                 " LIMIT " + userInput;
 
@@ -111,7 +112,8 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "\n" + "Country:" + "\t" + "Population:" );
+            System.out.println( "\n" + "*** Top " + userInput + " populated countries in the Middle East: ***" );
+            System.out.println( "Country:" + "\t" + "Population:" );
 
             while (rset.next())
             {
