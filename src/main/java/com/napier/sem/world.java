@@ -166,6 +166,9 @@ public class world {
 
     public String Population;
     public String Name;
+    public String City;
+    public String Urban;
+    public String Total;
 
 
 

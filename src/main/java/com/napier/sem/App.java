@@ -76,7 +76,7 @@ public class App {
         String Results = "";
 
 
-        Results = getReport22();
+        Results = getReport24();
 
         // Display results
 //        app.displayResults(Results);
@@ -85,24 +85,23 @@ public class App {
         app.disconnect();
     }
 
-    // REPORT 22: produce a report listing the top N populated capital cities in a region where N is provided by the user
-    public static String getReport22()
+    // REPORT 24: produce a report listing the population of people, people living in cities, and people not living in cities in each region
+    public static String getReport24()
     {
         // Create user input variable
-        int userInput = 8;
+        // int userInput = 8;
 
         String results = "";
         try
         {
 
             // SELECT STATEMENT
-            String strSelect = "SELECT city.Name, city.Population " +
-                                " FROM city " +
-                                " JOIN country ON city.CountryCode=country.Code " +
-                                " WHERE country.Capital=city.ID " +
-                                " AND Region = 'Caribbean' " +
-                                " ORDER BY city.Population DESC " +
-                                " LIMIT " + userInput;
+            String strSelect = "SELECT Region, sum(cast(country.Population AS UNSIGNED INTEGER )) AS Total, " +
+                                " sum(city.Population) AS City, sum(country.Population - city.Population) AS Urban  " +
+                                " FROM city JOIN country ON country.Code=city.CountryCode " +
+                                " GROUP BY Region ";
+
+//            String strTest = "SELECT sum(Population) FROM country GROUP BY Region";
 
 
             Statement stmt = con.createStatement();
@@ -114,22 +113,26 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "\n" + "*** The top " + userInput + " most populated capital cities in the Caribbean: ***" );
-            System.out.println( "City:" + "\t" + "Population:" );
+            System.out.println( "\n" + "*** Region population, city population and urban population: ***" );
+            System.out.println( "--Region--" + "\t--Total--" + "\t--City--" + "\t" + "--Urban--" );
 
             while (rset.next())
             {
                 world wd = new world();
 
                 // Fields to be shown
-               // wd.Country = rset.getString("Country");
-                wd.Name = rset.getString("Name");
-                wd.Population = rset.getString("Population");
+               //wd.Country = rset.getString("Country");
+                //wd.Name = rset.getString("Name");
+                //wd.Population = rset.getString("Population");
+                wd.Region = rset.getString("Region");
+                wd.Total = rset.getString("Total");
+                wd.City = rset.getString("City");
+                wd.Urban = rset.getString("Urban");
 
 
 
-                System.out.println( wd.Name + "\t" + wd.Population );
-                String newRES =   wd.Name + "\t" + wd.Population +"\n";
+                System.out.println( wd.Region + "\t" + wd.Total + "\t" + wd.City + "\t" + wd.Urban );
+                String newRES =    wd.Region + "\t" + wd.Total + "\t" + wd.City + "\t" + wd.Urban +"\n";
 
                 // Build Results
                 results = results + newRES;
