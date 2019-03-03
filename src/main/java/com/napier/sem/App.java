@@ -76,7 +76,7 @@ public class App {
         String Results = "";
 
 
-        Results = getReport10();
+        Results = getReport12();
 
         // Display results
 //        app.displayResults(Results);
@@ -85,11 +85,11 @@ public class App {
         app.disconnect();
     }
 
-    // REPORT 10: produce a report listing all the cities in a country organised by largest population to smallest
-    public static String getReport10()
+    // REPORT 12: produce a report listing the top N populated cities in the world where N is provided by the user
+    public static String getReport12()
     {
         // Create user input variable
-        // int userInput = 7;
+        int userInput = 20;
 
         String results = "";
         try
@@ -99,8 +99,8 @@ public class App {
             String strSelect = "SELECT city.Name, city.Population " +
                                 " FROM city " +
                                 " JOIN country ON city.CountryCode=country.Code " +
-                                " WHERE country.Name = 'United Kingdom' " +
-                                " ORDER BY city.Population DESC ";
+                                " ORDER BY city.Population DESC " +
+                                "LIMIT " + userInput;
 
 
             Statement stmt = con.createStatement();
@@ -112,7 +112,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "\n" + "*** Cities in the UK ordered by population: ***" );
+            System.out.println( "\n" + "*** The top " +  userInput + " most populated cities in the world: ***" );
             System.out.println( "City:" + "\t" + "Population:" );
 
             while (rset.next())
