@@ -76,7 +76,7 @@ public class App {
         String Results = "";
 
 
-        Results = getReport20();
+        Results = getReport22();
 
         // Display results
 //        app.displayResults(Results);
@@ -85,11 +85,11 @@ public class App {
         app.disconnect();
     }
 
-    // REPORT 20: produce a report listing the top N populated capital cities in the world where N is provided by the user
-    public static String getReport20()
+    // REPORT 22: produce a report listing the top N populated capital cities in a region where N is provided by the user
+    public static String getReport22()
     {
         // Create user input variable
-        int userInput = 12;
+        int userInput = 8;
 
         String results = "";
         try
@@ -100,6 +100,7 @@ public class App {
                                 " FROM city " +
                                 " JOIN country ON city.CountryCode=country.Code " +
                                 " WHERE country.Capital=city.ID " +
+                                " AND Region = 'Caribbean' " +
                                 " ORDER BY city.Population DESC " +
                                 " LIMIT " + userInput;
 
@@ -113,7 +114,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "\n" + "*** The top " + userInput + " most populated capital cities in the world: ***" );
+            System.out.println( "\n" + "*** The top " + userInput + " most populated capital cities in the Caribbean: ***" );
             System.out.println( "City:" + "\t" + "Population:" );
 
             while (rset.next())
