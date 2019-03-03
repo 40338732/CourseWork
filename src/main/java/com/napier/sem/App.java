@@ -76,7 +76,7 @@ public class App {
         String Results = "";
 
 
-        Results = getReport2();
+        Results = getReport4();
 
         // Display results
 //        app.displayResults(Results);
@@ -85,18 +85,21 @@ public class App {
         app.disconnect();
     }
 
-    // REPORT 2: list all the countries in a continent organised by largest population to smallest.
-    public static String getReport2()
+    // REPORT 4: produce a report listing the top N populated countries in the world where N is provided by the user
+    public static String getReport4()
     {
+        // Create user input variable
+        int userInput = 7;
+
         String results = "";
         try
         {
 
             // SELECT STATEMENT
-            String strSelect = "SELECT Continent, country.Name, Population " +
+            String strSelect = "SELECT Name, Population " +
                                 " FROM country " +
-                                " WHERE Continent='Europe' " +
-                                " ORDER BY Population DESC ";
+                                " ORDER BY Population DESC " +
+                                " LIMIT " + userInput;
 
 
             Statement stmt = con.createStatement();
