@@ -76,7 +76,7 @@ public class App {
         String Results = "";
 
 
-        Results = getReport16();
+        Results = getReport18();
 
         // Display results
 //        app.displayResults(Results);
@@ -85,11 +85,11 @@ public class App {
         app.disconnect();
     }
 
-    // REPORT 16:  produce a report listing the top N populated cities in a district where N is provided by the user
-    public static String getReport16()
+    // REPORT 18: produce a report listing all the capital cities in a continent organised by largest population to smallest
+    public static String getReport18()
     {
         // Create user input variable
-        int userInput = 5;
+        // int userInput = 5;
 
         String results = "";
         try
@@ -99,9 +99,9 @@ public class App {
             String strSelect = "SELECT city.Name, city.Population " +
                                 " FROM city " +
                                 " JOIN country ON city.CountryCode=country.Code " +
-                                " WHERE district = 'Tabasco' " +
-                                " ORDER BY city.Population DESC " +
-                                " LIMIT " + userInput;
+                                " WHERE Continent = 'Europe' " +
+                                " AND country.Capital=city.ID " +
+                                " ORDER BY city.Population DESC ";
 
 
             Statement stmt = con.createStatement();
@@ -113,7 +113,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "\n" + "*** The top " +  userInput + " most populated cities in Tabasco, Mexico: ***" );
+            System.out.println( "\n" + "*** The most populated capital cities in Europe: ***" );
             System.out.println( "City:" + "\t" + "Population:" );
 
             while (rset.next())
