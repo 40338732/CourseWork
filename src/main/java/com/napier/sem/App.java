@@ -76,7 +76,7 @@ public class App {
         String Results = "";
 
 
-        Results = getReport6();
+        Results = getReport8();
 
         // Display results
 //        app.displayResults(Results);
@@ -85,22 +85,22 @@ public class App {
         app.disconnect();
     }
 
-    // REPORT 6: produce a report listing the top N populated countries in a region where N is provided by the user
-    public static String getReport6()
+    // REPORT 8: produce a report listing all the cities in a continent organised by largest population to smallest
+    public static String getReport8()
     {
         // Create user input variable
-        int userInput = 7;
+        // int userInput = 7;
 
         String results = "";
         try
         {
 
             // SELECT STATEMENT
-            String strSelect = "SELECT Name, Region, Population " +
-                                " FROM country " +
-                                " WHERE region = 'Middle East' " +
-                                " ORDER BY Population DESC " +
-                                " LIMIT " + userInput;
+            String strSelect = "SELECT Continent, city.Name, city.Population " +
+                                " FROM city " +
+                                " JOIN country ON city.CountryCode=country.Code " +
+                                " WHERE Continent = 'Africa' " +
+                                " ORDER BY city.Population DESC ";
 
 
             Statement stmt = con.createStatement();
@@ -112,8 +112,8 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "\n" + "*** Top " + userInput + " populated countries in the Middle East: ***" );
-            System.out.println( "Country:" + "\t" + "Population:" );
+            System.out.println( "\n" + "*** Cities in Africa ordered by population: ***" );
+            System.out.println( "City:" + "\t" + "Population:" );
 
             while (rset.next())
             {
