@@ -142,7 +142,7 @@ public class world {
     /**
      * Country Language's Country Code
      */
-
+    public  String Country;
     public String LanguageCountryCode;
 
     /**
@@ -166,7 +166,10 @@ public class world {
 
     public String Population;
     public String Name;
-    public  String Capital1;
+    public String Capital1;
+    public String total;
+    public String city;
+    public String urban;
 
 
 }
