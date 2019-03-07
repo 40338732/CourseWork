@@ -86,6 +86,9 @@ public class App {
     }
 
 
+    // All Odd numbered reports copied into single file as git branch merges were overwriting the getReport method
+    // Original branches were deleted
+
     // REPORT 2: list all the countries in a continent organised by largest population to smallest.
     public static String getReport2()
     {
