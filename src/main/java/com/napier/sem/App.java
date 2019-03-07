@@ -85,7 +85,67 @@ public class App {
         app.disconnect();
     }
 
+
     
+
+
+    // REPORT 10: produce a report listing all the cities in a country organised by largest population to smallest
+    public static String getReport10()
+    {
+        // Create user input variable
+        // int userInput = 7;
+
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "SELECT city.Name, city.Population " +
+                    " FROM city " +
+                    " JOIN country ON city.CountryCode=country.Code " +
+                    " WHERE country.Name = 'United Kingdom' " +
+                    " ORDER BY city.Population DESC ";
+
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "\n" + "*** Cities in the UK ordered by population: ***" );
+            System.out.println( "City:" + "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                // wd.Country = rset.getString("Country");
+                wd.Name = rset.getString("Name");
+                wd.Population = rset.getString("Population");
+
+
+
+                System.out.println( wd.Name + "\t" + wd.Population );
+                String newRES =   wd.Name + "\t" + wd.Population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
 
 
     // REPORT 12: produce a report listing the top N populated cities in the world where N is provided by the user
