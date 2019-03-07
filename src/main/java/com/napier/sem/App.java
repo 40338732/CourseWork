@@ -89,6 +89,63 @@ public class App {
     
 
 
+    // REPORT 4: produce a report listing the top N populated countries in the world where N is provided by the user
+    public static String getReport4()
+    {
+        // Create user input variable
+        int userInput = 7;
+
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "SELECT Name, Population " +
+                    " FROM country " +
+                    " ORDER BY Population DESC " +
+                    " LIMIT " + userInput;
+
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "\n" + "Country:" + "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                // wd.Country = rset.getString("Country");
+                wd.Name = rset.getString("Name");
+                wd.Population = rset.getString("Population");
+
+
+
+                System.out.println( wd.Name + "\t" + wd.Population );
+                String newRES =   wd.Name + "\t" + wd.Population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
+
+
     // REPORT 6: produce a report listing the top N populated countries in a region where N is provided by the user
     public static String getReport6()
     {
