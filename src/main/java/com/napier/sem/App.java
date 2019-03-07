@@ -77,12 +77,13 @@ public class App {
 
         // Report 1
         Results1 = getReport1();
-
+        // Report 3
+        Results3 = getReport3();
 
 
         // Display results
         app.displayResults(Results1);
-
+        app.displayResults(Results3);
         // Disconnect from database
         app.disconnect();
     }
