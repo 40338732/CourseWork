@@ -73,14 +73,17 @@ public class App {
         System.out.println("version 1");
         app.connect();
 
-        String Results = "";
+        String Results1 , Results3  = "";
 
         // Report 1
-        Results = getReport1();
+        Results1 = getReport1();
+        // Report 3
+        Results3 = getReport3();
+
 
         // Display results
-        app.displayResults(Results);
-
+        app.displayResults(Results1);
+        app.displayResults(Results3);
         // Disconnect from database
         app.disconnect();
     }
@@ -129,6 +132,55 @@ public class App {
                 // Build Results
                 results = results + newRES;
             }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
+    public static String getReport3()
+    {
+        String results = "";
+        try
+        {
+            // SELECT STATEMENT - THIS GETS CHANGED
+
+            String strSelect = "SELECT Region,Code, country.Name, Continent,  country.Population, (SELECT name FROM city WHERE ID = Capital) as Capital " +
+                    " FROM country  group by Region, Code, country.Name, Continent, country.Population,Capital " +
+                    " order by Region, Population DESC";
+
+
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "Code"  +"\t" + "Name:" + "\t" + "Continent:" + "\t" + "Region:" + "\t" + "Population:" + "\t" + "Capital:");
+
+            while (rset.next())
+            {
+                world wd = new world();
+                wd.Code = rset.getString("Code");
+                wd.Name = rset.getString("Name");
+                wd.Continent = rset.getString("Continent");
+                wd.Region = rset.getString("Region");
+                wd.Population = rset.getString("Population");
+                wd.Capital = rset.getString("Capital");
+
+                System.out.println( wd.Code + "\t" +wd.Name + "\t" +wd.Continent + "\t" +wd.Region + "\t" +wd.Population + "\t" + wd.Capital + "\n" );
+                String newRES = wd.Code + "\t" +wd.Name + "\t" +wd.Continent + "\t" +wd.Region + "\t" +wd.Population + "\t" + wd.Capital + "\n";
+
+                results = results + newRES;
+
+            }
+
         }
         catch (Exception e)
         {
