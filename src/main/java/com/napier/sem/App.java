@@ -73,17 +73,20 @@ public class App {
         System.out.println("version 1");
         app.connect();
 
-        String Results1 , Results3  = "";
+        String Results1 , Results3 , Results5  = "";
 
         // Report 1
         Results1 = getReport1();
         // Report 3
         Results3 = getReport3();
-
+        // Reports 5
+        Results5 = getReport5(10);
 
         // Display results
         app.displayResults(Results1);
         app.displayResults(Results3);
+        app.displayResults(Results5);
+
         // Disconnect from database
         app.disconnect();
     }
@@ -142,6 +145,7 @@ public class App {
         return results;
     }
 
+    // REPORT 3:
     public static String getReport3()
     {
         String results = "";
@@ -191,7 +195,57 @@ public class App {
         return results;
     }
 
+    // REPORT 5 : The top N populated countries in a continent where N is provided by the user.
+    public static String getReport5(Integer num)
+    {
+        String results = "";
+        try
+        {
 
+            // SELECT STATEMENT
+            // https://docs.microsoft.com/en-us/sql/t-sql/statements/create-partition-function-transact-sql?view=sql-server-2017
+
+            String strSelect = "WITH RowSETS AS ( SELECT Code, country.Name, Continent, Region, country.Population, (SELECT name FROM city WHERE ID = Capital) as Capital, " +
+                    " ROW_NUMBER() over ( PARTITION BY CONTINENT ORDER BY Population DESC ) AS RowNum " +
+                    " from country ) " +
+                    " select * from RowSETS where RowNum <= " + num ;
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "Code"  +"\t" + "Name:" + "\t" + "Continent:" + "\t" + "Region:" + "\t" + "Population:" + "\t" + "Capital:");
+
+            while (rset.next())
+            {
+                world wd = new world();
+                wd.Code = rset.getString("Code");
+                wd.Name = rset.getString("Name");
+                wd.Continent = rset.getString("Continent");
+                wd.Region = rset.getString("Region");
+                wd.Population = rset.getString("Population");
+                wd.Capital = rset.getString("Capital");
+
+                System.out.println( wd.Code + "\t" +wd.Name + "\t" +wd.Continent + "\t" +wd.Region + "\t" +wd.Population + "\t" + wd.Capital + "\n" );
+                String newRES = wd.Code + "\t" +wd.Name + "\t" +wd.Continent + "\t" +wd.Region + "\t" +wd.Population + "\t" + wd.Capital + "\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
     // DON'T CHANGE
     public void displayResults(String results)
     {
