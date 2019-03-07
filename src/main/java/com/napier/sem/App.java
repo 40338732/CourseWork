@@ -82,7 +82,7 @@ public class App {
         // Reports 5
         Results5 = getReport5(10);
 
-        // Display results
+        // Display results 1,3,5
         app.displayResults(Results1);
         app.displayResults(Results3);
         app.displayResults(Results5);
