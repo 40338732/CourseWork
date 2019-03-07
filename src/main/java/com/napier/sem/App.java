@@ -8,9 +8,12 @@ public class App {
      * Connection to MySQL database.
      */
 
-
     private static Connection con = null;
 
+    public ArrayList<Employee> allSalaries;
+
+
+    // DON'T CHANGE
     public void connect() {
         try {
             // Load Database driver
@@ -46,7 +49,7 @@ public class App {
     }
 
     /**
-     * * Disconnect from the MySQL database.
+     * * Disconnect from the MySQL database. DON'T CHANGE
      */
 
     public void disconnect() {
@@ -61,26 +64,83 @@ public class App {
     }
 
 
+
+
+
     public static  void main(String[] args) {
         // Create new Application
         App app = new App();
-        System.out.println("version 2");
+        System.out.println("version 1");
         app.connect();
 
-        // Create variable to hold the data returned
-        String Results = "";
+        String Results1 , Results3  = "";
 
-        // Get World Data for report 3
-        Results = getReport3();
+        // Report 1
+        Results1 = getReport1();
+
+
 
         // Display results
-        app.displayResults(Results);
+        app.displayResults(Results1);
 
         // Disconnect from database
         app.disconnect();
     }
 
-    // REPORT 3 : All the countries in a region organised by largest population to smallest.
+    // REPORT 1: All the countries in the world organised by largest population to smallest.
+    public static String getReport1()
+    {
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            // R1 - All the countries in the world organised by largest population to smallest.
+
+
+            String strSelect = "SELECT Code, country.Name, Continent, Region, country.Population, (SELECT name FROM city WHERE ID = Capital) as Capital " +
+                    "            FROM country\n" +
+                    "            ORDER BY country.Population DESC ";
+
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "Code:" + "\t" +"Name:" + "\t" + "Continent:" + "\t" + "Region:" + "\t" + "Population:"  + "\t" +  "Capital:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                wd.Code = rset.getString("Code");
+                wd.Name = rset.getString("name");
+                wd.Continent = rset.getString("Continent");
+                wd.Region = rset.getString("Region");
+                wd.Population = rset.getString("Population");
+                wd.Capital = rset.getString("Capital");
+
+
+                System.out.println( wd.Code + "\t" + wd.Name  + "\t" + wd.Continent  + "\t" + wd.Region  + "\t" + wd.Population  + "\t" + wd.Capital);
+                String newRES =  wd.Code + "\t" + wd.Name  + "\t" + wd.Continent  + "\t" + wd.Region  + "\t" + wd.Population  + "\t" + wd.Capital;
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
     public static String getReport3()
     {
         String results = "";
@@ -89,8 +149,8 @@ public class App {
             // SELECT STATEMENT - THIS GETS CHANGED
 
             String strSelect = "SELECT Region,Code, country.Name, Continent,  country.Population, (SELECT name FROM city WHERE ID = Capital) as Capital " +
-            " FROM country  group by Region, Code, country.Name, Continent, country.Population,Capital " +
-            " order by Region, Population DESC";
+                    " FROM country  group by Region, Code, country.Name, Continent, country.Population,Capital " +
+                    " order by Region, Population DESC";
 
 
             Statement stmt = con.createStatement();
@@ -131,15 +191,15 @@ public class App {
     }
 
 
-    // Method used to display the results from the queries
-    public void displayResults(String results) {
-
+    // DON'T CHANGE
+    public void displayResults(String results)
+    {
         if (results != null) {
             System.out.println(
                     results + "\n");
+
         }
     }
-
 }
 
 
