@@ -88,6 +88,65 @@ public class App {
     
 
 
+    // REPORT 12: produce a report listing the top N populated cities in the world where N is provided by the user
+    public static String getReport12()
+    {
+        // Create user input variable
+        int userInput = 20;
+
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "SELECT city.Name, city.Population " +
+                    " FROM city " +
+                    " JOIN country ON city.CountryCode=country.Code " +
+                    " ORDER BY city.Population DESC " +
+                    "LIMIT " + userInput;
+
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "\n" + "*** The top " +  userInput + " most populated cities in the world: ***" );
+            System.out.println( "City:" + "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                // wd.Country = rset.getString("Country");
+                wd.Name = rset.getString("Name");
+                wd.Population = rset.getString("Population");
+
+
+
+                System.out.println( wd.Name + "\t" + wd.Population );
+                String newRES =   wd.Name + "\t" + wd.Population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
+
+
     // REPORT 14:  produce a report listing the top N populated cities in a region where N is provided by the user
     public static String getReport14()
     {
