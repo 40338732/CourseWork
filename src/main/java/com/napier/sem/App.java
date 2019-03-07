@@ -75,8 +75,8 @@ public class App {
 
         String Results = "";
 
-
-        Results = getReport25();
+        // Report 1
+        Results = getReport1();
 
         // Display results
         app.displayResults(Results);
@@ -85,10 +85,7 @@ public class App {
         app.disconnect();
     }
 
-    // 25. As a service user I want to produce a report listing the population of people,
-    // people living in cities, and people not living in cities in each country
-
-
+    // REPORT 1: All the countries in the world organised by largest population to smallest.
     public static String getReport1()
     {
         String results = "";
@@ -128,61 +125,6 @@ public class App {
 
                 System.out.println( wd.Code + "\t" + wd.Name  + "\t" + wd.Continent  + "\t" + wd.Region  + "\t" + wd.Population  + "\t" + wd.Capital);
                 String newRES =  wd.Code + "\t" + wd.Name  + "\t" + wd.Continent  + "\t" + wd.Region  + "\t" + wd.Population  + "\t" + wd.Capital;
-
-                // Build Results
-                results = results + newRES;
-            }
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
-            return null;
-        }
-        return results;
-    }
-
-    public static String getReport25()
-    {
-        String results = "";
-        try
-        {
-
-            // SELECT STATEMENT
-            String strSelect = "select country.Name as 'Country', SUM(city.Population) AS City , " +
-                    " country.Population - SUM(city.Population) as Urban  , country.Population AS Total " +
-                    " from city " +
-                    " inner join country on country.Code = city.CountryCode " +
-                    " where countryCode = city.CountryCode " +
-                    " group by  country.Population, country.Name ";
-
-
-            Statement stmt = con.createStatement();
-
-            // Execute SQL statement
-            stmt.executeQuery(strSelect);
-
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            // Check one is returned
-            System.out.println( "Country" + "\t" + "Total:" + "\t" + "City:" + "\t" +  "Urban:" );
-
-            while (rset.next())
-            {
-                world wd = new world();
-
-                // Fields to be shown
-                wd.Country = rset.getString("Country");
-                wd.total = rset.getString("total");
-                wd.city = rset.getString("city");
-                wd.urban = rset.getString("urban");
-               //// wd.Name = rset.getString("Name");
-              //  wd.Population = rset.getString("Population");
-
-
-
-                System.out.println( wd.Country + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban );
-                String newRES =     wd.Country + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban +"\n";
 
                 // Build Results
                 results = results + newRES;
