@@ -85,7 +85,66 @@ public class App {
         app.disconnect();
     }
 
+
     
+
+    // REPORT 18: produce a report listing all the capital cities in a continent organised by largest population to smallest
+    public static String getReport18()
+    {
+        // Create user input variable
+        // int userInput = 5;
+
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "SELECT city.Name, city.Population " +
+                    " FROM city " +
+                    " JOIN country ON city.CountryCode=country.Code " +
+                    " WHERE Continent = 'Europe' " +
+                    " AND country.Capital=city.ID " +
+                    " ORDER BY city.Population DESC ";
+
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "\n" + "*** The most populated capital cities in Europe: ***" );
+            System.out.println( "City:" + "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                // wd.Country = rset.getString("Country");
+                wd.Name = rset.getString("Name");
+                wd.Population = rset.getString("Population");
+
+
+
+                System.out.println( wd.Name + "\t" + wd.Population );
+                String newRES =   wd.Name + "\t" + wd.Population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
 
 
 
