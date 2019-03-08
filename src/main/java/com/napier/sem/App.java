@@ -70,11 +70,11 @@ public class App {
     public static  void main(String[] args) {
         // Create new Application
         App app = new App();
-        System.out.println("version r13");
+        System.out.println("version r15");
         app.connect();
 
         // local variable
-        String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 = "";
+        String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 , Results15 = "";
 
         // Report 1
         //Results1 = getReport1();
@@ -89,7 +89,9 @@ public class App {
         //Report 11
         //Results11 = getReport11();
         //Reports 13
-        Results13 = getReport13(10);
+        //Results13 = getReport13(10);
+        //Reports 15
+        Results15 = getReport15(10);
 
         // Display results
         //app.displayResults(Results1);
@@ -98,7 +100,8 @@ public class App {
         //app.displayResults(Results7);
         //app.displayResults(Results9);
         //app.displayResults(Results11);
-        app.displayResults(Results13);
+        //app.displayResults(Results13);
+        app.displayResults(Results15);
 
 
 
@@ -444,6 +447,59 @@ public class App {
                     "   ROW_NUMBER() over (PARTITION BY CONTINENT ORDER BY city.Population DESC) AS RowNum " +
                     " from country, city where city.CountryCode = country.Code) " +
 
+                    " select * from RowSETS where RowNum <=" + num;
+
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "Name:" + "\t" + "Country:"+ "\t" + "District:"+ "\t" + "Population:");
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                wd.name = rset.getString("Name");
+                wd.country = rset.getString("Country");
+                wd.district = rset.getString("District");
+                wd.population = rset.getString("Population");
+
+                System.out.println( wd.name + "\t" + wd.country+ "\t" + wd.district+ "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.country+ "\t" + wd.district+ "\t" + wd.population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
+    // REPORT 15: The top N populated cities in a country where N is provided by the user.
+
+    public static String getReport15(Integer num)
+    {
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "WITH RowSETS AS (" +
+                    " SELECT city.Name, country.Name as 'Country', District, city.Population,  ROW_NUMBER() over " +
+                    " ( PARTITION BY country.Name ORDER BY city.Population DESC ) AS RowNum " +
+                    " from country, city where city.CountryCode = country.Code ) " +
                     " select * from RowSETS where RowNum <=" + num;
 
 
