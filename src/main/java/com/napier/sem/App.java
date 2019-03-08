@@ -70,11 +70,11 @@ public class App {
     public static  void main(String[] args) {
         // Create new Application
         App app = new App();
-        System.out.println("version r19");
+        System.out.println("version r21");
         app.connect();
 
         // local variable
-        String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 , Results15, Results17 , Results19 = "";
+        String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 , Results15, Results17 , Results19, Results21 = "";
 
         // Report 1
         //Results1 = getReport1();
@@ -95,8 +95,9 @@ public class App {
         //Reports 17
         //Results17 = getReport17();
         //Reports 19
-        Results19 = getReport19();
-
+        //Results19 = getReport19();
+        //Reports 21
+        Results21 = getReport21(10);
 
 
         // Display results
@@ -109,7 +110,8 @@ public class App {
         //app.displayResults(Results13);
         //app.displayResults(Results15);
         //app.displayResults(Results17);
-          app.displayResults(Results19);
+        //app.displayResults(Results19);
+        app.displayResults(Results21);
 
         // Disconnect from database
         app.disconnect();
@@ -649,6 +651,65 @@ public class App {
         }
         return results;
     }
+
+// REPORT 21: As a service user I want to produce a report listing the top N populated
+    // capital cities in a continent where N is provided by the user
+
+    public static String getReport21( Integer num)
+    {
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = " WITH RowSETS AS ( " +
+                    " SELECT city.Name , country.Name as Country, District, " +
+                    " city.Population, " +
+                    " ROW_NUMBER() over (PARTITION BY country.Continent ORDER BY city.Population DESC) AS RowNum " +
+                    " from country, city where city.CountryCode = country.Code) " +
+                    " select * from RowSETS where RowNum <= " + num ;
+
+
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "City" + "\t" + "Country:" + "\t" + "District:"+ "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                wd.country = rset.getString("Country");
+                wd.district = rset.getString("District");
+                wd.name = rset.getString("Name");
+                wd.population = rset.getString("Population");
+
+
+
+                System.out.println( wd.name + "\t" + wd.country + "\t" + wd.district + "\t" + wd.population  );
+                String newRES =     wd.name + "\t" + wd.country + "\t" + wd.district + "\t" + wd.population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
+
+
 
     // DON'T CHANGE
     public void displayResults(String results)
