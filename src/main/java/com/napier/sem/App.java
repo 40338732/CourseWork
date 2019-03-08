@@ -97,7 +97,7 @@ public class App {
         //Reports 19
         //Results19 = getReport19();
         //Reports 21
-        Results21 = getReport21(10);
+        //Results21 = getReport21(10);
         //Reports 23
         Results23 = getReport23();
 
@@ -112,8 +112,8 @@ public class App {
         //app.displayResults(Results15);
         //app.displayResults(Results17);
         //app.displayResults(Results19);
-        app.displayResults(Results21);
-
+        //app.displayResults(Results21);
+        app.displayResults(Results23);
         // Disconnect from database
         app.disconnect();
     }
