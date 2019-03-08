@@ -653,7 +653,7 @@ public class App {
         return results;
     }
 
-// REPORT 21: As a service user I want to produce a report listing the top N populated
+// REPORT 21: As a service user I want to produce a report listing the top N populated updated
     // capital cities in a continent where N is provided by the user
 
     public static String getReport21( Integer num)
