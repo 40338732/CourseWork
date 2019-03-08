@@ -70,7 +70,7 @@ public class App {
     public static  void main(String[] args) {
         // Create new Application
         App app = new App();
-        System.out.println("version r11");
+        System.out.println("version r11a");
         app.connect();
 
         // local variable
