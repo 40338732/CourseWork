@@ -73,6 +73,7 @@ public class App {
         System.out.println("version 1");
         app.connect();
 
+        // local variable
         String Results1 , Results3 , Results5 , Results7 = "";
 
         // Report 1
