@@ -70,11 +70,11 @@ public class App {
     public static  void main(String[] args) {
         // Create new Application
         App app = new App();
-        System.out.println("version r23");
+        System.out.println("version r25");
         app.connect();
 
         // local variable
-        String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 , Results15, Results17 , Results19, Results21 , Results23 = "";
+        String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 , Results15, Results17 , Results19, Results21 , Results23 , Results25 = "";
 
         // Report 1
         //Results1 = getReport1();
@@ -99,7 +99,10 @@ public class App {
         //Reports 21
         //Results21 = getReport21(10);
         //Reports 23
-        Results23 = getReport23();
+        //Results23 = getReport23();
+        //Reports 25
+        Results25 = getReport25();
+
 
         // Display results
         //app.displayResults(Results1);
@@ -113,7 +116,10 @@ public class App {
         //app.displayResults(Results17);
         //app.displayResults(Results19);
         //app.displayResults(Results21);
-        app.displayResults(Results23);
+        //app.displayResults(Results23);
+        app.displayResults(Results25);
+
+
         // Disconnect from database
         app.disconnect();
     }
@@ -654,6 +660,7 @@ public class App {
     }
 
     // REPORT 21: As a service user I want to produce a report listing the top N populated
+
     // capital cities in a continent where N is provided by the user
 
     public static String getReport21( Integer num)
@@ -768,6 +775,63 @@ public class App {
         return results;
     }
 
+    // 25. As a service user I want to produce a report listing the population of people,
+    // people living in cities, and people not living in cities in each country
+
+    public static String getReport25()
+    {
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "select country.Name as 'Country', SUM(city.Population) AS City , " +
+                    " country.Population - SUM(city.Population) as Urban  , country.Population AS Total " +
+                    " from city " +
+                    " inner join country on country.Code = city.CountryCode " +
+                    " where countryCode = city.CountryCode " +
+                    " group by  country.Population, country.Name ";
+
+
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "Country" + "\t" + "Total:" + "\t" + "City:" + "\t" +  "Urban:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                wd.country = rset.getString("Country");
+                wd.total = rset.getString("total");
+                wd.city = rset.getString("city");
+                wd.urban = rset.getString("urban");
+                //// wd.Name = rset.getString("Name");
+                //  wd.Population = rset.getString("Population");
+
+
+
+                System.out.println( wd.country + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban );
+                String newRES =     wd.country + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
 
     // DON'T CHANGE
     public void displayResults(String results)
