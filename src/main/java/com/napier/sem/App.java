@@ -70,11 +70,11 @@ public class App {
     public static  void main(String[] args) {
         // Create new Application
         App app = new App();
-        System.out.println("version r21");
+        System.out.println("version r23");
         app.connect();
 
         // local variable
-        String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 , Results15, Results17 , Results19, Results21 = "";
+        String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 , Results15, Results17 , Results19, Results21 , Results23 = "";
 
         // Report 1
         //Results1 = getReport1();
@@ -98,7 +98,8 @@ public class App {
         //Results19 = getReport19();
         //Reports 21
         Results21 = getReport21(10);
-
+        //Reports 23
+        Results23 = getReport23();
 
         // Display results
         //app.displayResults(Results1);
@@ -601,7 +602,7 @@ public class App {
         return results;
     }
 
-// REPORT 19: : All the capital cities in a region organised by largest to smallest.
+    // REPORT 19: : All the capital cities in a region organised by largest to smallest.
 
     public static String getReport19()
     {
@@ -653,7 +654,8 @@ public class App {
         return results;
     }
 
-// REPORT 21: As a service user I want to produce a report listing the top N populated updated
+    // REPORT 21: As a service user I want to produce a report listing the top N populated
+
     // capital cities in a continent where N is provided by the user
 
     public static String getReport21( Integer num)
@@ -709,7 +711,64 @@ public class App {
         return results;
     }
 
+    // REPORT 23: As a service user I want to produce a report listing the population of people,
+    // people living in cities, and people not living in cities in each continent
 
+    public static String getReport23()
+    {
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "select Continent as Continent,  "+
+                    " SUM(cast(country.Population AS UNSIGNED INTEGER )) As total ,  "+
+                    " SUM(city.Population) as city ,  "+
+                    " SUM( country.Population - city.Population ) as urban"+
+                    " from city join country on  country.Code = city.CountryCode "+
+                    " group by continent "+
+                    " order by continent ASC ";
+
+
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "Continent" + "\t" + "Total:" + "\t" + "City:" + "Urban" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                wd.continent = rset.getString("Continent");
+                wd.total = rset.getString("total");
+                wd.city = rset.getString("city");
+                wd.urban = rset.getString("urban");
+                //// wd.Name = rset.getString("Name");
+                //  wd.Population = rset.getString("Population");
+
+
+
+                System.out.println( wd.continent + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban );
+                String newRES =     wd.continent + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
 
 
     // DON'T CHANGE

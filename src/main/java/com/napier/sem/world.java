@@ -19,7 +19,9 @@ public class world {
     public String continent;
     public String region;
     public String capital;
-
+    public String city;
+    public String total;
+    public String urban;
 
 
 }
