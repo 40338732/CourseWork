@@ -73,19 +73,28 @@ public class App {
         System.out.println("version 1");
         app.connect();
 
-        String Results1 , Results3 , Results5  = "";
+        String Results1 , Results3 , Results5 , Results7 = "";
 
         // Report 1
-        Results1 = getReport1();
+        //Results1 = getReport1();
         // Report 3
-        Results3 = getReport3();
+        //Results3 = getReport3();
         // Reports 5
-        Results5 = getReport5(10);
+        //Results5 = getReport5(10);
+        // Report 7
+        Results7 = getReport7();
+
+
 
         // Display results
-        app.displayResults(Results1);
-        app.displayResults(Results3);
-        app.displayResults(Results5);
+        //app.displayResults(Results1);
+        //app.displayResults(Results3);
+        //app.displayResults(Results5);
+        app.displayResults(Results7);
+
+
+
+
 
         // Disconnect from database
         app.disconnect();
@@ -121,16 +130,16 @@ public class App {
                 world wd = new world();
 
                 // Fields to be shown
-                wd.Code = rset.getString("Code");
-                wd.Name = rset.getString("name");
-                wd.Continent = rset.getString("Continent");
-                wd.Region = rset.getString("Region");
-                wd.Population = rset.getString("Population");
-                wd.Capital = rset.getString("Capital");
+                wd.code = rset.getString("Code");
+                wd.name = rset.getString("name");
+                wd.continent = rset.getString("Continent");
+                wd.region = rset.getString("Region");
+                wd.population = rset.getString("Population");
+                wd.capital = rset.getString("Capital");
 
 
-                System.out.println( wd.Code + "\t" + wd.Name  + "\t" + wd.Continent  + "\t" + wd.Region  + "\t" + wd.Population  + "\t" + wd.Capital);
-                String newRES =  wd.Code + "\t" + wd.Name  + "\t" + wd.Continent  + "\t" + wd.Region  + "\t" + wd.Population  + "\t" + wd.Capital;
+                System.out.println( wd.code + "\t" + wd.name  + "\t" + wd.continent  + "\t" + wd.region  + "\t" + wd.population  + "\t" + wd.capital);
+                String newRES =  wd.code + "\t" + wd.name  + "\t" + wd.continent  + "\t" + wd.region  + "\t" + wd.population  + "\t" + wd.capital;
 
                 // Build Results
                 results = results + newRES;
@@ -171,15 +180,15 @@ public class App {
             while (rset.next())
             {
                 world wd = new world();
-                wd.Code = rset.getString("Code");
-                wd.Name = rset.getString("Name");
-                wd.Continent = rset.getString("Continent");
-                wd.Region = rset.getString("Region");
-                wd.Population = rset.getString("Population");
-                wd.Capital = rset.getString("Capital");
+                wd.code = rset.getString("Code");
+                wd.name = rset.getString("Name");
+                wd.continent = rset.getString("Continent");
+                wd.region = rset.getString("Region");
+                wd.population = rset.getString("Population");
+                wd.capital = rset.getString("Capital");
 
-                System.out.println( wd.Code + "\t" +wd.Name + "\t" +wd.Continent + "\t" +wd.Region + "\t" +wd.Population + "\t" + wd.Capital + "\n" );
-                String newRES = wd.Code + "\t" +wd.Name + "\t" +wd.Continent + "\t" +wd.Region + "\t" +wd.Population + "\t" + wd.Capital + "\n";
+                System.out.println( wd.code + "\t" +wd.name + "\t" +wd.continent + "\t" +wd.region + "\t" +wd.population + "\t" + wd.capital + "\n" );
+                String newRES =wd.code + "\t" +wd.name + "\t" +wd.continent + "\t" +wd.region + "\t" +wd.population + "\t" + wd.capital + "\n";
 
                 results = results + newRES;
 
@@ -224,15 +233,70 @@ public class App {
             while (rset.next())
             {
                 world wd = new world();
-                wd.Code = rset.getString("Code");
-                wd.Name = rset.getString("Name");
-                wd.Continent = rset.getString("Continent");
-                wd.Region = rset.getString("Region");
-                wd.Population = rset.getString("Population");
-                wd.Capital = rset.getString("Capital");
+                wd.code = rset.getString("Code");
+                wd.name = rset.getString("Name");
+                wd.continent = rset.getString("Continent");
+                wd.region = rset.getString("Region");
+                wd.population = rset.getString("Population");
+                wd.capital = rset.getString("Capital");
 
-                System.out.println( wd.Code + "\t" +wd.Name + "\t" +wd.Continent + "\t" +wd.Region + "\t" +wd.Population + "\t" + wd.Capital + "\n" );
-                String newRES = wd.Code + "\t" +wd.Name + "\t" +wd.Continent + "\t" +wd.Region + "\t" +wd.Population + "\t" + wd.Capital + "\n";
+                System.out.println( wd.code + "\t" +wd.name + "\t" +wd.continent + "\t" +wd.region + "\t" +wd.population + "\t" + wd.capital + "\n" );
+                String newRES = wd.code + "\t" +wd.name + "\t" +wd.continent + "\t" +wd.region + "\t" +wd.population + "\t" + wd.capital + "\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
+    // REPORT 7 : All the cities in the world organised by largest population to smallest.
+
+    public static String getReport7()
+    {
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+
+            String strSelect = "select city.Name , country.Name as Country, District, city.Population  " +
+
+                    " from city " +
+                    " inner join country on country.Code = city.CountryCode " +
+
+                    " ORDER BY city.Population DESC " ;
+
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned (header)
+            System.out.println( "Name:" + "\t" + "Country:"+ "\t" + "District:"+ "\t" + "Population:");
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                wd.name = rset.getString("Name");
+                wd.country = rset.getString("Country");
+                wd.district = rset.getString("District");
+                wd.population = rset.getString("Population");
+
+                System.out.println( wd.name + "\t" + wd.country+ "\t" + wd.district+ "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.country+ "\t" + wd.district+ "\t" + wd.population +"\n";
 
                 // Build Results
                 results = results + newRES;
