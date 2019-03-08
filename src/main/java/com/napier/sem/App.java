@@ -70,11 +70,11 @@ public class App {
     public static  void main(String[] args) {
         // Create new Application
         App app = new App();
-        System.out.println("version r15");
+        System.out.println("version r19");
         app.connect();
 
         // local variable
-        String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 , Results15 = "";
+        String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 , Results15, Results17 , Results19 = "";
 
         // Report 1
         //Results1 = getReport1();
@@ -91,7 +91,13 @@ public class App {
         //Reports 13
         //Results13 = getReport13(10);
         //Reports 15
-        Results15 = getReport15(10);
+        //Results15 = getReport15(10);
+        //Reports 17
+        //Results17 = getReport17();
+        //Reports 19
+        Results19 = getReport19();
+
+
 
         // Display results
         //app.displayResults(Results1);
@@ -101,9 +107,9 @@ public class App {
         //app.displayResults(Results9);
         //app.displayResults(Results11);
         //app.displayResults(Results13);
-        app.displayResults(Results15);
-
-
+        //app.displayResults(Results15);
+        //app.displayResults(Results17);
+          app.displayResults(Results19);
 
         // Disconnect from database
         app.disconnect();
@@ -540,8 +546,109 @@ public class App {
         return results;
     }
 
+    // REPORT 17: fixed All the capital cities in the world organised by largest population to smallest.
+
+    public static String getReport17()
+    {
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "SELECT city.name, country.Name as Country, city.Population " +
+                    " FROM country join city on city.ID = country.Capital " +
+                    " ORDER BY city.Population DESC ";
 
 
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "" + "\t" + "City:" + "\t" + "Country:"+ "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                wd.country = rset.getString("Country");
+                wd.name = rset.getString("Name");
+                wd.population = rset.getString("Population");
+
+
+
+                System.out.println( wd.name + "\t" + wd.country+ "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.country+ "\t" + wd.population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
+// REPORT 19: : All the capital cities in a region organised by largest to smallest.
+
+    public static String getReport19()
+    {
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = " SELECT Region,city.Name,  city.Population  " +
+                    " FROM country join city on city.ID = country.Capital " +
+                    " ORDER BY Region, city.Population DESC ";
+
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "Region" + "\t" + "City:" + "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                wd.region = rset.getString("region");
+                wd.name = rset.getString("Name");
+                wd.population = rset.getString("Population");
+
+
+
+                System.out.println( wd.name + "\t" + wd.region+ "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.region+ "\t" + wd.population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
 
     // DON'T CHANGE
     public void displayResults(String results)
