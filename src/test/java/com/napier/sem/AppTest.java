@@ -76,5 +76,28 @@ public class AppTest
         app.printSalaries(employees);
     }
 
+    @Test
+    void displayEmployee()
+    {
 
+        //Create single "Employee"
+        //Set the variables
+        // and pass it to Display Employee
+        ArrayList<Employee> employees = new ArrayList<Employee>();
+
+        Employee emp = new Employee();
+        emp.emp_no = 1;
+        emp.first_name = "Kevin";
+        emp.last_name = "Chalmers";
+        emp.title = "Engineer";
+        emp.salary = 55000;
+        employees.add(emp);
+
+        //No ID Supplied
+        app.displayEmployee(null);
+        //ID Supplied
+        //app.displayEmployee(emp);
+
+
+    }
 }
