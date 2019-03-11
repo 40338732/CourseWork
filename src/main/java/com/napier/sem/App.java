@@ -14,6 +14,7 @@ public class App {
 
 
     // DON'T CHANGE
+
     public void connect() {
         try {
             // Load Database driver
@@ -29,8 +30,8 @@ public class App {
             try {
                 // Wait a bit for db to start
                 Thread.sleep(10000);
-                // Connect to database
-                con = DriverManager.getConnection("jdbc:MySQL://db:3306/world?useSSL=false", "root", "example");
+                // Connect to database  world or employees
+                con = DriverManager.getConnection("jdbc:MySQL://db:3306/employees?useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             } catch (SQLException sqle) {
@@ -46,6 +47,46 @@ public class App {
             }
         }
 
+    }
+
+
+    public void connect(String location)
+    {
+        System.out.println("new connect");
+        try
+        {
+            // Load Database driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        }
+        catch (ClassNotFoundException e)
+        {
+            System.out.println("Could not load SQL driver");
+            System.exit(-1);
+        }
+
+        int retries = 10;
+        for (int i = 0; i < retries; ++i)
+        {
+            System.out.println("Connecting to database...");
+            try
+            {
+                // Wait a bit for db to start
+                Thread.sleep(30000);
+                // Connect to database
+                con = DriverManager.getConnection("jdbc:mysql://" + location + "/employees?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
+                System.out.println("Successfully connected");
+                break;
+            }
+            catch (SQLException sqle)
+            {
+                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
+                System.out.println(sqle.getMessage());
+            }
+            catch (InterruptedException ie)
+            {
+                System.out.println("Thread interrupted? Should not happen.");
+            }
+        }
     }
 
     /**
@@ -64,27 +105,123 @@ public class App {
     }
 
 
+    public String getDepartment(String dept)
+    {
+        String results = "";
+        try
+        {
 
+            // SELECT STATEMENT
+            // R1 - All the countries in the world organised by largest population to smallest.
+
+
+            String strSelect = "SELECT dept_no " +
+                    "      ,dept_name " +
+                    "  FROM departments " +
+                    "  where dept_name = '" + dept +"'";
+
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+            while (rset.next())
+            {
+
+                String newRES =  (rset.getString(1));
+
+                // Build Results
+                results = newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get Department");
+            return null;
+        }
+        return results;
+    }
+
+    public ArrayList<Employee> getSalariesByDepartment(String dept) {
+        String results = "";
+        try {
+            // SELECT STATEMENT
+            String strSelect = "SELECT employees.emp_no, employees.first_name, employees.last_name, salaries.salary  " +
+                    " FROM employees, salaries, dept_emp, departments " +
+                    " WHERE employees.emp_no = salaries.emp_no " +
+                    " AND employees.emp_no = dept_emp.emp_no " +
+                    " AND dept_emp.dept_no = departments.dept_no " +
+                    " AND salaries.to_date = '9999-01-01' " +
+                    " AND departments.dept_no = '" + dept +"'" +
+                    " ORDER BY employees.emp_no ASC";
+
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println("Emp No:" + "\t" + "First Name:" + "\t" + "Last Name:" + "\t" + "Salary:");
+            ArrayList<Employee> employees = new ArrayList<Employee>();
+            while (rset.next()) {
+                Employee emp = new Employee();
+
+                // Fields to be shown
+                emp.emp_no = rset.getInt("emp_no");
+                emp.first_name = rset.getString("first_name");
+                emp.last_name = rset.getString("last_name");
+                emp.salary = rset.getInt("salary");
+
+                employees.add(emp);
+            }
+            return employees;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        //return allSalaries;
+
+
+
+    }
 
 
     public static  void main(String[] args) {
         // Create new Application
+        System.out.println("GET SALARIES");
         App app = new App();
-        System.out.println("version r25");
+        System.out.println("version E1AA");
+        //app.connect("localhost:33060");
         app.connect();
+        String deptid = app.getDepartment("Sales");
+
+        ArrayList<Employee> employees = app.getSalariesByDepartment(deptid);
+
+        System.out.println(employees.size());
+        //ArrayList<Employee> employees = app.getSalariesByDepartment(dept);
+
+        // Print salary report
+        //app.printSalaries(employees);
+
 
         // local variable
-        String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 , Results15, Results17 , Results19, Results21 , Results23 , Results25 = "";
+        //String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 , Results15, Results17 , Results19, Results21 , Results23 , Results25 = "";
 
-        // Report 1
+        //Report 1
         //Results1 = getReport1();
-        // Report 3
+        //Report 3
         //Results3 = getReport3();
-        // Reports 5
+        //Reports 5
         //Results5 = getReport5(10);
-        // Report 7
+        //Report 7
         //Results7 = getReport7();
-        // Report 9
+        //Report 9
         //Results9 = getReport9();
         //Report 11
         //Results11 = getReport11();
@@ -101,7 +238,7 @@ public class App {
         //Reports 23
         //Results23 = getReport23();
         //Reports 25
-        Results25 = getReport25();
+        //Results25 = getReport25();
 
 
         // Display results
@@ -118,11 +255,28 @@ public class App {
         //app.displayResults(Results19);
         //app.displayResults(Results21);
         //app.displayResults(Results23);
-        app.displayResults(Results25);
+        //app.displayResults(Results25);
 
 
         // Disconnect from database
+        //app.disconnect();
+
+        /* Employee stuff (S)*/
+
+
+
+        // Connect to database
+
+        // Get Employee
+        ///Employee emp = app.getEmployee(255530);
+        // Display results
+        ///app.displayEmployee(emp);
+
+        // Disconnect from database
         app.disconnect();
+
+
+         //Employee stuff (F)
     }
 
     // REPORT 1: All the countries in the world organised by largest population to smallest.
@@ -865,6 +1019,64 @@ public class App {
             System.out.println(emp_string);
         }
     }
+
+    // Employees methods
+    public Employee getEmployee(int ID)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT emp_no, first_name, last_name "
+                            + "FROM employees "
+                            + "WHERE emp_no = " + ID;
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            if (rset.next())
+            {
+                Employee emp = new Employee();
+                emp.emp_no = rset.getInt("emp_no");
+                emp.first_name = rset.getString("first_name");
+                emp.last_name = rset.getString("last_name");
+                return emp;
+            }
+            else
+                return null;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get employee details");
+            return null;
+        }
+    }
+
+    public void displayEmployee(Employee emp)
+    {
+        if (emp != null)
+        {
+            System.out.println(
+                    emp.emp_no + " "
+                            + emp.first_name + " "
+                            + emp.last_name + "\n"
+                            + emp.title + "\n"
+                            + "Salary:" + emp.salary + "\n"
+                            + emp.dept_name + "\n"
+                            + "Manager: " + emp.manager + "\n");
+        }
+        else
+        {
+            System.out.println("No Employee ID ");
+        }
+    }
+
+
+
+
 }
 
 
