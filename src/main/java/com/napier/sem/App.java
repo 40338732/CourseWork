@@ -75,49 +75,61 @@ public class App {
 
         // local variable
         String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 , Results15, Results17 , Results19, Results21 , Results23 , Results25 = "";
+        String Results2 , Results4 , Results6 , Results8, Results10, Results12, Results14 , Results16, Results18 , Results20, Results22 , Results24  = "";
 
-        // Report 1
         //Results1 = getReport1();
-        // Report 3
+        //Results2 = getReport3();
         //Results3 = getReport3();
-        // Reports 5
+        //Results4 = getReport4();
         //Results5 = getReport5(10);
-        // Report 7
+        //Results6 = getReport6();
         //Results7 = getReport7();
-        // Report 9
+        //Results8 = getReport8();
         //Results9 = getReport9();
-        //Report 11
+        //Results10 = getReport10();
         //Results11 = getReport11();
-        //Reports 13
+        //Results12 = getReport12();
         //Results13 = getReport13(10);
-        //Reports 15
+        //Results14 = getReport14();
         //Results15 = getReport15(10);
-        //Reports 17
+        //Results16 = getReport16();
         //Results17 = getReport17();
-        //Reports 19
+        //Results18 = getReport18();
         //Results19 = getReport19();
-        //Reports 21
+        //Results20 = getReport20();
         //Results21 = getReport21(10);
-        //Reports 23
+        //Results22 = getReport22();
         //Results23 = getReport23();
-        //Reports 25
+        //Results24 = getReport24();
         Results25 = getReport25();
 
 
         // Display results
         //app.displayResults(Results1);
+        //app.displayResults(Results2);
         //app.displayResults(Results3);
+        //app.displayResults(Results4);
         //app.displayResults(Results5);
+        //app.displayResults(Results6);
         //app.displayResults(Results7);
+        //app.displayResults(Results8);
         //app.displayResults(Results9);
+        //app.displayResults(Results10);
         //app.displayResults(Results11);
+        //app.displayResults(Results12);
         //app.displayResults(Results13);
+        //app.displayResults(Results14);
         //app.displayResults(Results15);
+        //app.displayResults(Results16);
         //app.displayResults(Results17);
+        //app.displayResults(Results18);
         //app.displayResults(Results19);
+        //app.displayResults(Results20);
         //app.displayResults(Results21);
+        //app.displayResults(Results22);
         //app.displayResults(Results23);
-        app.displayResults(Results25);
+        //app.displayResults(Results24);
+          app.displayResults(Results25);
 
 
         // Disconnect from database
