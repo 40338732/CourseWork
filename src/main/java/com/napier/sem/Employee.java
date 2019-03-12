@@ -16,12 +16,16 @@ public class Employee
     public int salary;
 
     public Department dept;
-
     public Employee manager;
 
     public Date fromdate; // title from date
-
     public Date todate; // title from date
+
+    public String dept_name;
+    public String birth_date;
+    public String gender;
+    public String hire_date;
+
 }
 
 
