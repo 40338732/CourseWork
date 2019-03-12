@@ -754,8 +754,8 @@ public class App {
                 wd.total = rset.getString("total");
                 wd.city = rset.getString("city");
                 wd.urban = rset.getString("urban");
-                //// wd.Name = rset.getString("Name");
-                //  wd.Population = rset.getString("Population");
+                //// wd.name = rset.getString("Name");
+                //  wd.population = rset.getString("Population");
 
 
 
@@ -812,13 +812,720 @@ public class App {
                 wd.total = rset.getString("total");
                 wd.city = rset.getString("city");
                 wd.urban = rset.getString("urban");
-                //// wd.Name = rset.getString("Name");
-                //  wd.Population = rset.getString("Population");
+                //// wd.name = rset.getString("Name");
+                //  wd.population = rset.getString("Population");
 
 
 
                 System.out.println( wd.country + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban );
                 String newRES =     wd.country + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
+    
+    // ADDED EVEN NUMBERS FROM ROB
+    // All Odd numbered reports copied into single file as git branch merges were overwriting the getReport method
+    // Original branches were deleted
+
+    // REPORT 2: list all the countries in a continent organised by largest population to smallest.
+    public static String getReport2()
+    {
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "SELECT Continent, country.Name, Population " +
+                    " FROM country " +
+                    " WHERE Continent='Europe' " +
+                    " ORDER BY Population DESC ";
+
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "\n" + "Country:" + "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                // wd.Country = rset.getString("Country");
+                wd.name = rset.getString("Name");
+                wd.population = rset.getString("Population");
+
+
+
+                System.out.println( wd.name + "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
+
+    // REPORT 4: produce a report listing the top N populated countries in the world where N is provided by the user
+    public static String getReport4()
+    {
+        // Create user input variable
+        int userInput = 7;
+
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "SELECT Name, Population " +
+                    " FROM country " +
+                    " ORDER BY Population DESC " +
+                    " LIMIT " + userInput;
+
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "\n" + "Country:" + "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                // wd.Country = rset.getString("Country");
+                wd.name = rset.getString("Name");
+                wd.population = rset.getString("Population");
+
+
+
+                System.out.println( wd.name + "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
+
+
+    // REPORT 6: produce a report listing the top N populated countries in a region where N is provided by the user
+    public static String getReport6()
+    {
+        // Create user input variable
+        int userInput = 7;
+
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "SELECT Name, Region, Population " +
+                    " FROM country " +
+                    " WHERE region = 'Middle East' " +
+                    " ORDER BY Population DESC " +
+                    " LIMIT " + userInput;
+
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "\n" + "*** Top " + userInput + " populated countries in the Middle East: ***" );
+            System.out.println( "Country:" + "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                // wd.Country = rset.getString("Country");
+                wd.name = rset.getString("Name");
+                wd.population = rset.getString("Population");
+
+
+
+                System.out.println( wd.name + "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
+
+    // REPORT 8: produce a report listing all the cities in a continent organised by largest population to smallest
+    public static String getReport8()
+    {
+        // Create user input variable
+        // int userInput = 7;
+
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "SELECT Continent, city.Name, city.Population " +
+                    " FROM city " +
+                    " JOIN country ON city.CountryCode=country.Code " +
+                    " WHERE Continent = 'Africa' " +
+                    " ORDER BY city.Population DESC ";
+
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "\n" + "*** Cities in Africa ordered by population: ***" );
+            System.out.println( "City:" + "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                // wd.Country = rset.getString("Country");
+                wd.name = rset.getString("Name");
+                wd.population = rset.getString("Population");
+
+
+
+                System.out.println( wd.name + "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
+
+    // REPORT 10: produce a report listing all the cities in a country organised by largest population to smallest
+    public static String getReport10()
+    {
+        // Create user input variable
+        // int userInput = 7;
+
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "SELECT city.Name, city.Population " +
+                    " FROM city " +
+                    " JOIN country ON city.CountryCode=country.Code " +
+                    " WHERE country.Name = 'United Kingdom' " +
+                    " ORDER BY city.Population DESC ";
+
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "\n" + "*** Cities in the UK ordered by population: ***" );
+            System.out.println( "City:" + "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                // wd.Country = rset.getString("Country");
+                wd.name = rset.getString("Name");
+                wd.population = rset.getString("Population");
+
+
+
+                System.out.println( wd.name + "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
+
+    // REPORT 12: produce a report listing the top N populated cities in the world where N is provided by the user
+    public static String getReport12()
+    {
+        // Create user input variable
+        int userInput = 20;
+
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "SELECT city.Name, city.Population " +
+                    " FROM city " +
+                    " JOIN country ON city.CountryCode=country.Code " +
+                    " ORDER BY city.Population DESC " +
+                    "LIMIT " + userInput;
+
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "\n" + "*** The top " +  userInput + " most populated cities in the world: ***" );
+            System.out.println( "City:" + "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                // wd.Country = rset.getString("Country");
+                wd.name = rset.getString("Name");
+                wd.population = rset.getString("Population");
+
+
+
+                System.out.println( wd.name + "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
+
+    // REPORT 14:  produce a report listing the top N populated cities in a region where N is provided by the user
+    public static String getReport14()
+    {
+        // Create user input variable
+        int userInput = 10;
+
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "SELECT city.Name, city.Population " +
+                    " FROM city " +
+                    " JOIN country ON city.CountryCode=country.Code " +
+                    " WHERE region = 'South America' " +
+                    " ORDER BY city.Population DESC " +
+                    " LIMIT " + userInput;
+
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "\n" + "*** The top " +  userInput + " most populated cities in South America: ***" );
+            System.out.println( "City:" + "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                // wd.Country = rset.getString("Country");
+                wd.name = rset.getString("Name");
+                wd.population = rset.getString("Population");
+
+
+
+                System.out.println( wd.name + "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
+    // REPORT 16:  produce a report listing the top N populated cities in a district where N is provided by the user
+    public static String getReport16()
+    {
+        // Create user input variable
+        int userInput = 5;
+
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "SELECT city.Name, city.Population " +
+                    " FROM city " +
+                    " JOIN country ON city.CountryCode=country.Code " +
+                    " WHERE district = 'Tabasco' " +
+                    " ORDER BY city.Population DESC " +
+                    " LIMIT " + userInput;
+
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "\n" + "*** The top " +  userInput + " most populated cities in Tabasco, Mexico: ***" );
+            System.out.println( "City:" + "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                // wd.Country = rset.getString("Country");
+                wd.name = rset.getString("Name");
+                wd.population = rset.getString("Population");
+
+
+
+                System.out.println( wd.name + "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
+
+
+    // REPORT 18: produce a report listing all the capital cities in a continent organised by largest population to smallest
+    public static String getReport18()
+    {
+        // Create user input variable
+        // int userInput = 5;
+
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "SELECT city.Name, city.Population " +
+                    " FROM city " +
+                    " JOIN country ON city.CountryCode=country.Code " +
+                    " WHERE Continent = 'Europe' " +
+                    " AND country.Capital=city.ID " +
+                    " ORDER BY city.Population DESC ";
+
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "\n" + "*** The most populated capital cities in Europe: ***" );
+            System.out.println( "City:" + "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                // wd.Country = rset.getString("Country");
+                wd.name = rset.getString("Name");
+                wd.population = rset.getString("Population");
+
+
+
+                System.out.println( wd.name + "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
+
+
+    // REPORT 20: produce a report listing the top N populated capital cities in the world where N is provided by the user
+    public static String getReport20()
+    {
+        // Create user input variable
+        int userInput = 12;
+
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "SELECT city.Name, city.Population " +
+                    " FROM city " +
+                    " JOIN country ON city.CountryCode=country.Code " +
+                    " WHERE country.Capital=city.ID " +
+                    " ORDER BY city.Population DESC " +
+                    " LIMIT " + userInput;
+
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "\n" + "*** The top " + userInput + " most populated capital cities in the world: ***" );
+            System.out.println( "City:" + "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                // wd.Country = rset.getString("Country");
+                wd.name = rset.getString("Name");
+                wd.population = rset.getString("Population");
+
+
+
+                System.out.println( wd.name + "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
+
+
+    // REPORT 22: produce a report listing the top N populated capital cities in a region where N is provided by the user
+    public static String getReport22()
+    {
+        // Create user input variable
+        int userInput = 8;
+
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "SELECT city.Name, city.Population " +
+                    " FROM city " +
+                    " JOIN country ON city.CountryCode=country.Code " +
+                    " WHERE country.Capital=city.ID " +
+                    " AND Region = 'Caribbean' " +
+                    " ORDER BY city.Population DESC " +
+                    " LIMIT " + userInput;
+
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "\n" + "*** The top " + userInput + " most populated capital cities in the Caribbean: ***" );
+            System.out.println( "City:" + "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                // wd.Country = rset.getString("Country");
+                wd.name = rset.getString("Name");
+                wd.population = rset.getString("Population");
+
+
+
+                System.out.println( wd.name + "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world details");
+            return null;
+        }
+        return results;
+    }
+
+
+    // REPORT 24: produce a report listing the population of people, people living in cities, and people not living in cities in each region
+    public static String getReport24()
+    {
+        // Create user input variable
+        // int userInput = 8;
+
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "SELECT Region, sum(cast(country.Population AS UNSIGNED INTEGER )) AS Total, " +
+                    " sum(city.Population) AS City, sum(country.Population - city.Population) AS Urban  " +
+                    " FROM city JOIN country ON country.Code=city.CountryCode " +
+                    " GROUP BY Region ";
+
+//            String strTest = "SELECT sum(Population) FROM country GROUP BY Region";
+
+
+            Statement stmt = con.createStatement();
+            // Statement conn = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "\n" + "*** Region population, city population and urban population: ***" );
+            System.out.println( "--Region--" + "\t--Total--" + "\t--City--" + "\t" + "--Urban--" );
+
+            while (rset.next())
+            {
+                world wd = new world();
+
+                // Fields to be shown
+                //wd.Country = rset.getString("Country");
+                //wd.name = rset.getString("Name");
+                //wd.population = rset.getString("Population");
+                wd.region = rset.getString("Region");
+                wd.total = rset.getString("Total");
+                wd.city = rset.getString("City");
+                wd.urban = rset.getString("Urban");
+
+
+
+                System.out.println( wd.region + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban );
+                String newRES =    wd.region + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban +"\n";
 
                 // Build Results
                 results = results + newRES;
