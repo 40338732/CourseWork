@@ -80,8 +80,8 @@ public class App {
         //Results1 = getReport1();
         //Results2 = getReport3();
         //Results3 = getReport3();
-        //Results4 = getReport4();
-        //Results5 = getReport5(10);
+        Results4 = getReport4(6);
+       // Results5 = getReport5(10);
         //Results6 = getReport6();
         //Results7 = getReport7();
         //Results8 = getReport8();
@@ -101,7 +101,7 @@ public class App {
         //Results22 = getReport22();
         //Results23 = getReport23();
         //Results24 = getReport24();
-        Results25 = getReport25();
+       // Results25 = getReport25();
 
 
         // Display results
@@ -109,7 +109,7 @@ public class App {
         //app.displayResults(Results1);
         //app.displayResults(Results2);
         //app.displayResults(Results3);
-        //app.displayResults(Results4);
+        app.displayResults(Results4);
         //app.displayResults(Results5);
         //app.displayResults(Results6);
         //app.displayResults(Results7);
@@ -130,7 +130,7 @@ public class App {
         //app.displayResults(Results22);
         //app.displayResults(Results23);
         //app.displayResults(Results24);
-          app.displayResults(Results25);
+         // app.displayResults(Results25);
 
 
         // Disconnect from database
@@ -245,6 +245,7 @@ public class App {
     public static String getReport5(Integer num)
     {
         String results = "";
+        System.out.println("Report5");
         try
         {
 
@@ -277,7 +278,7 @@ public class App {
                 wd.population = rset.getString("Population");
                 wd.capital = rset.getString("Capital");
 
-                System.out.println( wd.code + "\t" +wd.name + "\t" +wd.continent + "\t" +wd.region + "\t" +wd.population + "\t" + wd.capital + "\n" );
+                //System.out.println( wd.code + "\t" +wd.name + "\t" +wd.continent + "\t" +wd.region + "\t" +wd.population + "\t" + wd.capital + "\n" );
                 String newRES = wd.code + "\t" +wd.name + "\t" +wd.continent + "\t" +wd.region + "\t" +wd.population + "\t" + wd.capital + "\n";
 
                 // Build Results
@@ -905,10 +906,15 @@ public class App {
 
 
     // REPORT 4: produce a report listing the top N populated countries in the world where N is provided by the user
-    public static String getReport4()
+    public static String getReport4(int userInput)
     {
         // Create user input variable
-        int userInput = 7;
+        //int userInput = 7;
+        if (userInput <= 0)
+        {
+            System.out.println("Number must be positive");
+            return "";
+        }
 
         String results = "";
         try

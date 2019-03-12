@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AppTest
 {
     static App app;
+    private static Connection con = null;
 
     @BeforeAll
     static void init()
@@ -40,16 +42,29 @@ public class AppTest
 
 
     @Test
+    void testReport4LessThanZero()
+    {
+        app.getReport4(-2);
+    }
+
+    @Test
+    void testReport8ForSomething()
+    {
+        app.getReport8();
+    }
+
+
+    @Test
     void printSalariesTestNull()
     {
-        app.printSalaries(null);
+      //  app.printSalaries(null);
     }
 
     @Test
     void printSalariesTestEmpty()
     {
         ArrayList<Employee> employess = new ArrayList<Employee>();
-        app.printSalaries(employess);
+     //  app.printSalaries(employess);
     }
 
     // Employees Contains null
@@ -58,7 +73,7 @@ public class AppTest
     {
         ArrayList<Employee> employess = new ArrayList<Employee>();
         employess.add(null);
-        app.printSalaries(employess);
+     //   app.printSalaries(employess);
     }
 
     // Employee Contains All Non-null
@@ -73,7 +88,7 @@ public class AppTest
         emp.title = "Engineer";
         emp.salary = 55000;
         employees.add(emp);
-        app.printSalaries(employees);
+     //   app.printSalaries(employees);
     }
 
     @Test
@@ -94,7 +109,7 @@ public class AppTest
         employees.add(emp);
 
         //No ID Supplied
-        app.displayEmployee(null);
+     //   app.displayEmployee(null);
         //ID Supplied
         //app.displayEmployee(emp);
 
