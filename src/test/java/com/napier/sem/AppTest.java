@@ -48,71 +48,112 @@ public class AppTest
     }
 
     @Test
-    void testReport8ForSomething()
+    void testPrintCountries() {
+
+        ArrayList<Country> countries = new ArrayList<>();
+        Country country = new Country();
+        country.name = "United Korea";
+        country.continent = "Asia";
+        country.population = 7088300;
+
+        countries.add(country);
+        app.printCountries(countries);
+    }
+
+    @Test
+    void testPrintCountriesNull()
     {
-        app.getReport8();
+        app.printCountries(null);
+    }
+
+    @Test
+    void testPrintCountriesEmpty()
+    {
+        ArrayList<Country> countries = new ArrayList<>();
+        app.printCountries(countries);
+    }
+
+    @Test
+    void testPrintCountriesWithNull()
+    {
+        ArrayList<Country> countries = new ArrayList<>();
+        countries.add(null);
+        app.printCountries(countries);
     }
 
 
     @Test
-    void printSalariesTestNull()
+    void testReport8ForConsistentOutput()
     {
-      //  app.printSalaries(null);
+
     }
 
     @Test
-    void printSalariesTestEmpty()
-    {
-        ArrayList<Employee> employess = new ArrayList<Employee>();
-     //  app.printSalaries(employess);
-    }
-
-    // Employees Contains null
-    @Test
-    void printSalariesTestContainsNull()
-    {
-        ArrayList<Employee> employess = new ArrayList<Employee>();
-        employess.add(null);
-     //   app.printSalaries(employess);
-    }
-
-    // Employee Contains All Non-null
-    @Test
-    void printSalaries()
-    {
-        ArrayList<Employee> employees = new ArrayList<Employee>();
-        Employee emp = new Employee();
-        emp.emp_no = 1;
-        emp.first_name = "Kevin";
-        emp.last_name = "Chalmers";
-        emp.title = "Engineer";
-        emp.salary = 55000;
-        employees.add(emp);
-     //   app.printSalaries(employees);
-    }
-
-    @Test
-    void displayEmployee()
+    void testReportsReturnDifferentOutput()
     {
 
-        //Create single "Employee"
-        //Set the variables
-        // and pass it to Display Employee
-        ArrayList<Employee> employees = new ArrayList<Employee>();
-
-        Employee emp = new Employee();
-        emp.emp_no = 1;
-        emp.first_name = "Kevin";
-        emp.last_name = "Chalmers";
-        emp.title = "Engineer";
-        emp.salary = 55000;
-        employees.add(emp);
-
-        //No ID Supplied
-     //   app.displayEmployee(null);
-        //ID Supplied
-        //app.displayEmployee(emp);
-
-
     }
+
+
+//    @Test
+//    void printSalariesTestNull()
+//    {
+//      //  app.printSalaries(null);
+//    }
+//
+//    @Test
+//    void printSalariesTestEmpty()
+//    {
+//        ArrayList<Employee> employess = new ArrayList<Employee>();
+//     //  app.printSalaries(employess);
+//    }
+//
+//    // Employees Contains null
+//    @Test
+//    void printSalariesTestContainsNull()
+//    {
+//        ArrayList<Employee> employess = new ArrayList<Employee>();
+//        employess.add(null);
+//     //   app.printSalaries(employess);
+//    }
+//
+//    // Employee Contains All Non-null
+//    @Test
+//    void printSalaries()
+//    {
+//        ArrayList<Employee> employees = new ArrayList<Employee>();
+//        Employee emp = new Employee();
+//        emp.emp_no = 1;
+//        emp.first_name = "Kevin";
+//        emp.last_name = "Chalmers";
+//        emp.title = "Engineer";
+//        emp.salary = 55000;
+//        employees.add(emp);
+//     //   app.printSalaries(employees);
+//    }
+//
+//    @Test
+//    void displayEmployee()
+//    {
+//
+//        //Create single "Employee"
+//        //Set the variables
+//        // and pass it to Display Employee
+//        ArrayList<Employee> employees = new ArrayList<Employee>();
+//
+//        Employee emp = new Employee();
+//        emp.emp_no = 1;
+//        emp.first_name = "Kevin";
+//        emp.last_name = "Chalmers";
+//        emp.title = "Engineer";
+//        emp.salary = 55000;
+//        employees.add(emp);
+//
+//        //No ID Supplied
+//     //   app.displayEmployee(null);
+//        //ID Supplied
+//        //app.displayEmployee(emp);
+//
+//
+//    }
 }
