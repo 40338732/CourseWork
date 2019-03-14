@@ -80,7 +80,7 @@ public class App {
         //Results1 = getReport1();
         //Results2 = getReport3();
         //Results3 = getReport3();
-        Results4 = getReport4(6);
+       // Results4 = getReport4(6);
        // Results5 = getReport5(10);
         //Results6 = getReport6();
         //Results7 = getReport7();
@@ -101,7 +101,7 @@ public class App {
         //Results22 = getReport22();
         //Results23 = getReport23();
         //Results24 = getReport24();
-       // Results25 = getReport25();
+        Results25 = getReport25();
 
 
         // Display results
@@ -109,7 +109,7 @@ public class App {
         //app.displayResults(Results1);
         //app.displayResults(Results2);
         //app.displayResults(Results3);
-        app.displayResults(Results4);
+       // app.displayResults(Results4);
         //app.displayResults(Results5);
         //app.displayResults(Results6);
         //app.displayResults(Results7);
@@ -130,14 +130,41 @@ public class App {
         //app.displayResults(Results22);
         //app.displayResults(Results23);
         //app.displayResults(Results24);
-         // app.displayResults(Results25);
+        app.displayResults(Results25);
 
 
         // Disconnect from database
         app.disconnect();
     }
 
-    // REPORT 1: All the countries in the world organised by largest population to smallest.
+
+    void printCountries(ArrayList<Country> countries)
+    {
+        // Check countries is not null
+        if (countries != null)
+        {
+            System.out.println(String.format("%-10s %-15s %-20s", "Name", "Continent", "Population"));
+            for (Country country : countries)
+            {
+                if (country == null)
+                {
+                    continue;
+                }
+
+                String country_string =
+                        String.format("%-10s %-15s %-20s",
+                                country.name, country.continent, country.population);
+                System.out.println(country_string);
+            }
+        }
+        else {
+                System.out.println("No countries");
+        }
+    }
+
+
+
+    // REPORT 1: All the countries in the World organised by largest population to smallest.
     public static String getReport1()
     {
         String results = "";
@@ -145,7 +172,7 @@ public class App {
         {
 
             // SELECT STATEMENT
-            // R1 - All the countries in the world organised by largest population to smallest.
+            // R1 - All the countries in the World organised by largest population to smallest.
 
 
             String strSelect = "SELECT Code, country.Name, Continent, Region, country.Population, (SELECT name FROM city WHERE ID = Capital) as Capital " +
@@ -164,7 +191,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 wd.code = rset.getString("Code");
@@ -185,7 +212,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -216,7 +243,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
                 wd.code = rset.getString("Code");
                 wd.name = rset.getString("Name");
                 wd.continent = rset.getString("Continent");
@@ -235,7 +262,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -270,7 +297,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
                 wd.code = rset.getString("Code");
                 wd.name = rset.getString("Name");
                 wd.continent = rset.getString("Continent");
@@ -288,13 +315,13 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
     }
 
-    // REPORT 7 : All the cities in the world organised by largest population to smallest.
+    // REPORT 7 : All the cities in the World organised by largest population to smallest.
 
     public static String getReport7()
     {
@@ -325,7 +352,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 wd.name = rset.getString("Name");
@@ -343,7 +370,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -380,7 +407,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 wd.name = rset.getString("Name");
@@ -400,7 +427,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -438,7 +465,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 wd.name = rset.getString("Name");
@@ -455,7 +482,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -492,7 +519,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 wd.name = rset.getString("Name");
@@ -510,7 +537,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -545,7 +572,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 wd.name = rset.getString("Name");
@@ -563,13 +590,13 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
     }
 
-    // REPORT 17: fixed All the capital cities in the world organised by largest population to smallest.
+    // REPORT 17: fixed All the capital cities in the World organised by largest population to smallest.
 
     public static String getReport17()
     {
@@ -596,7 +623,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 wd.country = rset.getString("Country");
@@ -615,7 +642,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -648,7 +675,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 wd.region = rset.getString("region");
@@ -667,7 +694,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -704,7 +731,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 wd.country = rset.getString("Country");
@@ -724,7 +751,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -761,7 +788,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 wd.continent = rset.getString("Continent");
@@ -783,7 +810,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -819,7 +846,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 wd.country = rset.getString("Country");
@@ -841,7 +868,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -879,7 +906,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
@@ -898,14 +925,14 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
     }
 
 
-    // REPORT 4: produce a report listing the top N populated countries in the world where N is provided by the user
+    // REPORT 4: produce a report listing the top N populated countries in the World where N is provided by the user
     public static String getReport4(int userInput)
     {
         // Create user input variable
@@ -940,7 +967,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
@@ -959,7 +986,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -999,7 +1026,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
@@ -1018,7 +1045,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -1057,7 +1084,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
@@ -1076,7 +1103,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -1115,7 +1142,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
@@ -1134,14 +1161,14 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
     }
 
 
-    // REPORT 12: produce a report listing the top N populated cities in the world where N is provided by the user
+    // REPORT 12: produce a report listing the top N populated cities in the World where N is provided by the user
     public static String getReport12()
     {
         // Create user input variable
@@ -1168,12 +1195,12 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "\n" + "*** The top " +  userInput + " most populated cities in the world: ***" );
+            System.out.println( "\n" + "*** The top " +  userInput + " most populated cities in the World: ***" );
             System.out.println( "City:" + "\t" + "Population:" );
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
@@ -1192,7 +1219,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -1232,7 +1259,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
@@ -1251,7 +1278,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -1290,7 +1317,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
@@ -1309,7 +1336,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -1350,7 +1377,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
@@ -1369,7 +1396,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -1377,7 +1404,7 @@ public class App {
 
 
 
-    // REPORT 20: produce a report listing the top N populated capital cities in the world where N is provided by the user
+    // REPORT 20: produce a report listing the top N populated capital cities in the World where N is provided by the user
     public static String getReport20()
     {
         // Create user input variable
@@ -1405,12 +1432,12 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "\n" + "*** The top " + userInput + " most populated capital cities in the world: ***" );
+            System.out.println( "\n" + "*** The top " + userInput + " most populated capital cities in the World: ***" );
             System.out.println( "City:" + "\t" + "Population:" );
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
@@ -1429,7 +1456,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -1471,7 +1498,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
@@ -1490,7 +1517,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
@@ -1530,7 +1557,7 @@ public class App {
 
             while (rset.next())
             {
-                world wd = new world();
+                World wd = new World();
 
                 // Fields to be shown
                 //wd.Country = rset.getString("Country");
@@ -1553,7 +1580,7 @@ public class App {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get world details");
+            System.out.println("Failed to get World details");
             return null;
         }
         return results;
