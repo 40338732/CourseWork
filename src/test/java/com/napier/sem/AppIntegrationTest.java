@@ -20,11 +20,12 @@ public class AppIntegrationTest
     }
 
     @Test
-    void testGetEmployee()
+    void testGetReport2()
     {
-        Employee emp = app.getEmployee(255530);
-        assertEquals(emp.emp_no, 255530);
-        assertEquals(emp.first_name, "Ronghao");
-        assertEquals(emp.last_name, "Garigliano");
+        // REPORT 2: list all the countries in a continent organised by largest population to smallest.
+        String[] s = App.getReport2().split("\t", 2);
+        //System.out.println("Results" + s[0]);
+        assertEquals(s[0], "Russian Federation");
+//
     }
 }
