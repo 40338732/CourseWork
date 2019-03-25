@@ -84,40 +84,40 @@ public class App {
         String Results2 , Results4 , Results6 , Results8, Results10, Results12, Results14 , Results16, Results18 , Results20, Results22 , Results24  = "";
 
         //Results1 = getReport1();
-        //Results2 = getReport3();
+//        Results2 = getReport2();
         //Results3 = getReport3();
-       // Results4 = getReport4(6);
+//        Results4 = getReport4(6);
        // Results5 = getReport5(10);
-        //Results6 = getReport6();
-        //Results7 = getReport7();
-        //Results8 = getReport8();
+//        Results6 = getReport6();
+//        Results7 = getReport7();
+//        Results8 = getReport8();
         //Results9 = getReport9();
-        //Results10 = getReport10();
+//        Results10 = getReport10();
         //Results11 = getReport11();
-        //Results12 = getReport12();
+//        Results12 = getReport12();
         //Results13 = getReport13(10);
-        //Results14 = getReport14();
+//        Results14 = getReport14();
         //Results15 = getReport15(10);
-        //Results16 = getReport16();
+//        Results16 = getReport16();
         //Results17 = getReport17();
-        //Results18 = getReport18();
+//        Results18 = getReport18();
         //Results19 = getReport19();
-        //Results20 = getReport20();
+//        Results20 = getReport20();
         //Results21 = getReport21(10);
-        //Results22 = getReport22();
+//        Results22 = getReport22();
         //Results23 = getReport23();
-        //Results24 = getReport24();
-        Results25 = getReport25();
+        Results24 = getReport24();
+//        Results25 = getReport25();
 
 
         // Display results
 
         //app.displayResults(Results1);
-        //app.displayResults(Results2);
+//        app.displayResults(Results2);
         //app.displayResults(Results3);
-       // app.displayResults(Results4);
+//        app.displayResults(Results4);
         //app.displayResults(Results5);
-        //app.displayResults(Results6);
+//        app.displayResults(Results6);
         //app.displayResults(Results7);
         //app.displayResults(Results8);
         //app.displayResults(Results9);
@@ -136,7 +136,7 @@ public class App {
         //app.displayResults(Results22);
         //app.displayResults(Results23);
         //app.displayResults(Results24);
-        app.displayResults(Results25);
+//        app.displayResults(Results25);
 
 
         // Disconnect from database
@@ -893,8 +893,9 @@ public class App {
         {
 
             // SELECT STATEMENT
-            String strSelect = "SELECT Continent, country.Name, Population " +
+            String strSelect = "SELECT country.Code, Region, Continent, country.Name, country.Population, city.name " +
                     " FROM country " +
+                    "JOIN city ON country.Capital=city.id " +
                     " WHERE Continent='Europe' " +
                     " ORDER BY Population DESC ";
 
@@ -908,7 +909,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "\n" + "Country:" + "\t" + "Population:" );
+            System.out.println( "\n" + "Country:" + "\t" + "Code:" + "\t" + "Continent:" + "\t" + "Region:" + "\t" + "Population:" + "\t" + "Capital:");
 
             while (rset.next())
             {
@@ -916,13 +917,17 @@ public class App {
 
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
+
                 wd.name = rset.getString("Name");
+                wd.code = rset.getString("Code");
+                wd.continent = rset.getString("Continent");
+                wd.region = rset.getString("Region");
                 wd.population = rset.getString("Population");
+                wd.capital = rset.getString("city.Name");
 
 
-
-                System.out.println( wd.name + "\t" + wd.population );
-                String newRES =   wd.name + "\t" + wd.population +"\n";
+                System.out.println( wd.name + "\t" + wd.code + "\t" + wd.continent + "\t" + wd.region + "\t" + wd.population + "\t" + wd.capital );
+                String newRES =   wd.name + "\t" + wd.code + "\t" + wd.continent + "\t" + wd.region + "\t" + wd.population + "\t" + wd.capital + "\n";
 
                 // Build Results
                 results = results + newRES;
@@ -954,8 +959,9 @@ public class App {
         {
 
             // SELECT STATEMENT
-            String strSelect = "SELECT Name, Population " +
+            String strSelect = "SELECT country.Code, Region, Continent, country.Name, country.Population, city.name " +
                     " FROM country " +
+                    " JOIN city ON country.Capital=city.id " +
                     " ORDER BY Population DESC " +
                     " LIMIT " + userInput;
 
@@ -969,7 +975,8 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "\n" + "Country:" + "\t" + "Population:" );
+            System.out.println( "\n" + "Country:" + "\t" + "Code:" + "\t" + "Continent:" + "\t" + "Region:" + "\t" + "Population:" + "\t" + "Capital:");
+
 
             while (rset.next())
             {
@@ -978,12 +985,16 @@ public class App {
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
                 wd.name = rset.getString("Name");
+                wd.code = rset.getString("Code");
+                wd.continent = rset.getString("Continent");
+                wd.region = rset.getString("Region");
                 wd.population = rset.getString("Population");
+                wd.capital = rset.getString("city.Name");
 
 
 
-                System.out.println( wd.name + "\t" + wd.population );
-                String newRES =   wd.name + "\t" + wd.population +"\n";
+                System.out.println( wd.name + "\t" + wd.code + "\t" + wd.continent + "\t" + wd.region + "\t" + wd.population + "\t" + wd.capital );
+                String newRES =   wd.name + "\t" + wd.code + "\t" + wd.continent + "\t" + wd.region + "\t" + wd.population + "\t" + wd.capital + "\n";
 
                 // Build Results
                 results = results + newRES;
@@ -1011,8 +1022,9 @@ public class App {
         {
 
             // SELECT STATEMENT
-            String strSelect = "SELECT Name, Region, Population " +
+            String strSelect = " SELECT country.Code, Region, Continent, country.Name, country.Population, city.name " +
                     " FROM country " +
+                    " JOIN city ON country.Capital=city.id " +
                     " WHERE region = 'Middle East' " +
                     " ORDER BY Population DESC " +
                     " LIMIT " + userInput;
@@ -1028,7 +1040,7 @@ public class App {
 
             // Check one is returned
             System.out.println( "\n" + "*** Top " + userInput + " populated countries in the Middle East: ***" );
-            System.out.println( "Country:" + "\t" + "Population:" );
+            System.out.println( "\n" + "Country:" + "\t" + "Code:" + "\t" + "Continent:" + "\t" + "Region:" + "\t" + "Population:" + "\t" + "Capital:");
 
             while (rset.next())
             {
@@ -1037,12 +1049,16 @@ public class App {
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
                 wd.name = rset.getString("Name");
+                wd.code = rset.getString("Code");
+                wd.continent = rset.getString("Continent");
+                wd.region = rset.getString("Region");
                 wd.population = rset.getString("Population");
+                wd.capital = rset.getString("city.Name");
 
 
 
-                System.out.println( wd.name + "\t" + wd.population );
-                String newRES =   wd.name + "\t" + wd.population +"\n";
+                System.out.println( wd.name + "\t" + wd.code + "\t" + wd.continent + "\t" + wd.region + "\t" + wd.population + "\t" + wd.capital );
+                String newRES =   wd.name + "\t" + wd.code + "\t" + wd.continent + "\t" + wd.region + "\t" + wd.population + "\t" + wd.capital + "\n";
 
                 // Build Results
                 results = results + newRES;
@@ -1069,7 +1085,7 @@ public class App {
         {
 
             // SELECT STATEMENT
-            String strSelect = "SELECT Continent, city.Name, city.Population " +
+            String strSelect = "SELECT Continent, country.name, city.Name, city.District, city.Population " +
                     " FROM city " +
                     " JOIN country ON city.CountryCode=country.Code " +
                     " WHERE Continent = 'Africa' " +
@@ -1086,7 +1102,7 @@ public class App {
 
             // Check one is returned
             System.out.println( "\n" + "*** Cities in Africa ordered by population: ***" );
-            System.out.println( "City:" + "\t" + "Population:" );
+            System.out.println( "City:" + "\t" + "Country:" + "\t" + "District:" + "\t" + "Population:");
 
             while (rset.next())
             {
@@ -1094,13 +1110,15 @@ public class App {
 
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
-                wd.name = rset.getString("Name");
+                wd.name = rset.getString("city.Name");
+                wd.country = rset.getString("country.name");
+                wd.district = rset.getString("District");
                 wd.population = rset.getString("Population");
 
 
+                System.out.println( wd.name + "\t" + wd.country + "\t" + wd.district + "\t" + wd.population );
+                String newRES =  wd.name + "\t" + wd.country + "\t" + wd.district + "\t" + wd.population + "\n";
 
-                System.out.println( wd.name + "\t" + wd.population );
-                String newRES =   wd.name + "\t" + wd.population +"\n";
 
                 // Build Results
                 results = results + newRES;
@@ -1127,7 +1145,7 @@ public class App {
         {
 
             // SELECT STATEMENT
-            String strSelect = "SELECT city.Name, city.Population " +
+            String strSelect = "SELECT country.name, city.Name, city.District, city.Population " +
                     " FROM city " +
                     " JOIN country ON city.CountryCode=country.Code " +
                     " WHERE country.Name = 'United Kingdom' " +
@@ -1144,7 +1162,7 @@ public class App {
 
             // Check one is returned
             System.out.println( "\n" + "*** Cities in the UK ordered by population: ***" );
-            System.out.println( "City:" + "\t" + "Population:" );
+            System.out.println( "City:" + "\t" + "Country:" + "\t" + "District:" + "\t" + "Population:");
 
             while (rset.next())
             {
@@ -1152,13 +1170,14 @@ public class App {
 
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
-                wd.name = rset.getString("Name");
+                wd.name = rset.getString("city.Name");
+                wd.country = rset.getString("country.name");
+                wd.district = rset.getString("District");
                 wd.population = rset.getString("Population");
 
 
-
-                System.out.println( wd.name + "\t" + wd.population );
-                String newRES =   wd.name + "\t" + wd.population +"\n";
+                System.out.println( wd.name + "\t" + wd.country + "\t" + wd.district + "\t" + wd.population );
+                String newRES =  wd.name + "\t" + wd.country + "\t" + wd.district + "\t" + wd.population + "\n";
 
                 // Build Results
                 results = results + newRES;
@@ -1185,7 +1204,7 @@ public class App {
         {
 
             // SELECT STATEMENT
-            String strSelect = "SELECT city.Name, city.Population " +
+            String strSelect = " SELECT country.name, city.Name, city.District, city.Population " +
                     " FROM city " +
                     " JOIN country ON city.CountryCode=country.Code " +
                     " ORDER BY city.Population DESC " +
@@ -1202,7 +1221,7 @@ public class App {
 
             // Check one is returned
             System.out.println( "\n" + "*** The top " +  userInput + " most populated cities in the World: ***" );
-            System.out.println( "City:" + "\t" + "Population:" );
+            System.out.println( "City:" + "\t" + "Country:" + "\t" + "District:" + "\t" + "Population:");
 
             while (rset.next())
             {
@@ -1210,13 +1229,14 @@ public class App {
 
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
-                wd.name = rset.getString("Name");
+                wd.name = rset.getString("city.Name");
+                wd.country = rset.getString("country.name");
+                wd.district = rset.getString("District");
                 wd.population = rset.getString("Population");
 
 
-
-                System.out.println( wd.name + "\t" + wd.population );
-                String newRES =   wd.name + "\t" + wd.population +"\n";
+                System.out.println( wd.name + "\t" + wd.country + "\t" + wd.district + "\t" + wd.population );
+                String newRES =  wd.name + "\t" + wd.country + "\t" + wd.district + "\t" + wd.population + "\n";
 
                 // Build Results
                 results = results + newRES;
@@ -1243,7 +1263,7 @@ public class App {
         {
 
             // SELECT STATEMENT
-            String strSelect = "SELECT city.Name, city.Population " +
+            String strSelect = " SELECT country.name, city.Name, city.District, city.Population  " +
                     " FROM city " +
                     " JOIN country ON city.CountryCode=country.Code " +
                     " WHERE region = 'South America' " +
@@ -1261,7 +1281,7 @@ public class App {
 
             // Check one is returned
             System.out.println( "\n" + "*** The top " +  userInput + " most populated cities in South America: ***" );
-            System.out.println( "City:" + "\t" + "Population:" );
+            System.out.println( "City:" + "\t" + "Country:" + "\t" + "District:" + "\t" + "Population:");
 
             while (rset.next())
             {
@@ -1269,13 +1289,14 @@ public class App {
 
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
-                wd.name = rset.getString("Name");
+                wd.name = rset.getString("city.Name");
+                wd.country = rset.getString("country.name");
+                wd.district = rset.getString("District");
                 wd.population = rset.getString("Population");
 
 
-
-                System.out.println( wd.name + "\t" + wd.population );
-                String newRES =   wd.name + "\t" + wd.population +"\n";
+                System.out.println( wd.name + "\t" + wd.country + "\t" + wd.district + "\t" + wd.population );
+                String newRES =  wd.name + "\t" + wd.country + "\t" + wd.district + "\t" + wd.population + "\n";
 
                 // Build Results
                 results = results + newRES;
@@ -1301,7 +1322,7 @@ public class App {
         {
 
             // SELECT STATEMENT
-            String strSelect = "SELECT city.Name, city.Population " +
+            String strSelect = " SELECT country.name, city.Name, city.District, city.Population  " +
                     " FROM city " +
                     " JOIN country ON city.CountryCode=country.Code " +
                     " WHERE district = 'Tabasco' " +
@@ -1319,7 +1340,7 @@ public class App {
 
             // Check one is returned
             System.out.println( "\n" + "*** The top " +  userInput + " most populated cities in Tabasco, Mexico: ***" );
-            System.out.println( "City:" + "\t" + "Population:" );
+            System.out.println( "City:" + "\t" + "Country:" + "\t" + "District:" + "\t" + "Population:");
 
             while (rset.next())
             {
@@ -1327,13 +1348,14 @@ public class App {
 
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
-                wd.name = rset.getString("Name");
+                wd.name = rset.getString("city.Name");
+                wd.country = rset.getString("country.name");
+                wd.district = rset.getString("District");
                 wd.population = rset.getString("Population");
 
 
-
-                System.out.println( wd.name + "\t" + wd.population );
-                String newRES =   wd.name + "\t" + wd.population +"\n";
+                System.out.println( wd.name + "\t" + wd.country + "\t" + wd.district + "\t" + wd.population );
+                String newRES =  wd.name + "\t" + wd.country + "\t" + wd.district + "\t" + wd.population + "\n";
 
                 // Build Results
                 results = results + newRES;
@@ -1361,7 +1383,7 @@ public class App {
         {
 
             // SELECT STATEMENT
-            String strSelect = "SELECT city.Name, city.Population " +
+            String strSelect = "SELECT city.Name, country.name, city.Population " +
                     " FROM city " +
                     " JOIN country ON city.CountryCode=country.Code " +
                     " WHERE Continent = 'Europe' " +
@@ -1379,7 +1401,7 @@ public class App {
 
             // Check one is returned
             System.out.println( "\n" + "*** The most populated capital cities in Europe: ***" );
-            System.out.println( "City:" + "\t" + "Population:" );
+            System.out.println( "City:" + "\t" + "Country:" + "\t" + "Population:" );
 
             while (rset.next())
             {
@@ -1388,12 +1410,13 @@ public class App {
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
                 wd.name = rset.getString("Name");
+                wd.country = rset.getString("country.name");
                 wd.population = rset.getString("Population");
 
 
 
-                System.out.println( wd.name + "\t" + wd.population );
-                String newRES =   wd.name + "\t" + wd.population +"\n";
+                System.out.println( wd.name + "\t" + wd.country + "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.country + "\t" + wd.population +"\n";
 
                 // Build Results
                 results = results + newRES;
@@ -1421,7 +1444,7 @@ public class App {
         {
 
             // SELECT STATEMENT
-            String strSelect = "SELECT city.Name, city.Population " +
+            String strSelect = "SELECT city.Name, country.name, city.Population " +
                     " FROM city " +
                     " JOIN country ON city.CountryCode=country.Code " +
                     " WHERE country.Capital=city.ID " +
@@ -1439,7 +1462,7 @@ public class App {
 
             // Check one is returned
             System.out.println( "\n" + "*** The top " + userInput + " most populated capital cities in the World: ***" );
-            System.out.println( "City:" + "\t" + "Population:" );
+            System.out.println( "City:" + "\t" + "Country:" + "\t" + "Population:" );
 
             while (rset.next())
             {
@@ -1448,12 +1471,13 @@ public class App {
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
                 wd.name = rset.getString("Name");
+                wd.country = rset.getString("country.name");
                 wd.population = rset.getString("Population");
 
 
 
-                System.out.println( wd.name + "\t" + wd.population );
-                String newRES =   wd.name + "\t" + wd.population +"\n";
+                System.out.println( wd.name + "\t" + wd.country + "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.country + "\t" + wd.population +"\n";
 
                 // Build Results
                 results = results + newRES;
@@ -1481,7 +1505,7 @@ public class App {
         {
 
             // SELECT STATEMENT
-            String strSelect = "SELECT city.Name, city.Population " +
+            String strSelect = "SELECT city.Name, country.name, city.Population " +
                     " FROM city " +
                     " JOIN country ON city.CountryCode=country.Code " +
                     " WHERE country.Capital=city.ID " +
@@ -1500,7 +1524,7 @@ public class App {
 
             // Check one is returned
             System.out.println( "\n" + "*** The top " + userInput + " most populated capital cities in the Caribbean: ***" );
-            System.out.println( "City:" + "\t" + "Population:" );
+            System.out.println( "City:" + "\t" + "Country:" + "\t" + "Population:" );
 
             while (rset.next())
             {
@@ -1509,12 +1533,13 @@ public class App {
                 // Fields to be shown
                 // wd.Country = rset.getString("Country");
                 wd.name = rset.getString("Name");
+                wd.country = rset.getString("country.name");
                 wd.population = rset.getString("Population");
 
 
 
-                System.out.println( wd.name + "\t" + wd.population );
-                String newRES =   wd.name + "\t" + wd.population +"\n";
+                System.out.println( wd.name + "\t" + wd.country + "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.country + "\t" + wd.population +"\n";
 
                 // Build Results
                 results = results + newRES;
@@ -1577,7 +1602,7 @@ public class App {
 
 
                 System.out.println( wd.region + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban );
-                String newRES =    wd.region + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban +"\n";
+                String newRES =    wd.region + "\t" + wd.total + "\t" + wd.city  + "\t" + wd.urban +"\n";
 
                 // Build Results
                 results = results + newRES;

@@ -11,6 +11,8 @@ public class World {
     public String district;
     public String language;
     public Float percentage;
+    public String cityPercentage;
+    public String urbanPercentage;
     public String code;
     public String continent;
     public String region;
