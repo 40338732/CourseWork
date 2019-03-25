@@ -96,7 +96,7 @@ public class App {
         //Results11 = getReport11();
 //        Results12 = getReport12();
         //Results13 = getReport13(10);
-//        Results14 = getReport14();
+        Results14 = getReport14();
         //Results15 = getReport15(10);
 //        Results16 = getReport16();
         //Results17 = getReport17();
@@ -106,7 +106,7 @@ public class App {
         //Results21 = getReport21(10);
 //        Results22 = getReport22();
         //Results23 = getReport23();
-        Results24 = getReport24();
+//        Results24 = getReport24();
 //        Results25 = getReport25();
 
 
@@ -880,7 +880,7 @@ public class App {
         return results;
     }
 
-    
+
     // ADDED EVEN NUMBERS FROM ROB
     // All Odd numbered reports copied into single file as git branch merges were overwriting the getReport method
     // Original branches were deleted
@@ -1266,7 +1266,7 @@ public class App {
             String strSelect = " SELECT country.name, city.Name, city.District, city.Population  " +
                     " FROM city " +
                     " JOIN country ON city.CountryCode=country.Code " +
-                    " WHERE region = 'South America' " +
+                    " WHERE region = 'North America' " +
                     " ORDER BY city.Population DESC " +
                     " LIMIT " + userInput;
 
@@ -1280,7 +1280,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "\n" + "*** The top " +  userInput + " most populated cities in South America: ***" );
+            System.out.println( "\n" + "*** The top " +  userInput + " most populated cities in North America: ***" );
             System.out.println( "City:" + "\t" + "Country:" + "\t" + "District:" + "\t" + "Population:");
 
             while (rset.next())

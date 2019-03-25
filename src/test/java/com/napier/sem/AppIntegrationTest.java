@@ -73,7 +73,7 @@ public class AppIntegrationTest
     {
         // REPORT 14:  produce a report listing the top N populated cities in a region where N is provided by the user
         String[] s = App.getReport14().split("\t", 2);
-        assertEquals(s[0], "São Paulo");
+        assertEquals(s[0], "New York");
     }
 
     @Test
