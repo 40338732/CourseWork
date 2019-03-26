@@ -83,12 +83,12 @@ public class App {
         String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 , Results15, Results17 , Results19, Results21 , Results23 , Results25 = "";
         String Results2 , Results4 , Results6 , Results8, Results10, Results12, Results14 , Results16, Results18 , Results20, Results22 , Results24  = "";
 
-        //Results1 = getReport1();
-//        Results2 = getReport2();
-        //Results3 = getReport3();
-//        Results4 = getReport4(6);
-       // Results5 = getReport5(10);
-//        Results6 = getReport6();
+//        Results1 = getReport1();
+        Results2 = getReport2();
+//        Results3 = getReport3();
+        Results4 = getReport4(6);
+//        Results5 = getReport5(10);
+        Results6 = getReport6();
 //        Results7 = getReport7();
 //        Results8 = getReport8();
         //Results9 = getReport9();
@@ -96,7 +96,7 @@ public class App {
         //Results11 = getReport11();
 //        Results12 = getReport12();
         //Results13 = getReport13(10);
-        Results14 = getReport14();
+//        Results14 = getReport14();
         //Results15 = getReport15(10);
 //        Results16 = getReport16();
         //Results17 = getReport17();
@@ -112,12 +112,12 @@ public class App {
 
         // Display results
 
-        //app.displayResults(Results1);
-//        app.displayResults(Results2);
-        //app.displayResults(Results3);
-//        app.displayResults(Results4);
-        //app.displayResults(Results5);
-//        app.displayResults(Results6);
+//        app.displayResults(Results1);
+        app.displayResults(Results2);
+//        app.displayResults(Results3);
+        app.displayResults(Results4);
+//        app.displayResults(Results5);
+        app.displayResults(Results6);
         //app.displayResults(Results7);
         //app.displayResults(Results8);
         //app.displayResults(Results9);
@@ -169,6 +169,31 @@ public class App {
     }
 
 
+    private static String getCountryReport(String results, ResultSet rset, String title) throws SQLException {
+
+        String header = "Code"  +"\t" + "Name:" + "\t" + "Continent:" + "\t" + "Region:" + "\t" + "Population:" + "\t" + "Capital:" + "\n";
+
+        while (rset.next())
+        {
+            World wd = new World();
+
+            // Fields to be shown
+            wd.code = rset.getString("Code");
+            wd.name = rset.getString("name");
+            wd.continent = rset.getString("Continent");
+            wd.region = rset.getString("Region");
+            wd.population = rset.getString("Population");
+            wd.capital = rset.getString("Capital");
+
+            String newRES =  wd.code + "\t" + wd.name  + "\t" + wd.continent  + "\t" + wd.region  + "\t" + wd.population  + "\t" + wd.capital + "\n";
+
+            // Build Results
+            results = results + newRES;
+        }
+        return title + header + results;
+    }
+
+
 
     // REPORT 1: All the countries in the World organised by largest population to smallest.
     public static String getReport1()
@@ -180,7 +205,6 @@ public class App {
             // SELECT STATEMENT
             // R1 - All the countries in the World organised by largest population to smallest.
 
-
             String strSelect = "SELECT Code, country.Name, Continent, Region, country.Population, (SELECT name FROM city WHERE ID = Capital) as Capital " +
                     "            FROM country\n" +
                     "            ORDER BY country.Population DESC ";
@@ -191,29 +215,8 @@ public class App {
             stmt.executeQuery(strSelect);
 
             ResultSet rset = stmt.executeQuery(strSelect);
-
-            // Check one is returned
-            System.out.println( "Code:" + "\t" +"Name:" + "\t" + "Continent:" + "\t" + "Region:" + "\t" + "Population:"  + "\t" +  "Capital:" );
-
-            while (rset.next())
-            {
-                World wd = new World();
-
-                // Fields to be shown
-                wd.code = rset.getString("Code");
-                wd.name = rset.getString("name");
-                wd.continent = rset.getString("Continent");
-                wd.region = rset.getString("Region");
-                wd.population = rset.getString("Population");
-                wd.capital = rset.getString("Capital");
-
-
-                System.out.println( wd.code + "\t" + wd.name  + "\t" + wd.continent  + "\t" + wd.region  + "\t" + wd.population  + "\t" + wd.capital);
-                String newRES =  wd.code + "\t" + wd.name  + "\t" + wd.continent  + "\t" + wd.region  + "\t" + wd.population  + "\t" + wd.capital;
-
-                // Build Results
-                results = results + newRES;
-            }
+            String title = "";
+            results = getCountryReport(results, rset, title);
         }
         catch (Exception e)
         {
@@ -236,7 +239,6 @@ public class App {
                     " FROM country  group by Region, Code, country.Name, Continent, country.Population,Capital " +
                     " order by Region, Population DESC";
 
-
             Statement stmt = con.createStatement();
 
             // Execute SQL statement
@@ -244,25 +246,9 @@ public class App {
 
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            // Check one is returned
-            System.out.println( "Code"  +"\t" + "Name:" + "\t" + "Continent:" + "\t" + "Region:" + "\t" + "Population:" + "\t" + "Capital:");
-
-            while (rset.next())
-            {
-                World wd = new World();
-                wd.code = rset.getString("Code");
-                wd.name = rset.getString("Name");
-                wd.continent = rset.getString("Continent");
-                wd.region = rset.getString("Region");
-                wd.population = rset.getString("Population");
-                wd.capital = rset.getString("Capital");
-
-                System.out.println( wd.code + "\t" +wd.name + "\t" +wd.continent + "\t" +wd.region + "\t" +wd.population + "\t" + wd.capital + "\n" );
-                String newRES =wd.code + "\t" +wd.name + "\t" +wd.continent + "\t" +wd.region + "\t" +wd.population + "\t" + wd.capital + "\n";
-
-                results = results + newRES;
-
-            }
+            String title = "";
+            // Refactored results sets method
+            results = getCountryReport(results, rset, title);
 
         }
         catch (Exception e)
@@ -274,6 +260,8 @@ public class App {
         return results;
     }
 
+
+
     // REPORT 5 : The top N populated countries in a continent where N is provided by the user.
     public static String getReport5(Integer num)
     {
@@ -281,7 +269,6 @@ public class App {
         System.out.println("Report5");
         try
         {
-
             // SELECT STATEMENT
             // https://docs.microsoft.com/en-us/sql/t-sql/statements/create-partition-function-transact-sql?view=sql-server-2017
 
@@ -298,25 +285,9 @@ public class App {
 
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            // Check one is returned
-            System.out.println( "Code"  +"\t" + "Name:" + "\t" + "Continent:" + "\t" + "Region:" + "\t" + "Population:" + "\t" + "Capital:");
-
-            while (rset.next())
-            {
-                World wd = new World();
-                wd.code = rset.getString("Code");
-                wd.name = rset.getString("Name");
-                wd.continent = rset.getString("Continent");
-                wd.region = rset.getString("Region");
-                wd.population = rset.getString("Population");
-                wd.capital = rset.getString("Capital");
-
-                //System.out.println( wd.code + "\t" +wd.name + "\t" +wd.continent + "\t" +wd.region + "\t" +wd.population + "\t" + wd.capital + "\n" );
-                String newRES = wd.code + "\t" +wd.name + "\t" +wd.continent + "\t" +wd.region + "\t" +wd.population + "\t" + wd.capital + "\n";
-
-                // Build Results
-                results = results + newRES;
-            }
+            String title = "";
+            // Refactored results sets method
+            results = getCountryReport(results, rset, title);
         }
         catch (Exception e)
         {
@@ -334,7 +305,6 @@ public class App {
         String results = "";
         try
         {
-
             // SELECT STATEMENT
 
             String strSelect = "select city.Name , country.Name as Country, District, city.Population  " +
@@ -891,47 +861,24 @@ public class App {
         String results = "";
         try
         {
-
             // SELECT STATEMENT
-            String strSelect = "SELECT country.Code, Region, Continent, country.Name, country.Population, city.name " +
+            String strSelect = "SELECT country.Code, Region, Continent, country.Name, country.Population, city.name AS Capital " +
                     " FROM country " +
                     "JOIN city ON country.Capital=city.id " +
                     " WHERE Continent='Europe' " +
                     " ORDER BY Population DESC ";
-
 
             Statement stmt = con.createStatement();
             // Statement conn = con.createStatement();
 
             // Execute SQL statement
             stmt.executeQuery(strSelect);
-
+            String title = "\n" + "*** Populations of countries in Europe: ***" + "\n";
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            // Check one is returned
-            System.out.println( "\n" + "Country:" + "\t" + "Code:" + "\t" + "Continent:" + "\t" + "Region:" + "\t" + "Population:" + "\t" + "Capital:");
+            // Refactored results sets method
+            results = getCountryReport(results, rset, title);
 
-            while (rset.next())
-            {
-                World wd = new World();
-
-                // Fields to be shown
-                // wd.Country = rset.getString("Country");
-
-                wd.name = rset.getString("Name");
-                wd.code = rset.getString("Code");
-                wd.continent = rset.getString("Continent");
-                wd.region = rset.getString("Region");
-                wd.population = rset.getString("Population");
-                wd.capital = rset.getString("city.Name");
-
-
-                System.out.println( wd.name + "\t" + wd.code + "\t" + wd.continent + "\t" + wd.region + "\t" + wd.population + "\t" + wd.capital );
-                String newRES =   wd.name + "\t" + wd.code + "\t" + wd.continent + "\t" + wd.region + "\t" + wd.population + "\t" + wd.capital + "\n";
-
-                // Build Results
-                results = results + newRES;
-            }
         }
         catch (Exception e)
         {
@@ -939,6 +886,8 @@ public class App {
             System.out.println("Failed to get World details");
             return null;
         }
+
+
         return results;
     }
 
@@ -957,9 +906,8 @@ public class App {
         String results = "";
         try
         {
-
             // SELECT STATEMENT
-            String strSelect = "SELECT country.Code, Region, Continent, country.Name, country.Population, city.name " +
+            String strSelect = "SELECT country.Code, Region, Continent, country.Name, country.Population, city.name AS Capital " +
                     " FROM country " +
                     " JOIN city ON country.Capital=city.id " +
                     " ORDER BY Population DESC " +
@@ -974,31 +922,9 @@ public class App {
 
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            // Check one is returned
-            System.out.println( "\n" + "Country:" + "\t" + "Code:" + "\t" + "Continent:" + "\t" + "Region:" + "\t" + "Population:" + "\t" + "Capital:");
-
-
-            while (rset.next())
-            {
-                World wd = new World();
-
-                // Fields to be shown
-                // wd.Country = rset.getString("Country");
-                wd.name = rset.getString("Name");
-                wd.code = rset.getString("Code");
-                wd.continent = rset.getString("Continent");
-                wd.region = rset.getString("Region");
-                wd.population = rset.getString("Population");
-                wd.capital = rset.getString("city.Name");
-
-
-
-                System.out.println( wd.name + "\t" + wd.code + "\t" + wd.continent + "\t" + wd.region + "\t" + wd.population + "\t" + wd.capital );
-                String newRES =   wd.name + "\t" + wd.code + "\t" + wd.continent + "\t" + wd.region + "\t" + wd.population + "\t" + wd.capital + "\n";
-
-                // Build Results
-                results = results + newRES;
-            }
+            String title = "\n" + "*** Top " + userInput + " populated countries in the World: ***" + "\n";
+            // Refactored results sets method
+            results = getCountryReport(results, rset, title);
         }
         catch (Exception e)
         {
@@ -1006,6 +932,7 @@ public class App {
             System.out.println("Failed to get World details");
             return null;
         }
+
         return results;
     }
 
@@ -1020,9 +947,8 @@ public class App {
         String results = "";
         try
         {
-
             // SELECT STATEMENT
-            String strSelect = " SELECT country.Code, Region, Continent, country.Name, country.Population, city.name " +
+            String strSelect = " SELECT country.Code, Region, Continent, country.Name, country.Population, city.name AS Capital " +
                     " FROM country " +
                     " JOIN city ON country.Capital=city.id " +
                     " WHERE region = 'Middle East' " +
@@ -1038,31 +964,9 @@ public class App {
 
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            // Check one is returned
-            System.out.println( "\n" + "*** Top " + userInput + " populated countries in the Middle East: ***" );
-            System.out.println( "\n" + "Country:" + "\t" + "Code:" + "\t" + "Continent:" + "\t" + "Region:" + "\t" + "Population:" + "\t" + "Capital:");
-
-            while (rset.next())
-            {
-                World wd = new World();
-
-                // Fields to be shown
-                // wd.Country = rset.getString("Country");
-                wd.name = rset.getString("Name");
-                wd.code = rset.getString("Code");
-                wd.continent = rset.getString("Continent");
-                wd.region = rset.getString("Region");
-                wd.population = rset.getString("Population");
-                wd.capital = rset.getString("city.Name");
-
-
-
-                System.out.println( wd.name + "\t" + wd.code + "\t" + wd.continent + "\t" + wd.region + "\t" + wd.population + "\t" + wd.capital );
-                String newRES =   wd.name + "\t" + wd.code + "\t" + wd.continent + "\t" + wd.region + "\t" + wd.population + "\t" + wd.capital + "\n";
-
-                // Build Results
-                results = results + newRES;
-            }
+            String title = "\n" + "*** Top " + userInput + " populated countries in the Middle East: ***" + "\n";
+            // Refactored results sets method
+            results = getCountryReport(results, rset, title);
         }
         catch (Exception e)
         {
