@@ -23,16 +23,16 @@ public class AppIntegrationTest
     void testGetReport2()
     {
         // REPORT 2: list all the countries in a continent organised by largest population to smallest.
-        String[] s = App.getReport2().split("\t", 2);
-        assertEquals(s[0], "Russian Federation");
+        String[] s = App.getReport2().split("\t", 10);
+        assertEquals(s[6], "Russian Federation");
     }
 
     @Test
     void testGetReport4()
     {
         // REPORT 4: produce a report listing the top N populated countries in the World where N is provided by the user
-        String[] s = App.getReport4(2).split("\t", 4);
-        assertEquals(s[0], "China");
+        String[] s = App.getReport4(2).split("\t", 10);
+        assertEquals(s[6], "China");
     }
 
 
@@ -40,48 +40,48 @@ public class AppIntegrationTest
     void testGetReport6()
     {
         // REPORT 6: produce a report listing the top N populated countries in a region where N is provided by the user
-        String[] s = App.getReport6().split("\t", 4);
-        assertEquals(s[0], "Turkey");
+        String[] s = App.getReport6().split("\t", 10);
+        assertEquals(s[6], "Turkey");
     }
 
     @Test
     void testGetReport8()
     {
         // REPORT 8: produce a report listing all the cities in a continent organised by largest population to smallest
-        String[] s = App.getReport8().split("\t", 2);
-        assertEquals(s[0], "Cairo");
+        String[] s = App.getReport8().split("\t", 10);
+        assertEquals(s[4], "\nCairo");
     }
 
     @Test
     void testGetReport10()
     {
         // REPORT 10: produce a report listing all the cities in a country organised by largest population to smallest
-        String[] s = App.getReport10().split("\t", 2);
-        assertEquals(s[0], "London");
+        String[] s = App.getReport10().split("\t", 10);
+        assertEquals(s[4], "\nLondon");
     }
 
     @Test
     void testGetReport12()
     {
         // REPORT 12: produce a report listing the top N populated cities in the World where N is provided by the user
-        String[] s = App.getReport12().split("\t", 2);
-        assertEquals(s[0], "Mumbai (Bombay)");
+        String[] s = App.getReport12().split("\t", 10);
+        assertEquals(s[4], "\nMumbai (Bombay)");
     }
 
     @Test
     void testGetReport14()
     {
         // REPORT 14:  produce a report listing the top N populated cities in a region where N is provided by the user
-        String[] s = App.getReport14().split("\t", 2);
-        assertEquals(s[0], "New York");
+        String[] s = App.getReport14().split("\t", 10);
+        assertEquals(s[4], "\nNew York");
     }
 
     @Test
     void testGetReport16()
     {
         // REPORT 16:  produce a report listing the top N populated cities in a district where N is provided by the user
-        String[] s = App.getReport16().split("\t", 2);
-        assertEquals(s[0], "Centro (Villahermosa)");
+        String[] s = App.getReport16().split("\t", 10);
+        assertEquals(s[4], "\nCentro (Villahermosa)");
     }
 
     @Test

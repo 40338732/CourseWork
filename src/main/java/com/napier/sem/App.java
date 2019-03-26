@@ -83,22 +83,22 @@ public class App {
         String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 , Results15, Results17 , Results19, Results21 , Results23 , Results25 = "";
         String Results2 , Results4 , Results6 , Results8, Results10, Results12, Results14 , Results16, Results18 , Results20, Results22 , Results24  = "";
 
-        Results1 = getReport1();
-        Results2 = getReport2();
-        Results3 = getReport3();
-        Results4 = getReport4(6);
-        Results5 = getReport5(10);
-        Results6 = getReport6();
-        Results7 = getReport7();
+//        Results1 = getReport1();
+//        Results2 = getReport2();
+//        Results3 = getReport3();
+//        Results4 = getReport4(6);
+//        Results5 = getReport5(10);
+//        Results6 = getReport6();
+//        Results7 = getReport7();
         Results8 = getReport8();
-        Results9 = getReport9();
-        Results10 = getReport10();
-        Results11 = getReport11();
-        Results12 = getReport12();
-        Results13 = getReport13(10);
-        Results14 = getReport14();
-        Results15 = getReport15(10);
-        Results16 = getReport16();
+//        Results9 = getReport9();
+//        Results10 = getReport10();
+//        Results11 = getReport11();
+//        Results12 = getReport12();
+//        Results13 = getReport13(10);
+//        Results14 = getReport14();
+//        Results15 = getReport15(10);
+//        Results16 = getReport16();
 //        Results17 = getReport17();
 //        Results18 = getReport18();
         //Results19 = getReport19();
@@ -112,22 +112,22 @@ public class App {
 
         // Display results
 
-        app.displayResults(Results1);
-        app.displayResults(Results2);
-        app.displayResults(Results3);
-        app.displayResults(Results4);
-        app.displayResults(Results5);
-        app.displayResults(Results6);
-        app.displayResults(Results7);
+//        app.displayResults(Results1);
+//        app.displayResults(Results2);
+//        app.displayResults(Results3);
+//        app.displayResults(Results4);
+//        app.displayResults(Results5);
+//        app.displayResults(Results6);
+//        app.displayResults(Results7);
         app.displayResults(Results8);
-        app.displayResults(Results9);
-        app.displayResults(Results10);
-        app.displayResults(Results11);
-        app.displayResults(Results12);
-        app.displayResults(Results13);
-        app.displayResults(Results14);
-        app.displayResults(Results15);
-        app.displayResults(Results16);
+//        app.displayResults(Results9);
+//        app.displayResults(Results10);
+//        app.displayResults(Results11);
+//        app.displayResults(Results12);
+//        app.displayResults(Results13);
+//        app.displayResults(Results14);
+//        app.displayResults(Results15);
+//        app.displayResults(Results16);
         //app.displayResults(Results17);
         //app.displayResults(Results18);
         //app.displayResults(Results19);
@@ -195,7 +195,7 @@ public class App {
 
     private static String getCityReport(String results, ResultSet rset, String title) throws SQLException {
 
-        String header = "Name:" + "\t" + "Country:"+ "\t" + "District:"+ "\t" + "Population:" + "\n";
+        String header = "Name:" + "\t" + "Country:"+ "\t" + "District:"+ "\t" + "Population:" + "\t";
 
         while (rset.next())
         {
@@ -207,13 +207,12 @@ public class App {
             wd.district = rset.getString("District");
             wd.population = rset.getString("Population");
 
-//            System.out.println( wd.name + "\t" + wd.country+ "\t" + wd.district+ "\t" + wd.population );
             String newRES = wd.name + "\t" + wd.country + "\t" + wd.district+ "\t" + wd.population +"\n";
 
             // Build Results
             results = results + newRES;
         }
-        return "\n" + title + "\n" + header + results + "\n";
+        return "\n" + title + "\n" + header + "\n" + results + "\n";
     }
 
     // REPORT 1: All the countries in the World organised by largest population to smallest.
