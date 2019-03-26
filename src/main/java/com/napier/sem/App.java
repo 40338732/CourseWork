@@ -84,20 +84,20 @@ public class App {
         String Results2 , Results4 , Results6 , Results8, Results10, Results12, Results14 , Results16, Results18 , Results20, Results22 , Results24  = "";
 
 //        Results1 = getReport1();
-        Results2 = getReport2();
+//        Results2 = getReport2();
 //        Results3 = getReport3();
-        Results4 = getReport4(6);
+//        Results4 = getReport4(6);
 //        Results5 = getReport5(10);
-        Results6 = getReport6();
-//        Results7 = getReport7();
+//        Results6 = getReport6();
+        Results7 = getReport7();
 //        Results8 = getReport8();
-        //Results9 = getReport9();
+        Results9 = getReport9();
 //        Results10 = getReport10();
-        //Results11 = getReport11();
+        Results11 = getReport11();
 //        Results12 = getReport12();
-        //Results13 = getReport13(10);
+        Results13 = getReport13(10);
 //        Results14 = getReport14();
-        //Results15 = getReport15(10);
+        Results15 = getReport15(10);
 //        Results16 = getReport16();
         //Results17 = getReport17();
 //        Results18 = getReport18();
@@ -113,20 +113,20 @@ public class App {
         // Display results
 
 //        app.displayResults(Results1);
-        app.displayResults(Results2);
+//        app.displayResults(Results2);
 //        app.displayResults(Results3);
-        app.displayResults(Results4);
+//        app.displayResults(Results4);
 //        app.displayResults(Results5);
-        app.displayResults(Results6);
-        //app.displayResults(Results7);
+//        app.displayResults(Results6);
+        app.displayResults(Results7);
         //app.displayResults(Results8);
-        //app.displayResults(Results9);
+        app.displayResults(Results9);
         //app.displayResults(Results10);
-        //app.displayResults(Results11);
+        app.displayResults(Results11);
         //app.displayResults(Results12);
-        //app.displayResults(Results13);
+        app.displayResults(Results13);
         //app.displayResults(Results14);
-        //app.displayResults(Results15);
+        app.displayResults(Results15);
         //app.displayResults(Results16);
         //app.displayResults(Results17);
         //app.displayResults(Results18);
@@ -193,7 +193,28 @@ public class App {
         return title + header + results;
     }
 
+    private static String getCityReport(String results, ResultSet rset, String title) throws SQLException {
 
+        String header = "Name:" + "\t" + "Country:"+ "\t" + "District:"+ "\t" + "Population:" + "\n";
+
+        while (rset.next())
+        {
+            World wd = new World();
+
+            // Fields to be shown
+            wd.name = rset.getString("Name");
+            wd.country = rset.getString("Country");
+            wd.district = rset.getString("District");
+            wd.population = rset.getString("Population");
+
+//            System.out.println( wd.name + "\t" + wd.country+ "\t" + wd.district+ "\t" + wd.population );
+            String newRES = wd.name + "\t" + wd.country + "\t" + wd.district+ "\t" + wd.population +"\n";
+
+            // Build Results
+            results = results + newRES;
+        }
+        return title + "\n" + header + results + "\n";
+    }
 
     // REPORT 1: All the countries in the World organised by largest population to smallest.
     public static String getReport1()
@@ -323,25 +344,9 @@ public class App {
 
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            // Check one is returned (header)
-            System.out.println( "Name:" + "\t" + "Country:"+ "\t" + "District:"+ "\t" + "Population:");
+            String title = "";
 
-            while (rset.next())
-            {
-                World wd = new World();
-
-                // Fields to be shown
-                wd.name = rset.getString("Name");
-                wd.country = rset.getString("Country");
-                wd.district = rset.getString("District");
-                wd.population = rset.getString("Population");
-
-                System.out.println( wd.name + "\t" + wd.country+ "\t" + wd.district+ "\t" + wd.population );
-                String newRES =   wd.name + "\t" + wd.country+ "\t" + wd.district+ "\t" + wd.population +"\n";
-
-                // Build Results
-                results = results + newRES;
-            }
+            results = getCityReport(results, rset, title);
         }
         catch (Exception e)
         {
@@ -351,6 +356,7 @@ public class App {
         }
         return results;
     }
+
 
     // REPORT 9: All the cities in a region organised by largest population to smallest.
 
@@ -378,27 +384,9 @@ public class App {
 
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            // Check one is returned
-            System.out.println( "Name" + "\t" + "Country:" + "\t" + "District:"+ "\t" + "Population:");
+            String title = "";
 
-            while (rset.next())
-            {
-                World wd = new World();
-
-                // Fields to be shown
-                wd.name = rset.getString("Name");
-                wd.country = rset.getString("Country");
-                wd.district = rset.getString("District");
-
-                wd.population = rset.getString("Population");
-
-
-                System.out.println( wd.name + "\t" + wd.country + "\t" +wd.district + "\t" + wd.population );
-                String newRES =  wd.name + "\t" + wd.country + "\t" +wd.district + "\t" + wd.population +"\n";
-
-                // Build Results
-                results = results + newRES;
-            }
+            results = getCityReport(results, rset, title);
         }
         catch (Exception e)
         {
@@ -436,24 +424,9 @@ public class App {
 
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            // Check one is returned
-            System.out.println( "Name:" + "\t" + "Country:"+ "\t" + "District:"+ "\t" + "Population:");
+            String title = "";
 
-            while (rset.next())
-            {
-                World wd = new World();
-
-                // Fields to be shown
-                wd.name = rset.getString("Name");
-                wd.country = rset.getString("Country");
-                wd.district = rset.getString("District");
-                wd.population = rset.getString("Population");
-
-                System.out.println( wd.name + "\t" + wd.country+ "\t" + wd.district+ "\t" + wd.population );
-                String newRES =   wd.name + "\t" + wd.country+ "\t" + wd.district+ "\t" + wd.population +"\n";
-                // Build Results
-                results = results + newRES;
-            }
+            results = getCityReport(results, rset, title);
         }
         catch (Exception e)
         {
@@ -490,25 +463,9 @@ public class App {
 
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            // Check one is returned
-            System.out.println( "Name:" + "\t" + "Country:"+ "\t" + "District:"+ "\t" + "Population:");
+            String title = "";
 
-            while (rset.next())
-            {
-                World wd = new World();
-
-                // Fields to be shown
-                wd.name = rset.getString("Name");
-                wd.country = rset.getString("Country");
-                wd.district = rset.getString("District");
-                wd.population = rset.getString("Population");
-
-                System.out.println( wd.name + "\t" + wd.country+ "\t" + wd.district+ "\t" + wd.population );
-                String newRES =   wd.name + "\t" + wd.country+ "\t" + wd.district+ "\t" + wd.population +"\n";
-
-                // Build Results
-                results = results + newRES;
-            }
+            results = getCityReport(results, rset, title);
         }
         catch (Exception e)
         {
@@ -543,25 +500,9 @@ public class App {
 
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            // Check one is returned
-            System.out.println( "Name:" + "\t" + "Country:"+ "\t" + "District:"+ "\t" + "Population:");
+            String title = "";
 
-            while (rset.next())
-            {
-                World wd = new World();
-
-                // Fields to be shown
-                wd.name = rset.getString("Name");
-                wd.country = rset.getString("Country");
-                wd.district = rset.getString("District");
-                wd.population = rset.getString("Population");
-
-                System.out.println( wd.name + "\t" + wd.country+ "\t" + wd.district+ "\t" + wd.population );
-                String newRES =   wd.name + "\t" + wd.country+ "\t" + wd.district+ "\t" + wd.population +"\n";
-
-                // Build Results
-                results = results + newRES;
-            }
+            results = getCityReport(results, rset, title);
         }
         catch (Exception e)
         {
@@ -1005,28 +946,12 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "\n" + "*** Cities in Africa ordered by population: ***" );
+            System.out.println(  );
             System.out.println( "City:" + "\t" + "Country:" + "\t" + "District:" + "\t" + "Population:");
 
-            while (rset.next())
-            {
-                World wd = new World();
+            String title = "\n" + "*** Cities in Africa ordered by population: ***" + "\n";
 
-                // Fields to be shown
-                // wd.Country = rset.getString("Country");
-                wd.name = rset.getString("city.Name");
-                wd.country = rset.getString("country.name");
-                wd.district = rset.getString("District");
-                wd.population = rset.getString("Population");
-
-
-                System.out.println( wd.name + "\t" + wd.country + "\t" + wd.district + "\t" + wd.population );
-                String newRES =  wd.name + "\t" + wd.country + "\t" + wd.district + "\t" + wd.population + "\n";
-
-
-                // Build Results
-                results = results + newRES;
-            }
+            results = getCityReport(results, rset, title);
         }
         catch (Exception e)
         {
