@@ -11,14 +11,15 @@ public class World {
     public String district;
     public String language;
     public Float percentage;
-    public String cityPercentage;
+    public String ruralPercentage;
     public String urbanPercentage;
     public String code;
     public String continent;
     public String region;
     public String capital;
-    public String city;
+    public String rural;
     public String total;
     public String urban;
+    public String city;
 
 }

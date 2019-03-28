@@ -111,7 +111,7 @@ public class AppIntegrationTest
     @Test
     void testGetReport24()
     {
-        // REPORT 22: produce a report listing the top N populated capital cities in a region where N is provided by the user
+        // REPORT 24: produce a report listing the population of people, people living in cities, and people not living in cities in each region
         String[] s = App.getReport24().split("\t", 2);
         //System.out.println("Result: " + s[0]);
         assertEquals(s[0], "Southern and Central Asia");

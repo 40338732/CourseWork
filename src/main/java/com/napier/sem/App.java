@@ -90,7 +90,7 @@ public class App {
 //        Results5 = getReport5(10);
 //        Results6 = getReport6();
 //        Results7 = getReport7();
-        Results8 = getReport8();
+//        Results8 = getReport8();
 //        Results9 = getReport9();
 //        Results10 = getReport10();
 //        Results11 = getReport11();
@@ -106,7 +106,7 @@ public class App {
         //Results21 = getReport21(10);
 //        Results22 = getReport22();
         //Results23 = getReport23();
-//        Results24 = getReport24();
+        Results24 = getReport24();
 //        Results25 = getReport25();
 
 
@@ -119,7 +119,7 @@ public class App {
 //        app.displayResults(Results5);
 //        app.displayResults(Results6);
 //        app.displayResults(Results7);
-        app.displayResults(Results8);
+//        app.displayResults(Results8);
 //        app.displayResults(Results9);
 //        app.displayResults(Results10);
 //        app.displayResults(Results11);
@@ -135,7 +135,7 @@ public class App {
         //app.displayResults(Results21);
         //app.displayResults(Results22);
         //app.displayResults(Results23);
-        //app.displayResults(Results24);
+        app.displayResults(Results24);
 //        app.displayResults(Results25);
 
 
@@ -798,7 +798,6 @@ public class App {
                     " ORDER BY Population DESC ";
 
             Statement stmt = con.createStatement();
-            // Statement conn = con.createStatement();
 
             // Execute SQL statement
             stmt.executeQuery(strSelect);
@@ -844,7 +843,6 @@ public class App {
 
 
             Statement stmt = con.createStatement();
-            // Statement conn = con.createStatement();
 
             // Execute SQL statement
             stmt.executeQuery(strSelect);
@@ -886,7 +884,6 @@ public class App {
 
 
             Statement stmt = con.createStatement();
-            // Statement conn = con.createStatement();
 
             // Execute SQL statement
             stmt.executeQuery(strSelect);
@@ -926,7 +923,6 @@ public class App {
 
 
             Statement stmt = con.createStatement();
-            // Statement conn = con.createStatement();
 
             // Execute SQL statement
             stmt.executeQuery(strSelect);
@@ -950,9 +946,6 @@ public class App {
     // REPORT 10: produce a report listing all the cities in a country organised by largest population to smallest
     public static String getReport10()
     {
-        // Create user input variable
-        // int userInput = 7;
-
         String results = "";
         try
         {
@@ -966,7 +959,6 @@ public class App {
 
 
             Statement stmt = con.createStatement();
-            // Statement conn = con.createStatement();
 
             // Execute SQL statement
             stmt.executeQuery(strSelect);
@@ -996,7 +988,6 @@ public class App {
         String results = "";
         try
         {
-
             // SELECT STATEMENT
             String strSelect = " SELECT country.name AS Country, city.Name, city.District, city.Population " +
                     " FROM city " +
@@ -1006,7 +997,6 @@ public class App {
 
 
             Statement stmt = con.createStatement();
-            // Statement conn = con.createStatement();
 
             // Execute SQL statement
             stmt.executeQuery(strSelect);
@@ -1036,7 +1026,6 @@ public class App {
         String results = "";
         try
         {
-
             // SELECT STATEMENT
             String strSelect = " SELECT country.name AS Country, city.Name, city.District, city.Population  " +
                     " FROM city " +
@@ -1047,7 +1036,6 @@ public class App {
 
 
             Statement stmt = con.createStatement();
-            // Statement conn = con.createStatement();
 
             // Execute SQL statement
             stmt.executeQuery(strSelect);
@@ -1086,7 +1074,6 @@ public class App {
 
 
             Statement stmt = con.createStatement();
-            // Statement conn = con.createStatement();
 
             // Execute SQL statement
             stmt.executeQuery(strSelect);
@@ -1107,17 +1094,12 @@ public class App {
     }
 
 
-
     // REPORT 18: produce a report listing all the capital cities in a continent organised by largest population to smallest
     public static String getReport18()
     {
-        // Create user input variable
-        // int userInput = 5;
-
         String results = "";
         try
         {
-
             // SELECT STATEMENT
             String strSelect = "SELECT city.Name, country.name, city.Population " +
                     " FROM city " +
@@ -1128,7 +1110,6 @@ public class App {
 
 
             Statement stmt = con.createStatement();
-            // Statement conn = con.createStatement();
 
             // Execute SQL statement
             stmt.executeQuery(strSelect);
@@ -1149,8 +1130,6 @@ public class App {
                 wd.country = rset.getString("country.name");
                 wd.population = rset.getString("Population");
 
-
-
                 System.out.println( wd.name + "\t" + wd.country + "\t" + wd.population );
                 String newRES =   wd.name + "\t" + wd.country + "\t" + wd.population +"\n";
 
@@ -1168,7 +1147,6 @@ public class App {
     }
 
 
-
     // REPORT 20: produce a report listing the top N populated capital cities in the World where N is provided by the user
     public static String getReport20()
     {
@@ -1178,7 +1156,6 @@ public class App {
         String results = "";
         try
         {
-
             // SELECT STATEMENT
             String strSelect = "SELECT city.Name, country.name, city.Population " +
                     " FROM city " +
@@ -1189,7 +1166,6 @@ public class App {
 
 
             Statement stmt = con.createStatement();
-            // Statement conn = con.createStatement();
 
             // Execute SQL statement
             stmt.executeQuery(strSelect);
@@ -1210,8 +1186,6 @@ public class App {
                 wd.country = rset.getString("country.name");
                 wd.population = rset.getString("Population");
 
-
-
                 System.out.println( wd.name + "\t" + wd.country + "\t" + wd.population );
                 String newRES =   wd.name + "\t" + wd.country + "\t" + wd.population +"\n";
 
@@ -1229,7 +1203,6 @@ public class App {
     }
 
 
-
     // REPORT 22: produce a report listing the top N populated capital cities in a region where N is provided by the user
     public static String getReport22()
     {
@@ -1239,7 +1212,6 @@ public class App {
         String results = "";
         try
         {
-
             // SELECT STATEMENT
             String strSelect = "SELECT city.Name, country.name, city.Population " +
                     " FROM city " +
@@ -1251,7 +1223,6 @@ public class App {
 
 
             Statement stmt = con.createStatement();
-            // Statement conn = con.createStatement();
 
             // Execute SQL statement
             stmt.executeQuery(strSelect);
@@ -1271,8 +1242,6 @@ public class App {
                 wd.name = rset.getString("Name");
                 wd.country = rset.getString("country.name");
                 wd.population = rset.getString("Population");
-
-
 
                 System.out.println( wd.name + "\t" + wd.country + "\t" + wd.population );
                 String newRES =   wd.name + "\t" + wd.country + "\t" + wd.population +"\n";
@@ -1294,24 +1263,21 @@ public class App {
     // REPORT 24: produce a report listing the population of people, people living in cities, and people not living in cities in each region
     public static String getReport24()
     {
-        // Create user input variable
-        // int userInput = 8;
-
         String results = "";
+
         try
         {
-
             // SELECT STATEMENT
-            String strSelect = "SELECT Region, sum(cast(country.Population AS UNSIGNED INTEGER )) AS Total, " +
-                    " sum(city.Population) AS City, sum(country.Population - city.Population) AS Urban  " +
-                    " FROM city JOIN country ON country.Code=city.CountryCode " +
-                    " GROUP BY Region ";
-
-//            String strTest = "SELECT sum(Population) FROM country GROUP BY Region";
-
+            String strSelect = " SELECT Region, " +
+            " sum(cast(country.Population AS UNSIGNED INTEGER )) AS totalPopulationRegion, " +
+            " (sum(cast(country.Population AS UNSIGNED INTEGER )) - sum(cast(city.Population AS UNSIGNED INTEGER)) ) / (sum(cast(country.Population AS UNSIGNED INTEGER)) / 100 ) As percentageCountry, " +
+            " sum(cast(country.Population as UNSIGNED INTEGER)) - SUM(CAST(city.Population as UNSIGNED INTEGER)) as notLivingInCities, " +
+            " sum(cast(city.Population AS UNSIGNED INTEGER)) As totalPopulationCity, " +
+            " 100 - (sum(cast(country.Population AS UNSIGNED INTEGER)) - sum(cast(city.Population AS UNSIGNED INTEGER)) ) / (sum(cast(country.Population AS UNSIGNED INTEGER )) / 100) As percentageCity " +
+            " FROM city JOIN country ON country.Code=city.CountryCode " +
+            " GROUP BY Region";
 
             Statement stmt = con.createStatement();
-            // Statement conn = con.createStatement();
 
             // Execute SQL statement
             stmt.executeQuery(strSelect);
@@ -1319,26 +1285,22 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "\n" + "*** Region population, city population and urban population: ***" );
-            System.out.println( "--Region--" + "\t--Total--" + "\t--City--" + "\t" + "--Urban--" );
+            System.out.println( "\n" + "*** Region population, urban population and rural population: ***" );
+            System.out.println( "--Region--" + "\t--Total Population--" + "\t--Urban Population--" + "\t" + "--Rural Population--" );
 
             while (rset.next())
             {
                 World wd = new World();
 
                 // Fields to be shown
-                //wd.Country = rset.getString("Country");
-                //wd.name = rset.getString("Name");
-                //wd.population = rset.getString("Population");
                 wd.region = rset.getString("Region");
-                wd.total = rset.getString("Total");
-                wd.city = rset.getString("City");
-                wd.urban = rset.getString("Urban");
+                wd.total = rset.getString("totalPopulationRegion");
+                wd.urban = rset.getString("totalPopulationCity");
+                wd.rural = rset.getString("notLivingInCities");
+                wd.ruralPercentage = rset.getString("percentageCountry");
+                wd.urbanPercentage = rset.getString("percentageCity");
 
-
-
-                System.out.println( wd.region + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban );
-                String newRES =    wd.region + "\t" + wd.total + "\t" + wd.city  + "\t" + wd.urban +"\n";
+                String newRES =    wd.region + "\t" + wd.total + "\t" + wd.urban + "(" + wd.urbanPercentage + "%)"  + "\t" + wd.rural + "(" + wd.ruralPercentage + "%)" + "\n";
 
                 // Build Results
                 results = results + newRES;
