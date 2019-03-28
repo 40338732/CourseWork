@@ -83,7 +83,7 @@ public class App {
         String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 , Results15, Results17 , Results19, Results21 , Results23 , Results25 = "";
         String Results2 , Results4 , Results6 , Results8, Results10, Results12, Results14 , Results16, Results18 , Results20, Results22 , Results24  = "";
 
-//        Results1 = getReport1();
+        Results1 = getReport1();
 //        Results2 = getReport2();
 //        Results3 = getReport3();
 //        Results4 = getReport4(6);
@@ -106,13 +106,13 @@ public class App {
         //Results21 = getReport21(10);
 //        Results22 = getReport22();
         //Results23 = getReport23();
-        Results24 = getReport24();
+//        Results24 = getReport24();
 //        Results25 = getReport25();
 
 
         // Display results
 
-//        app.displayResults(Results1);
+        app.displayResults(Results1);
 //        app.displayResults(Results2);
 //        app.displayResults(Results3);
 //        app.displayResults(Results4);
@@ -135,7 +135,7 @@ public class App {
         //app.displayResults(Results21);
         //app.displayResults(Results22);
         //app.displayResults(Results23);
-        app.displayResults(Results24);
+//        app.displayResults(Results24);
 //        app.displayResults(Results25);
 
 
