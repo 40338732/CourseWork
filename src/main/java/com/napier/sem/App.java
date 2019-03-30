@@ -106,6 +106,7 @@ public class App {
 
         // World Reports
         PopReport1 = getPopReport1();
+        PopReport2 = getPopReport2();
 
         // Display results
 
@@ -133,10 +134,11 @@ public class App {
         //app.displayResults(Results22);
         //app.displayResults(Results23);
         //app.displayResults(Results24);
-        app.displayResults(Results25);
+        //app.displayResults(Results25);
 
         // World Reports
         app.displayResultsWR(PopReport1);
+        app.displayResultsWR(PopReport2);
         // Disconnect from database
         app.disconnect();
     }
@@ -1704,6 +1706,50 @@ public class App {
         }
         return results;
     }
+
+    /* Population 2 Report Continents */
+    private static String getPopReport2() {
+        String results = "";
+        try {
+            // SELECT STATEMENT to pull information required for the reports
+            String strSelect = reportTotalPopulationContinents();
+
+            // SQL Connect statements
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            // This is the results set that is returned from the queries
+            ResultSet set = stmt.executeQuery(strSelect);
+
+            while (set.next()) {
+                // New Instant of "World"
+                World wd = new World();
+                wd.totalPopulation = set.getString("TotalPopulation");
+                wd.continent = set.getString("Continent");
+
+                String newRES = wd.totalPopulation + "\t" + wd.continent + " \n";
+
+                // Build Results
+                results = results + newRES;
+            }
+
+            // Check we have Data
+            if (!(results == null)) {
+
+                // Display the results from the queries
+                displayResultsWR("R2: Total Population Continent" + "\n" + results);
+                return null;
+            }
+
+        } catch (Exception e) // Catch exceptions
+        {
+            return getException(e);
+        }
+        return results;
+    }
+
 
 }
 
