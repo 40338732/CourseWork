@@ -21,4 +21,11 @@ public class World {
 
     // Workd Reports
     public String totalPopulation;
+
+
+    public String totalPopulationCountry;
+    public String percentageCountry;
+    public String notLivingInCities;
+    public String totalPopulationCity;
+    public String percentageCity;
 }

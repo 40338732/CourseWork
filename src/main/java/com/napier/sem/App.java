@@ -112,6 +112,7 @@ public class App {
         PopReport5 = getPopReport5();
         PopReport6 = getPopReport6();
         PopReport7 = getPopReport7();
+        PopReportStats = getPopReportStats();
         // Display results
 
         //app.displayResults(Results1);
@@ -148,6 +149,7 @@ public class App {
         app.displayResultsWR(PopReport5);
         app.displayResultsWR(PopReport6);
         app.displayResultsWR(PopReport7);
+        app.displayResultsWR(PopReportStats);
         // Disconnect from database
         app.disconnect();
     }
@@ -1980,6 +1982,72 @@ public class App {
             return getException(e);
         }
         //return results;
+    }
+
+    private static String getPopReportStats() {
+        String results = "";
+        try {
+            // SELECT STATEMENT to pull information required for the reports
+            String strSelect = getStringPopulation();
+
+            // SQL Connect statements
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            // This is the results set that is returned from the queries
+            ResultSet set = stmt.executeQuery(strSelect);
+
+            // Check we have Data
+            if (!(set == null)) {
+                // Results from getStringWorld
+                results = getStringWorld(set, "Population Report Stats");
+                // Display the results from the queries
+                displayResultsWR(results);
+                return "";
+            }
+
+        } catch (Exception e) // Catch exceptions
+        {
+            return getException(e);
+        }
+        return results;
+    }
+
+    /* getStringWorld Method - this create the "string" of the results */
+    private static String getStringWorld(ResultSet set, String title) throws SQLException {
+
+        String results = "";
+        // Header for Report
+        String header = "Continent" + "\t" + "Region" + "\t" + "Name" + "\t" + "total Population Country" + "\t" + "percentage Country" + "\t" + "Not Living In Cities" + "\t" + "Total Population City" + "\t" + "Percentage City" + "\n";
+        // RESULTS SET
+        while (set.next()) {
+            // New Instant of "World"
+            World wd = new World();
+
+            // Fields to be shown
+            wd.continent = set.getString("Continent");
+            wd.region = set.getString("Region");
+            wd.name = set.getString("Name");
+            wd.totalPopulationCountry = set.getString("TotalPopulationCountry");
+            wd.percentageCountry = set.getString("PercentageCountry");
+            wd.notLivingInCities = set.getString("NotLivingInCities");
+            wd.totalPopulationCity = set.getString("TotalPopulationCity");
+            wd.percentageCity = set.getString("PercentageCity");
+
+            // Creates String with results
+            String newRES = wd.continent + "\t" + wd.region + "\t" + wd.name + "\t" + wd.totalPopulationCountry + "\t" + wd.notLivingInCities + "\t" + wd.percentageCountry + "\t" + wd.totalPopulationCity + "\t" + wd.percentageCity + "\n";
+
+            // Build Results
+            results = results.concat(newRES);
+        }
+
+        /* Depend if we have results will show one of two options */
+        if (results.equals("")) return title + "\n" + header + "No Results returned";
+        else {
+            return "\n".concat(title).concat(header).concat(results);
+        }
     }
 }
 
