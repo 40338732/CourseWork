@@ -109,7 +109,7 @@ public class App {
         PopReport2 = getPopReport2();
         PopReport3 = getPopReport3();
         PopReport4 = getPopReport4();
-
+        PopReport5 = getPopReport5();
         // Display results
 
         //app.displayResults(Results1);
@@ -1734,7 +1734,7 @@ public class App {
                 String newRES = wd.totalPopulation + "\t" + wd.continent + " \n";
 
                 // Build Results
-                results = results + newRES;
+                results = results.concat( newRES );
             }
 
             // Check we have Data
@@ -1777,7 +1777,7 @@ public class App {
                 String newRES = wd.totalPopulation + "\t" + wd.region + " \n";
 
                 // Build Results
-                results = results + newRES;
+                results = results.concat( newRES );
             }
 
             // Check we have Data
@@ -1820,7 +1820,7 @@ public class App {
                 String newRES = wd.totalPopulation + "\t" + wd.country + " \n";
 
                 // Build Results
-                results = results + newRES;
+                results = results.concat( newRES );
             }
 
             // Check we have Data
@@ -1828,6 +1828,49 @@ public class App {
 
                 // Display the results from the queries
                 displayResultsWR("R4: Total Population Country" + "\n" + results);
+                return null;
+            }
+
+        } catch (Exception e) // Catch exceptions
+        {
+            return getException(e);
+        }
+        return results;
+    }
+
+    /* Population 5 Report District */
+    private static String getPopReport5() {
+        String results = "";
+        try {
+            // SELECT STATEMENT to pull information required for the reports
+            String strSelect = reportTotalPopulationDistrictsCity();
+
+            // SQL Connect statements
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            // This is the results set that is returned from the queries
+            ResultSet set = stmt.executeQuery(strSelect);
+
+            while (set.next()) {
+                // New Instant of "World"
+                World wd = new World();
+                wd.totalPopulation = set.getString("TotalPopulation");
+                wd.district = set.getString("District");
+
+                String newRES = wd.totalPopulation + "\t" + wd.district + " \n";
+
+                // Build Results
+                results = results.concat(newRES);
+            }
+
+            // Check we have Data
+            if (!(results == null)) {
+
+                // Display the results from the queries
+                displayResultsWR("R5: Total Population District" + "\n" + results);
                 return null;
             }
 
