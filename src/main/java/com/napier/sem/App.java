@@ -110,6 +110,7 @@ public class App {
         PopReport3 = getPopReport3();
         PopReport4 = getPopReport4();
         PopReport5 = getPopReport5();
+        PopReport6 = getPopReport6();
         // Display results
 
         //app.displayResults(Results1);
@@ -144,6 +145,7 @@ public class App {
         app.displayResultsWR(PopReport3);
         app.displayResultsWR(PopReport4);
         app.displayResultsWR(PopReport5);
+        app.displayResultsWR(PopReport6);
         // Disconnect from database
         app.disconnect();
     }
@@ -1883,6 +1885,52 @@ public class App {
         }
         return results;
     }
+
+    /* Population 6 Report District */
+    private static String getPopReport6() {
+        String results = "";
+        try {
+            // SELECT STATEMENT to pull information required for the reports
+            String strSelect = reportTotalPopulationCountryCity();
+
+            // SQL Connect statements
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            // This is the results set that is returned from the queries
+            ResultSet set = stmt.executeQuery(strSelect);
+
+            while (set.next()) {
+                // New Instant of "World"
+                World wd = new World();
+
+                wd.totalPopulation = set.getString("TotalPopulation");
+                wd.name = set.getString("Name");
+
+                String newRES = wd.totalPopulation + "\t" + wd.name + " \n";
+
+                // Build Results
+                results = results.concat(newRES);
+            }
+
+            // Check we have Data
+            if (!(results == null)) {
+
+                // Display the results from the queries
+                displayResultsWR("R6: Total Population Country" + "\n" + results);
+                return null;
+            }
+
+        } catch (Exception e) // Catch exceptions
+        {
+            return getException(e);
+        }
+        return results;
+    }
+
+
 }
 
 
