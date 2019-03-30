@@ -141,6 +141,9 @@ public class App {
         // World Reports
         app.displayResultsWR(PopReport1);
         app.displayResultsWR(PopReport2);
+        app.displayResultsWR(PopReport3);
+        app.displayResultsWR(PopReport4);
+        app.displayResultsWR(PopReport5);
         // Disconnect from database
         app.disconnect();
     }
