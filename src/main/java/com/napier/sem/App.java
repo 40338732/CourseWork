@@ -76,6 +76,7 @@ public class App {
         // local variable
         String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 , Results15, Results17 , Results19, Results21 , Results23 , Results25 = "";
         String Results2 , Results4 , Results6 , Results8, Results10, Results12, Results14 , Results16, Results18 , Results20, Results22 , Results24  = "";
+        String PopReport1, PopReport2, PopReport3, PopReport4, PopReport5, PopReport6, PopReport7, PopReportStats;
 
         //Results1 = getReport1();
         //Results2 = getReport3();
@@ -101,8 +102,10 @@ public class App {
         //Results22 = getReport22();
         //Results23 = getReport23();
         //Results24 = getReport24();
-        Results25 = getReport25();
+        //Results25 = getReport25();
 
+        // World Reports
+        PopReport1 = getPopReport1();
 
         // Display results
 
@@ -132,7 +135,8 @@ public class App {
         //app.displayResults(Results24);
         app.displayResults(Results25);
 
-
+        // World Reports
+        app.displayResultsWR(PopReport1);
         // Disconnect from database
         app.disconnect();
     }
@@ -1595,6 +1599,112 @@ public class App {
 
         }
     }
+    // DON'T CHANGE
+    private static void displayResultsWR(String results) {
+        if (results != null) {
+            System.out.println(
+                    results + "\n");
+
+        }
+    }
+    /// WORLD POPULATION REPORT
+
+    // SELECT STATEMENTS FOR POPULATION REPORTS
+    private static String reportTotalPopulation() {
+        return "SELECT SUM(CAST( Population AS UNSIGNED INTEGER )) AS TotalPopulation FROM country";
+    }
+
+    private static String reportTotalPopulationContinents() {
+        return "select SUM(CAST( Population AS UNSIGNED INTEGER)) AS TotalPopulation, Continent from country group by Continent";
+    }
+
+    private static String reportTotalPopulationRegion() {
+        return "select SUM(CAST( Population AS UNSIGNED INTEGER)) AS TotalPopulation, Region from country group by Region";
+    }
+
+    private static String reportTotalPopulationCountry() {
+        return "select SUM(CAST( Population AS UNSIGNED INTEGER)) AS TotalPopulation, Name As Country from country group by Name";
+    }
+
+    private static String reportTotalPopulationDistrictsCity() {
+        return "select SUM(CAST( Population AS UNSIGNED INTEGER)) AS TotalPopulation, District from city group by District ";
+    }
+
+    private static String reportTotalPopulationCountryCity() {
+        return "select SUM(CAST( Population AS UNSIGNED INTEGER)) AS TotalPopulation, Name from city group by Name ";
+    }
+
+    private static String reportTotalPopulationLanguage() {
+        return "SELECT Name ,Language ,SUM(Percentage) as Percentage " +
+                "  FROM countrylanguage " +
+                "  inner join country on CountryCode = country.code " +
+                "  where CountryCode = 'USA' " +
+                "  group by name,Language " +
+                "  order by Percentage DESC";
+    }
+
+    /* SQL Statement */
+    private static String getStringPopulation() {
+        return "SELECT Continent, Region, country.Name as Name, " +
+                " sum(cast(country.Population AS UNSIGNED INTEGER )) AS totalPopulationCountry, " +
+                " (sum(cast(country.Population AS UNSIGNED INTEGER )) - sum(cast(city.Population AS UNSIGNED INTEGER)) ) / (sum(cast(country.Population AS UNSIGNED INTEGER)) / 100 ) As percentageCountry, " +
+                " sum(cast(country.Population as UNSIGNED INTEGER)) - SUM(CAST(city.Population as UNSIGNED INTEGER)) as notLivingInCities, " +
+                " sum(cast(city.Population AS UNSIGNED INTEGER)) As totalPopulationCity, " +
+                " 100 - (sum(cast(country.Population AS UNSIGNED INTEGER)) - sum(cast(city.Population AS UNSIGNED INTEGER)) ) / (sum(cast(country.Population AS UNSIGNED INTEGER )) / 100) As percentageCity " +
+                " FROM city JOIN country ON country.Code=city.CountryCode " +
+                " GROUP BY Continent,Region, country.Name  ";
+    }
+
+    /* Exceptions */
+    private static String getException(Exception e) {
+        String Exception;
+        Exception = (e.getMessage());
+        return Exception;
+    }
+
+    // ********* REPORTS - WORLD POPULATION *********
+    /* Population 1 Report */
+    private static String getPopReport1() {
+        String results = "";
+        try {
+            // SELECT STATEMENT to pull information required for the reports
+            String strSelect = reportTotalPopulation();
+
+            // SQL Connect statements
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            // This is the results set that is returned from the queries
+            ResultSet set = stmt.executeQuery(strSelect);
+
+            while (set.next()) {
+                // New Instant of "World"
+                World wd = new World();
+                wd.totalPopulation = set.getString("TotalPopulation");
+
+                String newRES = wd.totalPopulation + " \n";
+
+                // Build Results
+                results = results.concat( newRES );
+            }
+
+            // Check we have Data
+            if (!(results == null)) {
+
+                // Display the results from the queries
+                displayResultsWR("R1: Total Population World" + "\n" + results);
+                return null;
+            }
+
+        } catch (Exception e) // Catch exceptions
+        {
+            return getException(e);
+        }
+        return results;
+    }
+
 }
 
 

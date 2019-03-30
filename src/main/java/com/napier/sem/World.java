@@ -19,4 +19,6 @@ public class World {
     public String total;
     public String urban;
 
+    // Workd Reports
+    public String totalPopulation;
 }
