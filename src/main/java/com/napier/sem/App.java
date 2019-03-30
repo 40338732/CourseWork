@@ -111,6 +111,7 @@ public class App {
         PopReport4 = getPopReport4();
         PopReport5 = getPopReport5();
         PopReport6 = getPopReport6();
+        PopReport7 = getPopReport7();
         // Display results
 
         //app.displayResults(Results1);
@@ -146,6 +147,7 @@ public class App {
         app.displayResultsWR(PopReport4);
         app.displayResultsWR(PopReport5);
         app.displayResultsWR(PopReport6);
+        app.displayResultsWR(PopReport7);
         // Disconnect from database
         app.disconnect();
     }
@@ -1930,7 +1932,55 @@ public class App {
         return results;
     }
 
+    /* Population 7 Report District */
+    private static String getPopReport7() {
+        String results = "";
+        try {
+            // SELECT STATEMENT to pull information required for the reports
+            String strSelect = reportTotalPopulationLanguage();
 
+            // SQL Connect statements
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            // This is the results set that is returned from the queries
+            ResultSet set = stmt.executeQuery(strSelect);
+
+            while (set.next()) {
+                // New Instant of "World"
+                World wd = new World();
+
+                wd.name = set.getString("Name");
+                wd.language = set.getString("Language");
+                wd.percentage = set.getFloat("Percentage");
+
+                String newRES = wd.name + "\t" + wd.language + "\t" + wd.percentage + " \n";
+
+                // Build Results
+                results = results.concat( newRES );
+            }
+
+            // Check we have Data
+            if (!(results == null)) {
+
+                // Display the results from the queries
+                displayResultsWR("R7: Total Population Languages" + "\n" + results);
+                return null;
+            }
+            else
+            {
+                displayResultsWR("R7: Total Population Languages - NO DATA RETURNED" );
+                return null;
+            }
+
+        } catch (Exception e) // Catch exceptions
+        {
+            return getException(e);
+        }
+        //return results;
+    }
 }
 
 
