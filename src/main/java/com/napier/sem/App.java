@@ -12,8 +12,43 @@ public class App {
 
     public ArrayList<Employee> allSalaries;
 
+    // Non parameters connect
+    // DON'T CHANGE
+    public void connect() {
+        try {
+            // Load Database driver
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Could not load SQL driver");
+            System.exit(-1);
+        }
 
-    public void connect(String location)
+        int retries = 10;
+        for (int i = 0; i < retries; ++i) {
+            System.out.println("Connecting to database...");
+            try {
+                // Wait a bit for db to start
+                Thread.sleep(10000);
+                // Connect to database
+                con = DriverManager.getConnection("jdbc:MySQL://db:3306/world?useSSL=false", "root", "example");
+                System.out.println("Successfully connected");
+                break;
+            } catch (SQLException sqle) {
+                System.out.println("SQLException: " + sqle.getMessage());
+                System.out.println("SQLState: " + sqle.getSQLState());
+                System.out.println("VendorError: " + sqle.getErrorCode());
+
+
+                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
+                System.out.println(sqle.getMessage());
+            } catch (InterruptedException ie) {
+                System.out.println("Thread interrupted? Should not happen.");
+            }
+        }
+
+    }
+
+    private void connect(String location)
     {
         try
         {
@@ -66,26 +101,25 @@ public class App {
         }
     }
 
-    // updated to bring evens and odds together
 
-
-
+    // MAIN METHOD
     public static  void main(String[] args) {
         // Create new Application
         App app = new App();
         System.out.println("version r25");
 
         // Connect to database
-        app.connect("localhost:33060");
-
+        // app.connect("localhost:33060");
+        app.connect();
 
         // local variable
         String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 , Results15, Results17 , Results19, Results21 , Results23 , Results25 = "";
         String Results2 , Results4 , Results6 , Results8, Results10, Results12, Results14 , Results16, Results18 , Results20, Results22 , Results24  = "";
+        String PopReport1, PopReport2, PopReport3, PopReport4, PopReport5, PopReport6, PopReport7, PopReportStats;
 
-        Results1 = getReport1();
-//        Results2 = getReport2();
-//        Results3 = getReport3();
+        // Results1 = getReport1();
+        // Results2 = getReport2();
+        // Results3 = getReport3();
 //        Results4 = getReport4(6);
 //        Results5 = getReport5(10);
 //        Results6 = getReport6();
@@ -106,13 +140,22 @@ public class App {
         //Results21 = getReport21(10);
 //        Results22 = getReport22();
         //Results23 = getReport23();
-//        Results24 = getReport24();
-//        Results25 = getReport25();
+        //Results24 = getReport24();
+        //Results25 = getReport25();
 
+        // World Reports
+        PopReport1 = getPopReport1();
+        PopReport2 = getPopReport2();
+        PopReport3 = getPopReport3();
+        PopReport4 = getPopReport4();
+        PopReport5 = getPopReport5();
+        PopReport6 = getPopReport6();
+        PopReport7 = getPopReport7();
+        PopReportStats = getPopReportStats();
 
         // Display results
 
-        app.displayResults(Results1);
+        //app.displayResults(Results1);
 //        app.displayResults(Results2);
 //        app.displayResults(Results3);
 //        app.displayResults(Results4);
@@ -135,9 +178,18 @@ public class App {
         //app.displayResults(Results21);
         //app.displayResults(Results22);
         //app.displayResults(Results23);
-//        app.displayResults(Results24);
-//        app.displayResults(Results25);
+        //app.displayResults(Results24);
+        //app.displayResults(Results25);
 
+        // World Reports
+        app.displayResultsWR(PopReport1);
+        app.displayResultsWR(PopReport2);
+        app.displayResultsWR(PopReport3);
+        app.displayResultsWR(PopReport4);
+        app.displayResultsWR(PopReport5);
+        app.displayResultsWR(PopReport6);
+        app.displayResultsWR(PopReport7);
+        app.displayResultsWR(PopReportStats);
 
         // Disconnect from database
         app.disconnect();
@@ -167,7 +219,6 @@ public class App {
                 System.out.println("No countries");
         }
     }
-
 
     private static String getCountryReport(String results, ResultSet rset, String title) throws SQLException {
 
@@ -281,8 +332,6 @@ public class App {
         return results;
     }
 
-
-
     // REPORT 5 : The top N populated countries in a continent where N is provided by the user.
     public static String getReport5(Integer num)
     {
@@ -354,14 +403,12 @@ public class App {
         return results;
     }
 
-
     // REPORT 9: All the cities in a region organised by largest population to smallest.
     public static String getReport9()
     {
         String results = "";
         try
         {
-
             // SELECT STATEMENT
             String strSelect = "select city.Name , country.Name as Country, District, city.Population  " +
 
@@ -605,9 +652,7 @@ public class App {
         return results;
     }
 
-    // REPORT 21: As a service user I want to produce a report listing the top N populated
-
-    // capital cities in a continent where N is provided by the user
+    // REPORT 21: As a service user I want to produce a report listing the top N populated capital cities in a continent where N is provided by the user
 
     public static String getReport21( Integer num)
     {
@@ -721,8 +766,7 @@ public class App {
         return results;
     }
 
-    // 25. As a service user I want to produce a report listing the population of people,
-    // people living in cities, and people not living in cities in each country
+    // 25. As a service user I want to produce a report listing the population of people, people living in cities, and people not living in cities in each country
 
     public static String getReport25()
     {
@@ -778,11 +822,6 @@ public class App {
         }
         return results;
     }
-
-
-    // ADDED EVEN NUMBERS FROM ROB
-    // All Odd numbered reports copied into single file as git branch merges were overwriting the getReport method
-    // Original branches were deleted
 
     // REPORT 2: list all the countries in a continent organised by largest population to smallest.
     public static String getReport2()
@@ -1322,6 +1361,443 @@ public class App {
             System.out.println(
                     results + "\n");
 
+        }
+    }
+    // DON'T CHANGE
+    private static void displayResultsWR(String results) {
+        if (results != null) {
+            System.out.println(
+                    results + "\n");
+
+        }
+    }
+    /// WORLD POPULATION REPORT
+
+    // SELECT STATEMENTS FOR POPULATION REPORTS
+    private static String reportTotalPopulation() {
+        return "SELECT SUM(CAST( Population AS UNSIGNED INTEGER )) AS TotalPopulation FROM country";
+    }
+
+    private static String reportTotalPopulationContinents() {
+        return "select SUM(CAST( Population AS UNSIGNED INTEGER)) AS TotalPopulation, Continent from country group by Continent";
+    }
+
+    private static String reportTotalPopulationRegion() {
+        return "select SUM(CAST( Population AS UNSIGNED INTEGER)) AS TotalPopulation, Region from country group by Region";
+    }
+
+    private static String reportTotalPopulationCountry() {
+        return "select SUM(CAST( Population AS UNSIGNED INTEGER)) AS TotalPopulation, Name As Country from country group by Name";
+    }
+
+    private static String reportTotalPopulationDistrictsCity() {
+        return "select SUM(CAST( Population AS UNSIGNED INTEGER)) AS TotalPopulation, District from city group by District ";
+    }
+
+    private static String reportTotalPopulationCountryCity() {
+        return "select SUM(CAST( Population AS UNSIGNED INTEGER)) AS TotalPopulation, Name from city group by Name ";
+    }
+
+    private static String reportTotalPopulationLanguage() {
+        return "SELECT Name ,Language ,SUM(Percentage) as Percentage " +
+                "  FROM countrylanguage " +
+                "  inner join country on CountryCode = country.code " +
+                "  where CountryCode = 'USA' " +
+                "  group by name,Language " +
+                "  order by Percentage DESC";
+    }
+
+    /* SQL Statement */
+    private static String getStringPopulation() {
+        return "SELECT Continent, Region, country.Name as Name, " +
+                " sum(cast(country.Population AS UNSIGNED INTEGER )) AS totalPopulationCountry, " +
+                " (sum(cast(country.Population AS UNSIGNED INTEGER )) - sum(cast(city.Population AS UNSIGNED INTEGER)) ) / (sum(cast(country.Population AS UNSIGNED INTEGER)) / 100 ) As percentageCountry, " +
+                " sum(cast(country.Population as UNSIGNED INTEGER)) - SUM(CAST(city.Population as UNSIGNED INTEGER)) as notLivingInCities, " +
+                " sum(cast(city.Population AS UNSIGNED INTEGER)) As totalPopulationCity, " +
+                " 100 - (sum(cast(country.Population AS UNSIGNED INTEGER)) - sum(cast(city.Population AS UNSIGNED INTEGER)) ) / (sum(cast(country.Population AS UNSIGNED INTEGER )) / 100) As percentageCity " +
+                " FROM city JOIN country ON country.Code=city.CountryCode " +
+                " GROUP BY Continent,Region, country.Name  ";
+    }
+
+    /* Exceptions */
+    private static String getException(Exception e) {
+        String Exception;
+        Exception = (e.getMessage());
+        return Exception;
+    }
+
+    // ********* REPORTS - WORLD POPULATION *********
+    /* Population 1 Report */
+    private static String getPopReport1() {
+        String results = "";
+        try {
+            // SELECT STATEMENT to pull information required for the reports
+            String strSelect = reportTotalPopulation();
+
+            // SQL Connect statements
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            // This is the results set that is returned from the queries
+            ResultSet set = stmt.executeQuery(strSelect);
+
+            while (set.next()) {
+                // New Instant of "World"
+                World wd = new World();
+                wd.totalPopulation = set.getString("TotalPopulation");
+
+                String newRES = wd.totalPopulation + " \n";
+
+                // Build Results
+                results = results.concat( newRES );
+            }
+
+            // Check we have Data
+            if (!(results == null)) {
+
+                // Display the results from the queries
+                displayResultsWR("R1: Total Population World" + "\n" + results);
+                return null;
+            }
+
+        } catch (Exception e) // Catch exceptions
+        {
+            return getException(e);
+        }
+        return results;
+    }
+
+    /* Population 2 Report Continents */
+    private static String getPopReport2() {
+        String results = "";
+        try {
+            // SELECT STATEMENT to pull information required for the reports
+            String strSelect = reportTotalPopulationContinents();
+
+            // SQL Connect statements
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            // This is the results set that is returned from the queries
+            ResultSet set = stmt.executeQuery(strSelect);
+
+            while (set.next()) {
+                // New Instant of "World"
+                World wd = new World();
+                wd.totalPopulation = set.getString("TotalPopulation");
+                wd.continent = set.getString("Continent");
+
+                String newRES = wd.totalPopulation + "\t" + wd.continent + " \n";
+
+                // Build Results
+                results = results.concat( newRES );
+            }
+
+            // Check we have Data
+            if (!(results == null)) {
+
+                // Display the results from the queries
+                displayResultsWR("R2: Total Population Continent" + "\n" + results);
+                return null;
+            }
+
+        } catch (Exception e) // Catch exceptions
+        {
+            return getException(e);
+        }
+        return results;
+    }
+
+    /* Population 3 Report Region */
+    private static String getPopReport3() {
+        String results = "";
+        try {
+            // SELECT STATEMENT to pull information required for the reports
+            String strSelect = reportTotalPopulationRegion();
+
+            // SQL Connect statements
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            // This is the results set that is returned from the queries
+            ResultSet set = stmt.executeQuery(strSelect);
+
+            while (set.next()) {
+                // New Instant of "World"
+                World wd = new World();
+                wd.totalPopulation = set.getString("TotalPopulation");
+                wd.region = set.getString("Region");
+
+                String newRES = wd.totalPopulation + "\t" + wd.region + " \n";
+
+                // Build Results
+                results = results.concat( newRES );
+            }
+
+            // Check we have Data
+            if (!(results == null)) {
+
+                // Display the results from the queries
+                displayResultsWR("R3: Total Population Region" + "\n" + results);
+                return null;
+            }
+
+        } catch (Exception e) // Catch exceptions
+        {
+            return getException(e);
+        }
+        return results;
+    }
+
+    /* Population 4 Report Country */
+    private static String getPopReport4() {
+        String results = "";
+        try {
+            // SELECT STATEMENT to pull information required for the reports
+            String strSelect = reportTotalPopulationCountry();
+
+            // SQL Connect statements
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            // This is the results set that is returned from the queries
+            ResultSet set = stmt.executeQuery(strSelect);
+
+            while (set.next()) {
+                // New Instant of "World"
+                World wd = new World();
+                wd.totalPopulation = set.getString("TotalPopulation");
+                wd.country = set.getString("Country");
+
+                String newRES = wd.totalPopulation + "\t" + wd.country + " \n";
+
+                // Build Results
+                results = results.concat( newRES );
+            }
+
+            // Check we have Data
+            if (!(results == null)) {
+
+                // Display the results from the queries
+                displayResultsWR("R4: Total Population Country" + "\n" + results);
+                return null;
+            }
+
+        } catch (Exception e) // Catch exceptions
+        {
+            return getException(e);
+        }
+        return results;
+    }
+
+    /* Population 5 Report District */
+    private static String getPopReport5() {
+        String results = "";
+        try {
+            // SELECT STATEMENT to pull information required for the reports
+            String strSelect = reportTotalPopulationDistrictsCity();
+
+            // SQL Connect statements
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            // This is the results set that is returned from the queries
+            ResultSet set = stmt.executeQuery(strSelect);
+
+            while (set.next()) {
+                // New Instant of "World"
+                World wd = new World();
+                wd.totalPopulation = set.getString("TotalPopulation");
+                wd.district = set.getString("District");
+
+                String newRES = wd.totalPopulation + "\t" + wd.district + " \n";
+
+                // Build Results
+                results = results.concat(newRES);
+            }
+
+            // Check we have Data
+            if (!(results == null)) {
+
+                // Display the results from the queries
+                displayResultsWR("R5: Total Population District" + "\n" + results);
+                return null;
+            }
+
+        } catch (Exception e) // Catch exceptions
+        {
+            return getException(e);
+        }
+        return results;
+    }
+
+    /* Population 6 Report District */
+    private static String getPopReport6() {
+        String results = "";
+        try {
+            // SELECT STATEMENT to pull information required for the reports
+            String strSelect = reportTotalPopulationCountryCity();
+
+            // SQL Connect statements
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            // This is the results set that is returned from the queries
+            ResultSet set = stmt.executeQuery(strSelect);
+
+            while (set.next()) {
+                // New Instant of "World"
+                World wd = new World();
+
+                wd.totalPopulation = set.getString("TotalPopulation");
+                wd.name = set.getString("Name");
+
+                String newRES = wd.totalPopulation + "\t" + wd.name + " \n";
+
+                // Build Results
+                results = results.concat(newRES);
+            }
+
+            // Check we have Data
+            if (!(results == null)) {
+
+                // Display the results from the queries
+                displayResultsWR("R6: Total Population Country" + "\n" + results);
+                return null;
+            }
+
+        } catch (Exception e) // Catch exceptions
+        {
+            return getException(e);
+        }
+        return results;
+    }
+
+    /* Population 7 Report District */
+    private static String getPopReport7() {
+        String results = "";
+        try {
+            // SELECT STATEMENT to pull information required for the reports
+            String strSelect = reportTotalPopulationLanguage();
+
+            // SQL Connect statements
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            // This is the results set that is returned from the queries
+            ResultSet set = stmt.executeQuery(strSelect);
+
+            while (set.next()) {
+                // New Instant of "World"
+                World wd = new World();
+
+                wd.name = set.getString("Name");
+                wd.language = set.getString("Language");
+                wd.percentage = set.getFloat("Percentage");
+
+                String newRES = wd.name + "\t" + wd.language + "\t" + wd.percentage + " \n";
+
+                // Build Results
+                results = results.concat( newRES );
+            }
+
+            // Check we have Data
+            if (!(results == null)) {
+
+                // Display the results from the queries
+                displayResultsWR("R7: Total Population Languages" + "\n" + results);
+                return null;
+            }
+            else
+            {
+                displayResultsWR("R7: Total Population Languages - NO DATA RETURNED" );
+                return null;
+            }
+
+        } catch (Exception e) // Catch exceptions
+        {
+            return getException(e);
+        }
+        //return results;
+    }
+
+    private static String getPopReportStats() {
+        String results = "";
+        try {
+            // SELECT STATEMENT to pull information required for the reports
+            String strSelect = getStringPopulation();
+
+            // SQL Connect statements
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            // This is the results set that is returned from the queries
+            ResultSet set = stmt.executeQuery(strSelect);
+
+            // Check we have Data
+            if (!(set == null)) {
+                // Results from getStringWorld
+                results = getStringWorld(set, "Population Report Stats");
+                // Display the results from the queries
+                displayResultsWR(results);
+                return "";
+            }
+
+        } catch (Exception e) // Catch exceptions
+        {
+            return getException(e);
+        }
+        return results;
+    }
+
+    /* getStringWorld Method - this create the "string" of the results */
+    private static String getStringWorld(ResultSet set, String title) throws SQLException {
+
+        String results = "";
+        // Header for Report
+        String header = "Continent" + "\t" + "Region" + "\t" + "Name" + "\t" + "total Population Country" + "\t" + "percentage Country" + "\t" + "Not Living In Cities" + "\t" + "Total Population City" + "\t" + "Percentage City" + "\n";
+        // RESULTS SET
+        while (set.next()) {
+            // New Instant of "World"
+            World wd = new World();
+
+            // Fields to be shown
+            wd.continent = set.getString("Continent");
+            wd.region = set.getString("Region");
+            wd.name = set.getString("Name");
+            wd.totalPopulationCountry = set.getString("TotalPopulationCountry");
+            wd.percentageCountry = set.getString("PercentageCountry");
+            wd.notLivingInCities = set.getString("NotLivingInCities");
+            wd.totalPopulationCity = set.getString("TotalPopulationCity");
+            wd.percentageCity = set.getString("PercentageCity");
+
+            // Creates String with results
+            String newRES = wd.continent + "\t" + wd.region + "\t" + wd.name + "\t" + wd.totalPopulationCountry + "\t" + wd.notLivingInCities + "\t" + wd.percentageCountry + "\t" + wd.totalPopulationCity + "\t" + wd.percentageCity + "\n";
+
+            // Build Results
+            results = results.concat(newRES);
+        }
+
+        /* Depend if we have results will show one of two options */
+        if (results.equals("")) return title + "\n" + header + "No Results returned";
+        else {
+            return "\n".concat(title).concat(header).concat(results);
         }
     }
 }
