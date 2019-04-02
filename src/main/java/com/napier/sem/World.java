@@ -22,4 +22,13 @@ public class World {
     public String urban;
     public String city;
 
+    // Workd Reports
+    public String totalPopulation;
+
+
+    public String totalPopulationCountry;
+    public String percentageCountry;
+    public String notLivingInCities;
+    public String totalPopulationCity;
+    public String percentageCity;
 }
