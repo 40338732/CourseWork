@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AppTest
 {
     static App app;
-    private static Connection con = null;
+    static Connection con = null;
 
     @BeforeAll
     static void init()
