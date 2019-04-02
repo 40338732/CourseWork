@@ -1374,7 +1374,7 @@ public class App {
     /// WORLD POPULATION REPORT
 
     // SELECT STATEMENTS FOR POPULATION REPORTS
-    private static String reportTotalPopulation() {
+    public static String reportTotalPopulation() {
         return "SELECT SUM(CAST( Population AS UNSIGNED INTEGER )) AS TotalPopulation FROM country";
     }
 
@@ -1428,7 +1428,7 @@ public class App {
 
     // ********* REPORTS - WORLD POPULATION *********
     /* Population 1 Report */
-    private static String getPopReport1() {
+    public static String getPopReport1() {
         String results = "";
         try {
             // SELECT STATEMENT to pull information required for the reports
@@ -1458,8 +1458,7 @@ public class App {
             if (!(results == null)) {
 
                 // Display the results from the queries
-                displayResultsWR("R1: Total Population World" + "\n" + results);
-                return null;
+                displayResultsWR("R1: Total Population World" + "\n" + results.trim());
             }
 
         } catch (Exception e) // Catch exceptions
@@ -1470,7 +1469,7 @@ public class App {
     }
 
     /* Population 2 Report Continents */
-    private static String getPopReport2() {
+    public static String getPopReport2() {
         String results = "";
         try {
             // SELECT STATEMENT to pull information required for the reports
@@ -1502,7 +1501,6 @@ public class App {
 
                 // Display the results from the queries
                 displayResultsWR("R2: Total Population Continent" + "\n" + results);
-                return null;
             }
 
         } catch (Exception e) // Catch exceptions
@@ -1513,7 +1511,7 @@ public class App {
     }
 
     /* Population 3 Report Region */
-    private static String getPopReport3() {
+    public static String getPopReport3() {
         String results = "";
         try {
             // SELECT STATEMENT to pull information required for the reports
@@ -1545,7 +1543,6 @@ public class App {
 
                 // Display the results from the queries
                 displayResultsWR("R3: Total Population Region" + "\n" + results);
-                return null;
             }
 
         } catch (Exception e) // Catch exceptions
@@ -1588,7 +1585,6 @@ public class App {
 
                 // Display the results from the queries
                 displayResultsWR("R4: Total Population Country" + "\n" + results);
-                return null;
             }
 
         } catch (Exception e) // Catch exceptions
@@ -1631,7 +1627,6 @@ public class App {
 
                 // Display the results from the queries
                 displayResultsWR("R5: Total Population District" + "\n" + results);
-                return null;
             }
 
         } catch (Exception e) // Catch exceptions
@@ -1675,7 +1670,6 @@ public class App {
 
                 // Display the results from the queries
                 displayResultsWR("R6: Total Population Country" + "\n" + results);
-                return null;
             }
 
         } catch (Exception e) // Catch exceptions
@@ -1720,19 +1714,17 @@ public class App {
 
                 // Display the results from the queries
                 displayResultsWR("R7: Total Population Languages" + "\n" + results);
-                return null;
             }
             else
             {
                 displayResultsWR("R7: Total Population Languages - NO DATA RETURNED" );
-                return null;
             }
 
         } catch (Exception e) // Catch exceptions
         {
             return getException(e);
         }
-        //return results;
+        return results;
     }
 
     private static String getPopReportStats() {
@@ -1756,7 +1748,6 @@ public class App {
                 results = getStringWorld(set, "Population Report Stats");
                 // Display the results from the queries
                 displayResultsWR(results);
-                return "";
             }
 
         } catch (Exception e) // Catch exceptions
