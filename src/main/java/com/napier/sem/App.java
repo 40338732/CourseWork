@@ -899,7 +899,57 @@ public class App {
         }
         return results;
     }
+    // REPORT 18: produce a report listing all the capital cities in a continent organised by largest population to smallest
+    public static String getReport18()
+    {
+        String results = "";
+        try
+        {
+            // SELECT STATEMENT
+            String strSelect = "SELECT city.Name, country.name, city.Population " +
+                    " FROM city " +
+                    " JOIN country ON city.CountryCode=country.Code " +
+                    " WHERE Continent = 'Europe' " +
+                    " AND country.Capital=city.ID " +
+                    " ORDER BY city.Population DESC ";
 
+
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "\n" + "*** The most populated capital cities in Europe: ***" );
+            System.out.println( "City:" + "\t" + "Country:" + "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                World wd = new World();
+
+                // Fields to be shown
+                // wd.Country = rset.getString("Country");
+                wd.name = rset.getString("Name");
+                wd.country = rset.getString("country.name");
+                wd.population = rset.getString("Population");
+
+                System.out.println( wd.name + "\t" + wd.country + "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.country + "\t" + wd.population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get World details");
+            return null;
+        }
+        return results;
+    }
     // REPORT 19: : All the capital cities in a region organised by largest to smallest.
     public static String getReport19()
     {
@@ -952,7 +1002,6 @@ public class App {
     }
 
     // REPORT 21: As a service user I want to produce a report listing the top N populated capital cities in a continent where N is provided by the user
-
     public static String getReport21( Integer num)
     {
         String results = "";
@@ -1006,9 +1055,7 @@ public class App {
         return results;
     }
 
-    // REPORT 23: As a service user I want to produce a report listing the population of people,
-    // people living in cities, and people not living in cities in each continent
-
+    // REPORT 23: As a service user I want to produce a report listing the population of people, people living in cities, and people not living in cities in each continent
     public static String getReport23()
     {
         String results = "";
@@ -1144,57 +1191,7 @@ public class App {
 
 
 
-    // REPORT 18: produce a report listing all the capital cities in a continent organised by largest population to smallest
-    public static String getReport18()
-    {
-        String results = "";
-        try
-        {
-            // SELECT STATEMENT
-            String strSelect = "SELECT city.Name, country.name, city.Population " +
-                    " FROM city " +
-                    " JOIN country ON city.CountryCode=country.Code " +
-                    " WHERE Continent = 'Europe' " +
-                    " AND country.Capital=city.ID " +
-                    " ORDER BY city.Population DESC ";
 
-
-            Statement stmt = con.createStatement();
-
-            // Execute SQL statement
-            stmt.executeQuery(strSelect);
-
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            // Check one is returned
-            System.out.println( "\n" + "*** The most populated capital cities in Europe: ***" );
-            System.out.println( "City:" + "\t" + "Country:" + "\t" + "Population:" );
-
-            while (rset.next())
-            {
-                World wd = new World();
-
-                // Fields to be shown
-                // wd.Country = rset.getString("Country");
-                wd.name = rset.getString("Name");
-                wd.country = rset.getString("country.name");
-                wd.population = rset.getString("Population");
-
-                System.out.println( wd.name + "\t" + wd.country + "\t" + wd.population );
-                String newRES =   wd.name + "\t" + wd.country + "\t" + wd.population +"\n";
-
-                // Build Results
-                results = results + newRES;
-            }
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
-            return null;
-        }
-        return results;
-    }
 
 
     // REPORT 20: produce a report listing the top N populated capital cities in the World where N is provided by the user
