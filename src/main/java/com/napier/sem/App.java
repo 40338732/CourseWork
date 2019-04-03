@@ -299,6 +299,41 @@ public class App {
         return results;
     }
 
+    // REPORT 2: list all the countries in a continent organised by largest population to smallest.
+    public static String getReport2()
+    {
+        String results = "";
+        try
+        {
+            // SELECT STATEMENT
+            String strSelect = "SELECT country.Code, Region, Continent, country.Name, country.Population, city.name AS Capital " +
+                    " FROM country " +
+                    "JOIN city ON country.Capital=city.id " +
+                    " WHERE Continent='Europe' " +
+                    " ORDER BY Population DESC ";
+
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+            String title = "*** Populations of countries in Europe: ***";
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Refactored results sets method
+            results = getCountryReport(results, rset, title);
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get World details");
+            return null;
+        }
+
+
+        return results;
+    }
+
     // REPORT 3:
     public static String getReport3()
     {
@@ -823,40 +858,6 @@ public class App {
         return results;
     }
 
-    // REPORT 2: list all the countries in a continent organised by largest population to smallest.
-    public static String getReport2()
-    {
-        String results = "";
-        try
-        {
-            // SELECT STATEMENT
-            String strSelect = "SELECT country.Code, Region, Continent, country.Name, country.Population, city.name AS Capital " +
-                    " FROM country " +
-                    "JOIN city ON country.Capital=city.id " +
-                    " WHERE Continent='Europe' " +
-                    " ORDER BY Population DESC ";
-
-            Statement stmt = con.createStatement();
-
-            // Execute SQL statement
-            stmt.executeQuery(strSelect);
-            String title = "*** Populations of countries in Europe: ***";
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            // Refactored results sets method
-            results = getCountryReport(results, rset, title);
-
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
-            return null;
-        }
-
-
-        return results;
-    }
 
 
     // REPORT 4: produce a report listing the top N populated countries in the World where N is provided by the user
