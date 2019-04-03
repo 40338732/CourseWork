@@ -739,6 +739,44 @@ public class App {
         return results;
     }
 
+    // REPORT 14:  produce a report listing the top N populated cities in a region where N is provided by the user
+    public static String getReport14()
+    {
+        // Create user input variable
+        int userInput = 10;
+
+        String results = "";
+        try
+        {
+            // SELECT STATEMENT
+            String strSelect = " SELECT country.name AS Country, city.Name, city.District, city.Population  " +
+                    " FROM city " +
+                    " JOIN country ON city.CountryCode=country.Code " +
+                    " WHERE region = 'North America' " +
+                    " ORDER BY city.Population DESC " +
+                    " LIMIT " + userInput;
+
+
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            String title =  "*** The top " +  userInput + " most populated cities in North America: ***";
+
+            results = getCityReport(results, rset, title);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get World details");
+            return null;
+        }
+        return results;
+    }
+
     // REPORT 15: The top N populated cities in a country where N is provided by the user.
     public static String getReport15(Integer num)
     {
@@ -1066,43 +1104,7 @@ public class App {
 
 
 
-    // REPORT 14:  produce a report listing the top N populated cities in a region where N is provided by the user
-    public static String getReport14()
-    {
-        // Create user input variable
-        int userInput = 10;
 
-        String results = "";
-        try
-        {
-            // SELECT STATEMENT
-            String strSelect = " SELECT country.name AS Country, city.Name, city.District, city.Population  " +
-                    " FROM city " +
-                    " JOIN country ON city.CountryCode=country.Code " +
-                    " WHERE region = 'North America' " +
-                    " ORDER BY city.Population DESC " +
-                    " LIMIT " + userInput;
-
-
-            Statement stmt = con.createStatement();
-
-            // Execute SQL statement
-            stmt.executeQuery(strSelect);
-
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            String title =  "*** The top " +  userInput + " most populated cities in North America: ***";
-
-            results = getCityReport(results, rset, title);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
-            return null;
-        }
-        return results;
-    }
 
     // REPORT 16:  produce a report listing the top N populated cities in a district where N is provided by the user
     public static String getReport16()
