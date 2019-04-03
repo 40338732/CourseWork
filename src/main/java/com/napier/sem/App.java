@@ -1107,7 +1107,61 @@ public class App {
         }
         return results;
     }
+    // REPORT 22: produce a report listing the top N populated capital cities in a region where N is provided by the user
+    public static String getReport22()
+    {
+        // Create user input variable
+        int userInput = 8;
 
+        String results = "";
+        try
+        {
+            // SELECT STATEMENT
+            String strSelect = "SELECT city.Name, country.name, city.Population " +
+                    " FROM city " +
+                    " JOIN country ON city.CountryCode=country.Code " +
+                    " WHERE country.Capital=city.ID " +
+                    " AND Region = 'Caribbean' " +
+                    " ORDER BY city.Population DESC " +
+                    " LIMIT " + userInput;
+
+
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "\n" + "*** The top " + userInput + " most populated capital cities in the Caribbean: ***" );
+            System.out.println( "City:" + "\t" + "Country:" + "\t" + "Population:" );
+
+            while (rset.next())
+            {
+                World wd = new World();
+
+                // Fields to be shown
+                // wd.Country = rset.getString("Country");
+                wd.name = rset.getString("Name");
+                wd.country = rset.getString("country.name");
+                wd.population = rset.getString("Population");
+
+                System.out.println( wd.name + "\t" + wd.country + "\t" + wd.population );
+                String newRES =   wd.name + "\t" + wd.country + "\t" + wd.population +"\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get World details");
+            return null;
+        }
+        return results;
+    }
     // REPORT 23: As a service user I want to produce a report listing the population of people, people living in cities, and people not living in cities in each continent
     public static String getReport23()
     {
@@ -1250,61 +1304,7 @@ public class App {
 
 
 
-    // REPORT 22: produce a report listing the top N populated capital cities in a region where N is provided by the user
-    public static String getReport22()
-    {
-        // Create user input variable
-        int userInput = 8;
 
-        String results = "";
-        try
-        {
-            // SELECT STATEMENT
-            String strSelect = "SELECT city.Name, country.name, city.Population " +
-                    " FROM city " +
-                    " JOIN country ON city.CountryCode=country.Code " +
-                    " WHERE country.Capital=city.ID " +
-                    " AND Region = 'Caribbean' " +
-                    " ORDER BY city.Population DESC " +
-                    " LIMIT " + userInput;
-
-
-            Statement stmt = con.createStatement();
-
-            // Execute SQL statement
-            stmt.executeQuery(strSelect);
-
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            // Check one is returned
-            System.out.println( "\n" + "*** The top " + userInput + " most populated capital cities in the Caribbean: ***" );
-            System.out.println( "City:" + "\t" + "Country:" + "\t" + "Population:" );
-
-            while (rset.next())
-            {
-                World wd = new World();
-
-                // Fields to be shown
-                // wd.Country = rset.getString("Country");
-                wd.name = rset.getString("Name");
-                wd.country = rset.getString("country.name");
-                wd.population = rset.getString("Population");
-
-                System.out.println( wd.name + "\t" + wd.country + "\t" + wd.population );
-                String newRES =   wd.name + "\t" + wd.country + "\t" + wd.population +"\n";
-
-                // Build Results
-                results = results + newRES;
-            }
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
-            return null;
-        }
-        return results;
-    }
 
 
     // REPORT 24: produce a report listing the population of people, people living in cities, and people not living in cities in each region
