@@ -366,6 +366,49 @@ public class App {
         }
         return results;
     }
+    
+    // REPORT 4: produce a report listing the top N populated countries in the World where N is provided by the user
+    public static String getReport4(int userInput)
+    {
+        // Create user input variable
+        //int userInput = 7;
+        if (userInput <= 0)
+        {
+            System.out.println("Number must be positive");
+            return "";
+        }
+
+        String results = "";
+        try
+        {
+            // SELECT STATEMENT
+            String strSelect = "SELECT country.Code, Region, Continent, country.Name, country.Population, city.name AS Capital " +
+                    " FROM country " +
+                    " JOIN city ON country.Capital=city.id " +
+                    " ORDER BY Population DESC " +
+                    " LIMIT " + userInput;
+
+
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            String title = "*** Top " + userInput + " populated countries in the World: ***";
+            // Refactored results sets method
+            results = getCountryReport(results, rset, title);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get World details");
+            return null;
+        }
+
+        return results;
+    }
 
     // REPORT 5 : The top N populated countries in a continent where N is provided by the user.
     public static String getReport5(Integer num)
@@ -860,48 +903,6 @@ public class App {
 
 
 
-    // REPORT 4: produce a report listing the top N populated countries in the World where N is provided by the user
-    public static String getReport4(int userInput)
-    {
-        // Create user input variable
-        //int userInput = 7;
-        if (userInput <= 0)
-        {
-            System.out.println("Number must be positive");
-            return "";
-        }
-
-        String results = "";
-        try
-        {
-            // SELECT STATEMENT
-            String strSelect = "SELECT country.Code, Region, Continent, country.Name, country.Population, city.name AS Capital " +
-                    " FROM country " +
-                    " JOIN city ON country.Capital=city.id " +
-                    " ORDER BY Population DESC " +
-                    " LIMIT " + userInput;
-
-
-            Statement stmt = con.createStatement();
-
-            // Execute SQL statement
-            stmt.executeQuery(strSelect);
-
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            String title = "*** Top " + userInput + " populated countries in the World: ***";
-            // Refactored results sets method
-            results = getCountryReport(results, rset, title);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
-            return null;
-        }
-
-        return results;
-    }
 
 
 
