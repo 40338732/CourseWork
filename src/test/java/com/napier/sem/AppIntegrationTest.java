@@ -226,4 +226,25 @@ public class AppIntegrationTest
         assertEquals(s[0], "Afghanistan");
     }
 
+    @Test
+    void testGetPopReport1()
+    {
+        String s = App.getPopReport1();
+        assertEquals(s, "6078749450 " + "\n");
+    }
+
+    @Test
+    void testGetPopReport2()
+    {
+        String s = App.getPopReport2();
+        System.out.println("Result: " + s);
+        assertEquals(s, "482993000\tNorth America \n" +
+                "3705025700\tAsia \n" +
+                "784475000\tAfrica \n" +
+                "730074600\tEurope \n" +
+                "345780000\tSouth America \n" +
+                "30401150\tOceania \n" +
+                "0\tAntarctica \n");
+    }
+    
 }

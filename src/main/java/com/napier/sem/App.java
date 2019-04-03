@@ -12,43 +12,43 @@ public class App {
 
     public ArrayList<Employee> allSalaries;
 
-    // Non parameters connect
-    // DON'T CHANGE
-    public void connect() {
-        try {
-            // Load Database driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Could not load SQL driver");
-            System.exit(-1);
-        }
+//    // Non parameters connect
+//    // DON'T CHANGE
+//    public void connect() {
+//        try {
+//            // Load Database driver
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//        } catch (ClassNotFoundException e) {
+//            System.out.println("Could not load SQL driver");
+//            System.exit(-1);
+//        }
+//
+//        int retries = 10;
+//        for (int i = 0; i < retries; ++i) {
+//            System.out.println("Connecting to database...");
+//            try {
+//                // Wait a bit for db to start
+//                Thread.sleep(10000);
+//                // Connect to database
+//                con = DriverManager.getConnection("jdbc:MySQL://db:3306/world?useSSL=false", "root", "example");
+//                System.out.println("Successfully connected");
+//                break;
+//            } catch (SQLException sqle) {
+//                System.out.println("SQLException: " + sqle.getMessage());
+//                System.out.println("SQLState: " + sqle.getSQLState());
+//                System.out.println("VendorError: " + sqle.getErrorCode());
+//
+//
+//                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
+//                System.out.println(sqle.getMessage());
+//            } catch (InterruptedException ie) {
+//                System.out.println("Thread interrupted? Should not happen.");
+//            }
+//        }
+//
+//    }
 
-        int retries = 10;
-        for (int i = 0; i < retries; ++i) {
-            System.out.println("Connecting to database...");
-            try {
-                // Wait a bit for db to start
-                Thread.sleep(10000);
-                // Connect to database
-                con = DriverManager.getConnection("jdbc:MySQL://db:3306/world?useSSL=false", "root", "example");
-                System.out.println("Successfully connected");
-                break;
-            } catch (SQLException sqle) {
-                System.out.println("SQLException: " + sqle.getMessage());
-                System.out.println("SQLState: " + sqle.getSQLState());
-                System.out.println("VendorError: " + sqle.getErrorCode());
-
-
-                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
-                System.out.println(sqle.getMessage());
-            } catch (InterruptedException ie) {
-                System.out.println("Thread interrupted? Should not happen.");
-            }
-        }
-
-    }
-
-    private void connect(String location)
+    public void connect(String location)
     {
         try
         {
@@ -106,41 +106,42 @@ public class App {
     public static  void main(String[] args) {
         // Create new Application
         App app = new App();
+        System.out.println("version r25");
 
-        // Connect to database either with or without parameter
-        // app.connect("localhost:33060");
-        app.connect();
+        // Connect to database
+         app.connect("localhost:33060");
+//        app.connect();
 
         // local variable
         String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 , Results15, Results17 , Results19, Results21 , Results23 , Results25 = "";
         String Results2 , Results4 , Results6 , Results8, Results10, Results12, Results14 , Results16, Results18 , Results20, Results22 , Results24  = "";
         String PopReport1, PopReport2, PopReport3, PopReport4, PopReport5, PopReport6, PopReport7, PopReportStats;
 
-        //        Results1 = getReport1();
-        //        Results2 = getReport2();
-        //        Results3 = getReport3();
-        //        Results4 = getReport4(6);
-        //        Results5 = getReport5(10);
-        //        Results6 = getReport6();
-        //        Results7 = getReport7();
-        //        Results8 = getReport8();
-        //        Results9 = getReport9();
-        //        Results10 = getReport10();
-        //        Results11 = getReport11();
-        //        Results12 = getReport12();
-        //        Results13 = getReport13(10);
-        //        Results14 = getReport14();
-        //        Results15 = getReport15(10);
-        //        Results16 = getReport16();
-        //        Results17 = getReport17();
-        //        Results18 = getReport18();
-        //        Results19 = getReport19();
-        //        Results20 = getReport20();
-        //        Results21 = getReport21(10);
-        //        Results22 = getReport22();
-        //        Results23 = getReport23();
-        //        Results24 = getReport24();
-        //        Results25 = getReport25();
+        // Results1 = getReport1();
+        // Results2 = getReport2();
+        // Results3 = getReport3();
+//        Results4 = getReport4(6);
+//        Results5 = getReport5(10);
+//        Results6 = getReport6();
+//        Results7 = getReport7();
+//        Results8 = getReport8();
+//        Results9 = getReport9();
+//        Results10 = getReport10();
+//        Results11 = getReport11();
+//        Results12 = getReport12();
+//        Results13 = getReport13(10);
+//        Results14 = getReport14();
+//        Results15 = getReport15(10);
+//        Results16 = getReport16();
+//        Results17 = getReport17();
+//        Results18 = getReport18();
+        //Results19 = getReport19();
+//        Results20 = getReport20();
+        //Results21 = getReport21(10);
+//        Results22 = getReport22();
+        //Results23 = getReport23();
+        //Results24 = getReport24();
+        //Results25 = getReport25();
 
         // World Reports
         PopReport1 = getPopReport1();
@@ -154,31 +155,31 @@ public class App {
 
         // Display results
 
-        //        app.displayResults(Results1);
-        //        app.displayResults(Results2);
-        //        app.displayResults(Results3);
-        //        app.displayResults(Results4);
-        //        app.displayResults(Results5);
-        //        app.displayResults(Results6);
-        //        app.displayResults(Results7);
-        //        app.displayResults(Results8);
-        //        app.displayResults(Results9);
-        //        app.displayResults(Results10);
-        //        app.displayResults(Results11);
-        //        app.displayResults(Results12);
-        //        app.displayResults(Results13);
-        //        app.displayResults(Results14);
-        //        app.displayResults(Results15);
-        //        app.displayResults(Results16);
-        //        app.displayResults(Results17);
-        //        app.displayResults(Results18);
-        //        app.displayResults(Results19);
-        //        app.displayResults(Results20);
-        //        app.displayResults(Results21);
-        //        app.displayResults(Results22);
-        //        app.displayResults(Results23);
-        //        app.displayResults(Results24);
-        //        app.displayResults(Results25);
+        //app.displayResults(Results1);
+//        app.displayResults(Results2);
+//        app.displayResults(Results3);
+//        app.displayResults(Results4);
+//        app.displayResults(Results5);
+//        app.displayResults(Results6);
+//        app.displayResults(Results7);
+//        app.displayResults(Results8);
+//        app.displayResults(Results9);
+//        app.displayResults(Results10);
+//        app.displayResults(Results11);
+//        app.displayResults(Results12);
+//        app.displayResults(Results13);
+//        app.displayResults(Results14);
+//        app.displayResults(Results15);
+//        app.displayResults(Results16);
+        //app.displayResults(Results17);
+        //app.displayResults(Results18);
+        //app.displayResults(Results19);
+        //app.displayResults(Results20);
+        //app.displayResults(Results21);
+        //app.displayResults(Results22);
+        //app.displayResults(Results23);
+        //app.displayResults(Results24);
+        //app.displayResults(Results25);
 
         // World Reports
         app.displayResultsWR(PopReport1);
@@ -193,6 +194,7 @@ public class App {
         // Disconnect from database
         app.disconnect();
     }
+
 
     void printCountries(ArrayList<Country> countries)
     {
@@ -265,66 +267,28 @@ public class App {
     }
 
     // REPORT 1: All the countries in the World organised by largest population to smallest.
-    private static String getReport1()
+    public static String getReport1()
     {
         String results = "";
         try
         {
-            // SQL STATEMENT
-            String strSelect = "SELECT Code, country.Name, Continent, Region, country.Population, (SELECT name FROM city WHERE ID = Capital) as Capital  FROM country  ORDER BY country.Population DESC ";
 
-            // STATEMENT
-            Statement stmt = con.createStatement();
-
-            // Execute SQL statement
-            stmt.executeQuery(strSelect);
-
-            // DATA IF ANY IS RETURNED
-            ResultSet set = stmt.executeQuery(strSelect);
-
-            // DISPLAY RESULTS IF NOT NULL
-            if (!(set == null)) {
-                String title = "*** All countries organised by largest population: ***";
-                results = getCountryReport(results, set, title);
-
-                if (!( results == "" ))
-                {
-                    System.out.println("Report 1 Generated Successfully ");
-                }
-            }
-        }
-        catch (Exception e) // DISPLAY ANY EXCEPTION
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Report 1:");
-            return null;
-        }
-        return results;
-    }
-
-    // REPORT 2: list all the countries in a continent organised by largest population to smallest.
-    public static String getReport2()
-    {
-        String results = "";
-        try
-        {
             // SELECT STATEMENT
-            String strSelect = "SELECT country.Code, Region, Continent, country.Name, country.Population, city.name AS Capital " +
-                    " FROM country " +
-                    "JOIN city ON country.Capital=city.id " +
-                    " WHERE Continent='Europe' " +
-                    " ORDER BY Population DESC ";
+            // R1 - All the countries in the World organised by largest population to smallest.
+
+            String strSelect = "SELECT Code, country.Name, Continent, Region, country.Population, (SELECT name FROM city WHERE ID = Capital) as Capital " +
+                    "            FROM country\n" +
+                    "            ORDER BY country.Population DESC ";
 
             Statement stmt = con.createStatement();
 
             // Execute SQL statement
             stmt.executeQuery(strSelect);
-            String title = "*** Populations of countries in Europe: ***";
+
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            // Refactored results sets method
+            String title = "*** All countries organised by largest population: ***";
             results = getCountryReport(results, rset, title);
-
         }
         catch (Exception e)
         {
@@ -332,10 +296,9 @@ public class App {
             System.out.println("Failed to get World details");
             return null;
         }
-
-
         return results;
     }
+
     // REPORT 3:
     public static String getReport3()
     {
@@ -860,7 +823,40 @@ public class App {
         return results;
     }
 
+    // REPORT 2: list all the countries in a continent organised by largest population to smallest.
+    public static String getReport2()
+    {
+        String results = "";
+        try
+        {
+            // SELECT STATEMENT
+            String strSelect = "SELECT country.Code, Region, Continent, country.Name, country.Population, city.name AS Capital " +
+                    " FROM country " +
+                    "JOIN city ON country.Capital=city.id " +
+                    " WHERE Continent='Europe' " +
+                    " ORDER BY Population DESC ";
 
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+            String title = "*** Populations of countries in Europe: ***";
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Refactored results sets method
+            results = getCountryReport(results, rset, title);
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get World details");
+            return null;
+        }
+
+
+        return results;
+    }
 
 
     // REPORT 4: produce a report listing the top N populated countries in the World where N is provided by the user
@@ -1304,7 +1300,7 @@ public class App {
 
 
     // REPORT 24: produce a report listing the population of people, people living in cities, and people not living in cities in each region
-    private static String getReport24()
+    public static String getReport24()
     {
         String results = "";
 
@@ -1378,7 +1374,7 @@ public class App {
     /// WORLD POPULATION REPORT
 
     // SELECT STATEMENTS FOR POPULATION REPORTS
-    private static String reportTotalPopulation() {
+    public static String reportTotalPopulation() {
         return "SELECT SUM(CAST( Population AS UNSIGNED INTEGER )) AS TotalPopulation FROM country";
     }
 
@@ -1432,7 +1428,7 @@ public class App {
 
     // ********* REPORTS - WORLD POPULATION *********
     /* Population 1 Report */
-    private static String getPopReport1() {
+    public static String getPopReport1() {
         String results = "";
         try {
             // SELECT STATEMENT to pull information required for the reports
@@ -1462,8 +1458,7 @@ public class App {
             if (!(results == null)) {
 
                 // Display the results from the queries
-                displayResultsWR("R1: Total Population World" + "\n" + results);
-                return null;
+                displayResultsWR("R1: Total Population World" + "\n" + results.trim());
             }
 
         } catch (Exception e) // Catch exceptions
@@ -1474,7 +1469,7 @@ public class App {
     }
 
     /* Population 2 Report Continents */
-    private static String getPopReport2() {
+    public static String getPopReport2() {
         String results = "";
         try {
             // SELECT STATEMENT to pull information required for the reports
@@ -1506,7 +1501,6 @@ public class App {
 
                 // Display the results from the queries
                 displayResultsWR("R2: Total Population Continent" + "\n" + results);
-                return null;
             }
 
         } catch (Exception e) // Catch exceptions
@@ -1517,7 +1511,7 @@ public class App {
     }
 
     /* Population 3 Report Region */
-    private static String getPopReport3() {
+    public static String getPopReport3() {
         String results = "";
         try {
             // SELECT STATEMENT to pull information required for the reports
@@ -1549,7 +1543,6 @@ public class App {
 
                 // Display the results from the queries
                 displayResultsWR("R3: Total Population Region" + "\n" + results);
-                return null;
             }
 
         } catch (Exception e) // Catch exceptions
@@ -1592,7 +1585,6 @@ public class App {
 
                 // Display the results from the queries
                 displayResultsWR("R4: Total Population Country" + "\n" + results);
-                return null;
             }
 
         } catch (Exception e) // Catch exceptions
@@ -1635,7 +1627,6 @@ public class App {
 
                 // Display the results from the queries
                 displayResultsWR("R5: Total Population District" + "\n" + results);
-                return null;
             }
 
         } catch (Exception e) // Catch exceptions
@@ -1679,7 +1670,6 @@ public class App {
 
                 // Display the results from the queries
                 displayResultsWR("R6: Total Population Country" + "\n" + results);
-                return null;
             }
 
         } catch (Exception e) // Catch exceptions
@@ -1724,19 +1714,17 @@ public class App {
 
                 // Display the results from the queries
                 displayResultsWR("R7: Total Population Languages" + "\n" + results);
-                return null;
             }
             else
             {
                 displayResultsWR("R7: Total Population Languages - NO DATA RETURNED" );
-                return null;
             }
 
         } catch (Exception e) // Catch exceptions
         {
             return getException(e);
         }
-        //return results;
+        return results;
     }
 
     private static String getPopReportStats() {
@@ -1760,7 +1748,6 @@ public class App {
                 results = getStringWorld(set, "Population Report Stats");
                 // Display the results from the queries
                 displayResultsWR(results);
-                return "";
             }
 
         } catch (Exception e) // Catch exceptions
