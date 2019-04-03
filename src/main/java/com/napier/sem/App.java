@@ -556,6 +556,7 @@ public class App {
         }
         return results;
     }
+
     // REPORT 9: All the cities in a region organised by largest population to smallest.
     public static String getReport9()
     {
@@ -580,6 +581,41 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             String title = "*** All cities in a region ordered by largest population: ***";
+
+            results = getCityReport(results, rset, title);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get World details");
+            return null;
+        }
+        return results;
+    }
+
+    // REPORT 10: produce a report listing all the cities in a country organised by largest population to smallest
+    public static String getReport10()
+    {
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "SELECT country.name AS Country, city.Name, city.District, city.Population " +
+                    " FROM city " +
+                    " JOIN country ON city.CountryCode=country.Code " +
+                    " WHERE country.Name = 'United Kingdom' " +
+                    " ORDER BY city.Population DESC ";
+
+
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            String title =  "*** Cities in the UK ordered by population: ***";
 
             results = getCityReport(results, rset, title);
         }
@@ -987,40 +1023,7 @@ public class App {
 
 
 
-    // REPORT 10: produce a report listing all the cities in a country organised by largest population to smallest
-    public static String getReport10()
-    {
-        String results = "";
-        try
-        {
 
-            // SELECT STATEMENT
-            String strSelect = "SELECT country.name AS Country, city.Name, city.District, city.Population " +
-                    " FROM city " +
-                    " JOIN country ON city.CountryCode=country.Code " +
-                    " WHERE country.Name = 'United Kingdom' " +
-                    " ORDER BY city.Population DESC ";
-
-
-            Statement stmt = con.createStatement();
-
-            // Execute SQL statement
-            stmt.executeQuery(strSelect);
-
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            String title =  "*** Cities in the UK ordered by population: ***";
-
-            results = getCityReport(results, rset, title);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
-            return null;
-        }
-        return results;
-    }
 
 
     // REPORT 12: produce a report listing the top N populated cities in the World where N is provided by the user
