@@ -899,6 +899,7 @@ public class App {
         }
         return results;
     }
+
     // REPORT 18: produce a report listing all the capital cities in a continent organised by largest population to smallest
     public static String getReport18()
     {
@@ -950,6 +951,7 @@ public class App {
         }
         return results;
     }
+
     // REPORT 19: : All the capital cities in a region organised by largest to smallest.
     public static String getReport19()
     {
@@ -1000,6 +1002,7 @@ public class App {
         }
         return results;
     }
+
     // REPORT 20: produce a report listing the top N populated capital cities in the World where N is provided by the user
     public static String getReport20()
     {
@@ -1054,6 +1057,7 @@ public class App {
         }
         return results;
     }
+
     // REPORT 21: As a service user I want to produce a report listing the top N populated capital cities in a continent where N is provided by the user
     public static String getReport21( Integer num)
     {
@@ -1107,6 +1111,7 @@ public class App {
         }
         return results;
     }
+
     // REPORT 22: produce a report listing the top N populated capital cities in a region where N is provided by the user
     public static String getReport22()
     {
@@ -1162,6 +1167,7 @@ public class App {
         }
         return results;
     }
+
     // REPORT 23: As a service user I want to produce a report listing the population of people, people living in cities, and people not living in cities in each continent
     public static String getReport23()
     {
@@ -1219,8 +1225,62 @@ public class App {
         return results;
     }
 
-    // 25. As a service user I want to produce a report listing the population of people, people living in cities, and people not living in cities in each country
+    // REPORT 24: produce a report listing the population of people, people living in cities, and people not living in cities in each region
+    public static String getReport24()
+    {
+        String results = "";
 
+        try
+        {
+            // SELECT STATEMENT
+            String strSelect = " SELECT Region, " +
+                    " sum(cast(country.Population AS UNSIGNED INTEGER )) AS totalPopulationRegion, " +
+                    " (sum(cast(country.Population AS UNSIGNED INTEGER )) - sum(cast(city.Population AS UNSIGNED INTEGER)) ) / (sum(cast(country.Population AS UNSIGNED INTEGER)) / 100 ) As percentageCountry, " +
+                    " sum(cast(country.Population as UNSIGNED INTEGER)) - SUM(CAST(city.Population as UNSIGNED INTEGER)) as notLivingInCities, " +
+                    " sum(cast(city.Population AS UNSIGNED INTEGER)) As totalPopulationCity, " +
+                    " 100 - (sum(cast(country.Population AS UNSIGNED INTEGER)) - sum(cast(city.Population AS UNSIGNED INTEGER)) ) / (sum(cast(country.Population AS UNSIGNED INTEGER )) / 100) As percentageCity " +
+                    " FROM city JOIN country ON country.Code=city.CountryCode " +
+                    " GROUP BY Region";
+
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Check one is returned
+            System.out.println( "\n" + "*** Region population, urban population and rural population: ***" );
+            System.out.println( "--Region--" + "\t--Total Population--" + "\t--Urban Population--" + "\t" + "--Rural Population--" );
+
+            while (rset.next())
+            {
+                World wd = new World();
+
+                // Fields to be shown
+                wd.region = rset.getString("Region");
+                wd.total = rset.getString("totalPopulationRegion");
+                wd.urban = rset.getString("totalPopulationCity");
+                wd.rural = rset.getString("notLivingInCities");
+                wd.ruralPercentage = rset.getString("percentageCountry");
+                wd.urbanPercentage = rset.getString("percentageCity");
+
+                String newRES =    wd.region + "\t" + wd.total + "\t" + wd.urban + "(" + wd.urbanPercentage + "%)"  + "\t" + wd.rural + "(" + wd.ruralPercentage + "%)" + "\n";
+
+                // Build Results
+                results = results + newRES;
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get World details");
+            return null;
+        }
+        return results;
+    }
+
+    // 25. As a service user I want to produce a report listing the population of people, people living in cities, and people not living in cities in each country
     public static String getReport25()
     {
         String results = "";
@@ -1276,91 +1336,6 @@ public class App {
         return results;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // REPORT 24: produce a report listing the population of people, people living in cities, and people not living in cities in each region
-    public static String getReport24()
-    {
-        String results = "";
-
-        try
-        {
-            // SELECT STATEMENT
-            String strSelect = " SELECT Region, " +
-            " sum(cast(country.Population AS UNSIGNED INTEGER )) AS totalPopulationRegion, " +
-            " (sum(cast(country.Population AS UNSIGNED INTEGER )) - sum(cast(city.Population AS UNSIGNED INTEGER)) ) / (sum(cast(country.Population AS UNSIGNED INTEGER)) / 100 ) As percentageCountry, " +
-            " sum(cast(country.Population as UNSIGNED INTEGER)) - SUM(CAST(city.Population as UNSIGNED INTEGER)) as notLivingInCities, " +
-            " sum(cast(city.Population AS UNSIGNED INTEGER)) As totalPopulationCity, " +
-            " 100 - (sum(cast(country.Population AS UNSIGNED INTEGER)) - sum(cast(city.Population AS UNSIGNED INTEGER)) ) / (sum(cast(country.Population AS UNSIGNED INTEGER )) / 100) As percentageCity " +
-            " FROM city JOIN country ON country.Code=city.CountryCode " +
-            " GROUP BY Region";
-
-            Statement stmt = con.createStatement();
-
-            // Execute SQL statement
-            stmt.executeQuery(strSelect);
-
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            // Check one is returned
-            System.out.println( "\n" + "*** Region population, urban population and rural population: ***" );
-            System.out.println( "--Region--" + "\t--Total Population--" + "\t--Urban Population--" + "\t" + "--Rural Population--" );
-
-            while (rset.next())
-            {
-                World wd = new World();
-
-                // Fields to be shown
-                wd.region = rset.getString("Region");
-                wd.total = rset.getString("totalPopulationRegion");
-                wd.urban = rset.getString("totalPopulationCity");
-                wd.rural = rset.getString("notLivingInCities");
-                wd.ruralPercentage = rset.getString("percentageCountry");
-                wd.urbanPercentage = rset.getString("percentageCity");
-
-                String newRES =    wd.region + "\t" + wd.total + "\t" + wd.urban + "(" + wd.urbanPercentage + "%)"  + "\t" + wd.rural + "(" + wd.ruralPercentage + "%)" + "\n";
-
-                // Build Results
-                results = results + newRES;
-            }
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
-            return null;
-        }
-        return results;
-    }
 
     // DON'T CHANGE
     public void displayResults(String results)
