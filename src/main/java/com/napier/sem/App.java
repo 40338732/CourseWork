@@ -4,10 +4,8 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class App {
-    /**
-     * Connection to MySQL database.
-     */
-
+    
+    // Connection to MySQL database.
     private static Connection con = null;
 
     public ArrayList<Employee> allSalaries;
@@ -86,10 +84,7 @@ public class App {
         }
     }
 
-    /**
-     * * Disconnect from the MySQL database. DON'T CHANGE
-     */
-
+    // Disconnect from the MySQL database. DON'T CHANGE
     public void disconnect() {
         if (con != null) {
             try {
@@ -239,7 +234,7 @@ public class App {
             String newRES =  wd.code + "\t" + wd.name  + "\t" + wd.continent  + "\t" + wd.region  + "\t" + wd.population  + "\t" + wd.capital + "\n";
 
             // Build Results
-            results = results + newRES;
+            results = results.concat(newRES);
         }
         return "\n" + title + "\n" + header + results + "\n";
     }
@@ -261,7 +256,7 @@ public class App {
             String newRES = wd.name + "\t" + wd.country + "\t" + wd.district+ "\t" + wd.population +"\n";
 
             // Build Results
-            results = results + newRES;
+            results = results.concat(newRES);
         }
         return "\n" + title + "\n" + header + "\n" + results + "\n";
     }
@@ -888,7 +883,7 @@ public class App {
                 String newRES =   wd.name + "\t" + wd.country+ "\t" + wd.population +"\n";
 
                 // Build Results
-                results = results + newRES;
+                results = results.concat(newRES);
             }
         }
         catch (Exception e)
@@ -940,7 +935,7 @@ public class App {
                 String newRES =   wd.name + "\t" + wd.country + "\t" + wd.population +"\n";
 
                 // Build Results
-                results = results + newRES;
+                results = results.concat(newRES);
             }
         }
         catch (Exception e)
@@ -991,7 +986,7 @@ public class App {
                 String newRES =   wd.name + "\t" + wd.region+ "\t" + wd.population +"\n";
 
                 // Build Results
-                results = results + newRES;
+                results = results.concat(newRES);
             }
         }
         catch (Exception e)
@@ -1046,7 +1041,7 @@ public class App {
                 String newRES =   wd.name + "\t" + wd.country + "\t" + wd.population +"\n";
 
                 // Build Results
-                results = results + newRES;
+                results = results.concat(newRES);
             }
         }
         catch (Exception e)
@@ -1100,7 +1095,7 @@ public class App {
                 String newRES =     wd.name + "\t" + wd.country + "\t" + wd.district + "\t" + wd.population +"\n";
 
                 // Build Results
-                results = results + newRES;
+                results = results.concat(newRES);
             }
         }
         catch (Exception e)
@@ -1156,7 +1151,7 @@ public class App {
                 String newRES =   wd.name + "\t" + wd.country + "\t" + wd.population +"\n";
 
                 // Build Results
-                results = results + newRES;
+                results = results.concat(newRES);
             }
         }
         catch (Exception e)
@@ -1213,7 +1208,7 @@ public class App {
                 String newRES =     wd.continent + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban +"\n";
 
                 // Build Results
-                results = results + newRES;
+                results = results.concat(newRES);
             }
         }
         catch (Exception e)
@@ -1268,7 +1263,7 @@ public class App {
                 String newRES =    wd.region + "\t" + wd.total + "\t" + wd.urban + "(" + wd.urbanPercentage + "%)"  + "\t" + wd.rural + "(" + wd.ruralPercentage + "%)" + "\n";
 
                 // Build Results
-                results = results + newRES;
+                results = results.concat(newRES);
             }
         }
         catch (Exception e)
@@ -1301,20 +1296,20 @@ public class App {
             // Execute SQL statement
             stmt.executeQuery(strSelect);
 
-            ResultSet rset = stmt.executeQuery(strSelect);
+            ResultSet set = stmt.executeQuery(strSelect);
 
             // Check one is returned
             System.out.println( "Country" + "\t" + "Total:" + "\t" + "City:" + "\t" +  "Urban:" );
 
-            while (rset.next())
+            while (set.next())
             {
                 World wd = new World();
 
                 // Fields to be shown
-                wd.country = rset.getString("Country");
-                wd.total = rset.getString("total");
-                wd.city = rset.getString("city");
-                wd.urban = rset.getString("urban");
+                wd.country = set.getString("Country");
+                wd.total = set.getString("total");
+                wd.city = set.getString("city");
+                wd.urban = set.getString("urban");
                 //// wd.name = rset.getString("Name");
                 //  wd.population = rset.getString("Population");
 
@@ -1324,7 +1319,7 @@ public class App {
                 String newRES =     wd.country + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban +"\n";
 
                 // Build Results
-                results = results + newRES;
+                results = results.concat(newRES);
             }
         }
         catch (Exception e)
@@ -1357,7 +1352,7 @@ public class App {
     /// WORLD POPULATION REPORT
 
     // SELECT STATEMENTS FOR POPULATION REPORTS
-    public static String reportTotalPopulation() {
+    private static String reportTotalPopulation() {
         return "SELECT SUM(CAST( Population AS UNSIGNED INTEGER )) AS TotalPopulation FROM country";
     }
 
