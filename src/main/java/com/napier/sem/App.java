@@ -665,6 +665,43 @@ public class App {
         return results;
     }
 
+    // REPORT 12: produce a report listing the top N populated cities in the World where N is provided by the user
+    public static String getReport12()
+    {
+        // Create user input variable
+        int userInput = 20;
+
+        String results = "";
+        try
+        {
+            // SELECT STATEMENT
+            String strSelect = " SELECT country.name AS Country, city.Name, city.District, city.Population " +
+                    " FROM city " +
+                    " JOIN country ON city.CountryCode=country.Code " +
+                    " ORDER BY city.Population DESC " +
+                    "LIMIT " + userInput;
+
+
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            String title =  "*** The top " +  userInput + " most populated cities in the World: ***";
+
+            results = getCityReport(results, rset, title);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get World details");
+            return null;
+        }
+        return results;
+    }
+
     // REPORT 13: The top N populated cities in a continent where N is provided by the user.
     public static String getReport13(Integer num)
     {
@@ -1026,42 +1063,7 @@ public class App {
 
 
 
-    // REPORT 12: produce a report listing the top N populated cities in the World where N is provided by the user
-    public static String getReport12()
-    {
-        // Create user input variable
-        int userInput = 20;
 
-        String results = "";
-        try
-        {
-            // SELECT STATEMENT
-            String strSelect = " SELECT country.name AS Country, city.Name, city.District, city.Population " +
-                    " FROM city " +
-                    " JOIN country ON city.CountryCode=country.Code " +
-                    " ORDER BY city.Population DESC " +
-                    "LIMIT " + userInput;
-
-
-            Statement stmt = con.createStatement();
-
-            // Execute SQL statement
-            stmt.executeQuery(strSelect);
-
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            String title =  "*** The top " +  userInput + " most populated cities in the World: ***";
-
-            results = getCityReport(results, rset, title);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
-            return null;
-        }
-        return results;
-    }
 
 
     // REPORT 14:  produce a report listing the top N populated cities in a region where N is provided by the user
