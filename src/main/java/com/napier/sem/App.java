@@ -811,9 +811,45 @@ public class App {
         }
         return results;
     }
+    // REPORT 16:  produce a report listing the top N populated cities in a district where N is provided by the user
+    public static String getReport16()
+    {
+        // Create user input variable
+        int userInput = 5;
+
+        String results = "";
+        try
+        {
+            // SELECT STATEMENT
+            String strSelect = " SELECT country.name AS Country, city.Name, city.District, city.Population  " +
+                    " FROM city " +
+                    " JOIN country ON city.CountryCode=country.Code " +
+                    " WHERE district = 'Tabasco' " +
+                    " ORDER BY city.Population DESC " +
+                    " LIMIT " + userInput;
+
+
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            String title = "*** The top " +  userInput + " most populated cities in Tabasco, Mexico: ***";
+
+            results = getCityReport(results, rset, title);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get World details");
+            return null;
+        }
+        return results;
+    }
 
     // REPORT 17: fixed All the capital cities in the World organised by largest population to smallest.
-
     public static String getReport17()
     {
         String results = "";
@@ -865,7 +901,6 @@ public class App {
     }
 
     // REPORT 19: : All the capital cities in a region organised by largest to smallest.
-
     public static String getReport19()
     {
         String results = "";
@@ -1106,43 +1141,7 @@ public class App {
 
 
 
-    // REPORT 16:  produce a report listing the top N populated cities in a district where N is provided by the user
-    public static String getReport16()
-    {
-        // Create user input variable
-        int userInput = 5;
 
-        String results = "";
-        try
-        {
-            // SELECT STATEMENT
-            String strSelect = " SELECT country.name AS Country, city.Name, city.District, city.Population  " +
-                    " FROM city " +
-                    " JOIN country ON city.CountryCode=country.Code " +
-                    " WHERE district = 'Tabasco' " +
-                    " ORDER BY city.Population DESC " +
-                    " LIMIT " + userInput;
-
-
-            Statement stmt = con.createStatement();
-
-            // Execute SQL statement
-            stmt.executeQuery(strSelect);
-
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            String title = "*** The top " +  userInput + " most populated cities in Tabasco, Mexico: ***";
-
-            results = getCityReport(results, rset, title);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
-            return null;
-        }
-        return results;
-    }
 
 
     // REPORT 18: produce a report listing all the capital cities in a continent organised by largest population to smallest
