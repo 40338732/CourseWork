@@ -482,6 +482,7 @@ public class App {
         }
         return results;
     }
+
     // REPORT 7 : All the cities in the World organised by largest population to smallest.
     public static String getReport7()
     {
@@ -518,6 +519,43 @@ public class App {
         return results;
     }
 
+    // REPORT 8: produce a report listing all the cities in a continent organised by largest population to smallest
+    public static String getReport8()
+    {
+        // Create user input variable
+        // int userInput = 7;
+
+        String results = "";
+        try
+        {
+
+            // SELECT STATEMENT
+            String strSelect = "SELECT Continent, country.name AS Country, city.Name, city.District, city.Population " +
+                    " FROM city " +
+                    " JOIN country ON city.CountryCode=country.Code " +
+                    " WHERE Continent = 'Africa' " +
+                    " ORDER BY city.Population DESC ";
+
+
+            Statement stmt = con.createStatement();
+
+            // Execute SQL statement
+            stmt.executeQuery(strSelect);
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            String title = "*** Cities in Africa ordered by population: ***";
+
+            results = getCityReport(results, rset, title);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get World details");
+            return null;
+        }
+        return results;
+    }
     // REPORT 9: All the cities in a region organised by largest population to smallest.
     public static String getReport9()
     {
@@ -946,43 +984,7 @@ public class App {
 
 
 
-    // REPORT 8: produce a report listing all the cities in a continent organised by largest population to smallest
-    public static String getReport8()
-    {
-        // Create user input variable
-        // int userInput = 7;
 
-        String results = "";
-        try
-        {
-
-            // SELECT STATEMENT
-            String strSelect = "SELECT Continent, country.name AS Country, city.Name, city.District, city.Population " +
-                    " FROM city " +
-                    " JOIN country ON city.CountryCode=country.Code " +
-                    " WHERE Continent = 'Africa' " +
-                    " ORDER BY city.Population DESC ";
-
-
-            Statement stmt = con.createStatement();
-
-            // Execute SQL statement
-            stmt.executeQuery(strSelect);
-
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            String title = "*** Cities in Africa ordered by population: ***";
-
-            results = getCityReport(results, rset, title);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
-            return null;
-        }
-        return results;
-    }
 
 
     // REPORT 10: produce a report listing all the cities in a country organised by largest population to smallest
