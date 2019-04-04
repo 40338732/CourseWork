@@ -46,7 +46,7 @@ public class App {
 //
 //  hh  }
 
-    private void connect(String location)
+    public void connect(String location)
     {
         try
         {
@@ -262,7 +262,7 @@ public class App {
     }
 
     // REPORT 1: All the countries in the World organised by largest population to smallest.
-    private static String getReport1()
+    public static String getReport1()
     {
         String results = "";
         try
@@ -1518,7 +1518,7 @@ public class App {
     }
 
     /* Population 4 Report Country */
-    private static String getPopReport4() {
+    public static String getPopReport4() {
         String results = "";
         try {
             // SELECT STATEMENT to pull information required for the reports
@@ -1560,7 +1560,7 @@ public class App {
     }
 
     /* Population 5 Report District */
-    private static String getPopReport5() {
+    public static String getPopReport5() {
         String results = "";
         try {
             // SELECT STATEMENT to pull information required for the reports
@@ -1602,7 +1602,7 @@ public class App {
     }
 
     /* Population 6 Report District */
-    private static String getPopReport6() {
+    public static String getPopReport6() {
         String results = "";
         try {
             // SELECT STATEMENT to pull information required for the reports
@@ -1645,7 +1645,7 @@ public class App {
     }
 
     /* Population 7 Report District */
-    private static String getPopReport7() {
+    public static String getPopReport7() {
         String results = "";
         try {
             // SELECT STATEMENT to pull information required for the reports
@@ -1692,7 +1692,7 @@ public class App {
         return results;
     }
 
-    private static String getPopReportStats() {
+    public static String getPopReportStats() {
         String results = "";
         try {
             // SELECT STATEMENT to pull information required for the reports

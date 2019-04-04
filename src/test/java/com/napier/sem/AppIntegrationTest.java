@@ -236,15 +236,51 @@ public class AppIntegrationTest
     @Test
     void testGetPopReport2()
     {
-        String s = App.getPopReport2();
-        System.out.println("Result: " + s);
-        assertEquals(s, "482993000\tNorth America \n" +
-                "3705025700\tAsia \n" +
-                "784475000\tAfrica \n" +
-                "730074600\tEurope \n" +
-                "345780000\tSouth America \n" +
-                "30401150\tOceania \n" +
-                "0\tAntarctica \n");
+        String[] s = App.getPopReport2().split("\n", 4);
+        assertEquals(s[0], "482993000\tNorth America ");
+    }
+
+    @Test
+    void testGetPopReport3()
+    {
+        String[] s = App.getPopReport3().split("\n", 4);
+        assertEquals(s[0], "38140000\tCaribbean ");
+    }
+
+    @Test
+    void testGetPopReport4()
+    {
+        String[] s = App.getPopReport4().split("\n", 4);
+        assertEquals(s[0], "103000\tAruba ");
+    }
+
+    @Test
+    void testGetPopReport5()
+    {
+        String[] s = App.getPopReport5().split("\n", 4);
+        assertEquals(s[0], "1780000\tKabol ");
+    }
+
+    @Test
+    void testGetPopReport6()
+    {
+        String[] s = App.getPopReport6().split("\n", 4);
+        assertEquals(s[0], "1780000\tKabul ");
+    }
+
+    @Test
+    void testGetPopReport7()
+    {
+        String[] s = App.getPopReport7().split("\n", 4);
+        assertEquals(s[0], "United States\tEnglish\t86.2 ");
+    }
+
+    @Test
+    void testGetPopReportStats()
+    {
+        String[] s = App.getPopReportStats().split("\t", 10);
+//        System.out.println("Result: " + s[8]);
+        assertEquals(s[8], "Southern and Central Asia");
     }
     
 }
