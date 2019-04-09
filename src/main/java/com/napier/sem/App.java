@@ -148,10 +148,11 @@ public class App {
         Results5 = getReport5(10);
         Results6 = getReport6();
         Results7 = getReport7();
-        /*
+
         Results8 = getReport8();
         Results9 = getReport9();
         Results10 = getReport10();
+           /*
         Results11 = getReport11();
         Results12 = getReport12();
         Results13 = getReport13(10);
@@ -187,10 +188,10 @@ public class App {
         app.displayResults(Results5);
         app.displayResults(Results6);
         app.displayResults(Results7);
-        /*
         app.displayResults(Results8);
         app.displayResults(Results9);
         app.displayResults(Results10);
+                /*
         app.displayResults(Results11);
         app.displayResults(Results12);
         app.displayResults(Results13);
@@ -261,7 +262,7 @@ public class App {
             String newRES =  wd.code + "\t" + wd.name  + "\t" + wd.continent  + "\t" + wd.region  + "\t" + wd.population  + "\t" + wd.capital + "\n";
 
             // Build Results
-            results.concat(newRES);
+            results = results + newRES;
         }
         return "\n" + title + "\n" + header + results + "\n";
     }
@@ -282,7 +283,7 @@ public class App {
             String newRES = wd.name + "\t" + wd.country + "\t" + wd.district+ "\t" + wd.population +"\n";
 
             // Build Results
-            results.concat(newRES);
+            results = results + newRES;
         }
         return "\n" + title + "\n" + header + "\n" + results + "\n";
     }
@@ -1018,7 +1019,7 @@ public class App {
             String newRES = wd.name + "\t" + wd.country + "\t" + wd.population + "\n";
 
             // Build Results
-            results.concat(newRES);
+            results = results + newRES;
         }
         return results;
     }
@@ -1122,7 +1123,7 @@ public class App {
               String newRES = wd.name + "\t" + wd.country + "\t" + wd.population + "\n";
 
             // Build Results
-            results.concat(newRES);
+            results = results + newRES;
         }
         return results;
     }
@@ -1167,7 +1168,7 @@ public class App {
                   String newRES =     wd.continent + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban +"\n";
 
                 // Build Results
-                results = results.concat(newRES);
+                results = results + newRES;
             }
         }
         catch (Exception e)
@@ -1220,7 +1221,7 @@ public class App {
                 String newRES =    wd.region + "\t" + wd.total + "\t" + wd.urban + "(" + wd.urbanPercentage + "%)"  + "\t" + wd.rural + "(" + wd.ruralPercentage + "%)" + "\n";
 
                 // Build Results
-                results.concat(newRES);
+                results = results + newRES;
             }
         }
         catch (Exception e)
@@ -1272,7 +1273,7 @@ public class App {
                 String newRES =     wd.country + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban +"\n";
 
                 // Build Results
-                results.concat(newRES);
+                results = results + newRES;
             }
         }
         catch (Exception e)
@@ -1368,7 +1369,7 @@ public class App {
                 String newRES = wd.totalPopulation + " \n";
 
                 // Build Results
-                results = results.concat( newRES );
+                results = results + newRES;
             }
 
             // Check we have Data
@@ -1409,7 +1410,7 @@ public class App {
                 String newRES = wd.totalPopulation + "\t" + wd.continent + " \n";
 
                 // Build Results
-                results = results.concat( newRES );
+                results = results + newRES;
             }
 
             // Check we have Data
@@ -1491,7 +1492,7 @@ public class App {
                 String newRES = wd.totalPopulation + "\t" + wd.country + " \n";
 
                 // Build Results
-                results = results.concat( newRES );
+                results = results + newRES;
             }
 
             // Check we have Data
@@ -1532,7 +1533,7 @@ public class App {
                 String newRES = wd.totalPopulation + "\t" + wd.district + " \n";
 
                 // Build Results
-                results = results.concat(newRES);
+                results = results + newRES;
             }
 
             // Check we have Data
@@ -1574,7 +1575,7 @@ public class App {
                 String newRES = wd.totalPopulation + "\t" + wd.name + " \n";
 
                 // Build Results
-                results = results.concat(newRES);
+                results = results + newRES;
             }
 
             // Check we have Data
@@ -1691,14 +1692,14 @@ public class App {
             String newRES = wd.continent + "\t" + wd.region + "\t" + wd.name + "\t" + wd.totalPopulationCountry + "\t" + wd.notLivingInCities + "\t" + wd.percentageCountry + "\t" + wd.totalPopulationCity + "\t" + wd.percentageCity + "\n";
 
             // Build Results
-            results = results.concat(newRES);
+            results = results + newRES;
         }
 
         /* Depend if we have results will show one of two options */
         if (!results.equals("")) {
-            return "\n".concat(title).concat(header).concat(results);
+            return "\n" + title + header + results;
         }
-        return "\n".concat(title).concat(header).concat(results);
+        return "\n" + title + header + results;
     }
 }
 

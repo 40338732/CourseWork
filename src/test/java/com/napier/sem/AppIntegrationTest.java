@@ -98,7 +98,7 @@ public class AppIntegrationTest
     {
         // REPORT 10: produce a report listing all the cities in a country organised by largest population to smallest
         String[] s = App.getReport10().split("\t", 10);
-        assertEquals(s[4], "\nLondon");
+        assertEquals(s[5], "United Kingdom");
     }
 
     @Test
@@ -162,8 +162,9 @@ public class AppIntegrationTest
     void testGetReport18()
     {
         // REPORT 18: produce a report listing all the capital cities in a continent organised by largest population to smallest
-        String[] s = App.getReport18().split("\t", 2);
-        assertEquals(s[0], "Moscow");
+        String[] s = App.getReport18().split("\t", 6);
+        //System.out.println("Result: " + s[3]);
+        assertEquals(s[3], "United Kingdom");
     }
 
     @Test
@@ -178,8 +179,8 @@ public class AppIntegrationTest
     void testGetReport20()
     {
         // REPORT 20: produce a report listing the top N populated capital cities in the World where N is provided by the user
-        String[] s = App.getReport20().split("\t", 2);
-        assertEquals(s[0], "Seoul");
+        String[] s = App.getReport20().split("\n", 6);
+        assertEquals(s[0], "Seoul\tSouth Korea\t9981619");
     }
 
     @Test
@@ -195,7 +196,7 @@ public class AppIntegrationTest
     void testGetReport22()
     {
         // REPORT 22: produce a report listing the top N populated capital cities in a region where N is provided by the user
-        String[] s = App.getReport22().split("\t", 2);
+        String[] s = App.getReport22().split("\t", 6);
         assertEquals(s[0], "La Habana");
     }
 
@@ -212,7 +213,7 @@ public class AppIntegrationTest
     void testGetReport24()
     {
         // REPORT 24: produce a report listing the population of people, people living in cities, and people not living in cities in each region
-        String[] s = App.getReport24().split("\t", 2);
+        String[] s = App.getReport24().split("\t", 6);
         assertEquals(s[0], "Southern and Central Asia");
     }
 
@@ -222,7 +223,6 @@ public class AppIntegrationTest
         // 25. As a service user I want to produce a report listing the population of people,
         // people living in cities, and people not living in cities in each country
         String[] s = App.getReport25().split("\t", 2);
-//        System.out.println("Result: " + s[0]);
         assertEquals(s[0], "Afghanistan");
     }
 
