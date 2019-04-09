@@ -2,10 +2,6 @@ package com.napier.sem;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AppIntegrationTest
@@ -26,6 +22,10 @@ public class AppIntegrationTest
         // REPORT 1: All the countries in the World organised by largest population to smallest.
         String[] s = App.getReport1().split("\t", 10);
         assertEquals(s[6], "China");
+        /*
+        testing
+
+         */
     }
 
     @Test

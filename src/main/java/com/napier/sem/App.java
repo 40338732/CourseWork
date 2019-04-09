@@ -3,13 +3,13 @@ package com.napier.sem;
 import java.sql.*;
 import java.util.ArrayList;
 
+/*General App Class*/
 public class App {
     
-    // Connection to MySQL database.
+    /* Connection to MySQL database. */
     private static Connection con = null;
 
     // public ArrayList<Employee> allSalaries;
-
 
     // Non parameters connect
     // DON'T CHANGE
@@ -18,37 +18,34 @@ public class App {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            System.out.println("Could not load SQL driver");
+            //System.out.println("Could not load SQL driver");
             System.exit(-1);
         }
 
         int retries = 10;
         for (int i = 0; i < retries; ++i) {
-            System.out.println("Connecting to database...");
+            //System.out.println("Connecting to database...");
             try {
                 // Wait a bit for db to start
                 Thread.sleep(10000);
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:MySQL://db:3306/world?useSSL=false", "root", "example");
-                System.out.println("Successfully connected");
+                //System.out.println("Successfully connected");
                 break;
             } catch (SQLException sqle) {
-                System.out.println("SQLException: " + sqle.getMessage());
-                System.out.println("SQLState: " + sqle.getSQLState());
-                System.out.println("VendorError: " + sqle.getErrorCode());
+                //System.out.println("SQLException: " + sqle.getMessage());
+                //System.out.println("SQLState: " + sqle.getSQLState());
+                //System.out.println("VendorError: " + sqle.getErrorCode());
 
 
-                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
-                System.out.println(sqle.getMessage());
+                //System.out.println("Failed to connect to database attempt " + Integer.toString(i));
+                //System.out.println(sqle.getMessage());
             } catch (InterruptedException ie) {
-                System.out.println("Thread interrupted? Should not happen.");
+                //System.out.println("Thread interrupted? Should not happen.");
             }
         }
 
     }
-
-
-
     public void connect(String location)
     {
         try
@@ -58,35 +55,34 @@ public class App {
         }
         catch (ClassNotFoundException e)
         {
-            System.out.println("Could not load SQL driver");
+            //System.out.println("Could not load SQL driver");
             System.exit(-1);
         }
 
         int retries = 10;
         for (int i = 0; i < retries; ++i)
         {
-            System.out.println("Connecting to database...");
+            //System.out.println("Connecting to database...");
             try
             {
                 // Wait a bit for db to start
                 Thread.sleep(30000);
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
-                System.out.println("Successfully connected");
+                //System.out.println("Successfully connected");
                 break;
             }
             catch (SQLException sqle)
             {
-                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
-                System.out.println(sqle.getMessage());
+                //System.out.println("Failed to connect to database attempt " + Integer.toString(i));
+                //System.out.println(sqle.getMessage());
             }
             catch (InterruptedException ie)
             {
-                System.out.println("Thread interrupted? Should not happen.");
+                //System.out.println("Thread interrupted? Should not happen.");
             }
         }
     }
-
     // Disconnect from the MySQL database. DON'T CHANGE
     public void disconnect() {
         if (con != null) {
@@ -94,55 +90,83 @@ public class App {
                 // Close connection
                 con.close();
             } catch (Exception e) {
-                System.out.println("Error closing connection to database");
+                //System.out.println("Error closing connection to database");
             }
         }
     }
-
-
     // MAIN METHOD
     public static  void main(String[] args) {
         // Create new Application
         App app = new App();
 
-        System.out.println("version Dated 07/04/2019 13:25");
+        //System.out.println("version Dated 07/04/2019 13:25");
 
         // Connect to database
         // app.connect("localhost:33060");
 
         app.connect();
-//        app.connect();
 
         // local variable
-        String Results1 , Results3 , Results5 , Results7, Results9, Results11, Results13 , Results15, Results17 , Results19, Results21 , Results23 , Results25 = "";
-        String Results2 , Results4 , Results6 , Results8, Results10, Results12, Results14 , Results16, Results18 , Results20, Results22 , Results24  = "";
-        String PopReport1, PopReport2, PopReport3, PopReport4, PopReport5, PopReport6, PopReport7, PopReportStats;
+        String Results1 ;
+        String Results3 ;
+        String Results5 ;
+        String Results7;
+        String Results9;
+        String Results11;
+        String Results13 ;
+        String Results15;
+        String Results17 ;
+        String Results19;
+        String Results21 ;
+        String Results23 ;
+        String Results25 = "";
+        String Results2 ;
+        String Results4 ;
+        String Results6 ;
+        String Results8;
+        String Results10;
+        String Results12;
+        String Results14 ;
+        String Results16;
+        String Results18 ;
+        String Results20;
+        String Results22 ;
+        String Results24 = "";
+        String PopReport1;
+        String PopReport2;
+        String PopReport3;
+        String PopReport4;
+        String PopReport5;
+        String PopReport6;
+        String PopReport7;
+        String PopReportStats;
 
-        // Results1 = getReport1();
-        // Results2 = getReport2();
-        // Results3 = getReport3();
-//        Results4 = getReport4(6);
-//        Results5 = getReport5(10);
-//        Results6 = getReport6();
-//        Results7 = getReport7();
-//        Results8 = getReport8();
-//        Results9 = getReport9();
-//        Results10 = getReport10();
-//        Results11 = getReport11();
-//        Results12 = getReport12();
-//        Results13 = getReport13(10);
-//        Results14 = getReport14();
-//        Results15 = getReport15(10);
-//        Results16 = getReport16();
-//        Results17 = getReport17();
-//        Results18 = getReport18();
-        //Results19 = getReport19();
-//        Results20 = getReport20();
-        //Results21 = getReport21(10);
-//        Results22 = getReport22();
-        //Results23 = getReport23();
-        //Results24 = getReport24();
-        //Results25 = getReport25();
+        Results1 = getReport1();
+        Results2 = getReport2();
+        Results3 = getReport3();
+        Results4 = getReport4(6);
+        Results5 = getReport5(10);
+        Results6 = getReport6();
+        Results7 = getReport7();
+        /*
+        Results8 = getReport8();
+        Results9 = getReport9();
+        Results10 = getReport10();
+        Results11 = getReport11();
+        Results12 = getReport12();
+        Results13 = getReport13(10);
+        Results14 = getReport14();
+        Results15 = getReport15(10);
+        Results16 = getReport16();
+        Results17 = getReport17();
+        Results18 = getReport18();
+        Results19 = getReport19();
+        Results20 = getReport20();
+        Results21 = getReport21(10);
+        Results22 = getReport22();
+        Results23 = getReport23();
+        Results24 = getReport24();
+        Results25 = getReport25();
 
         // World Reports
         PopReport1 = getPopReport1();
@@ -153,34 +177,35 @@ public class App {
         PopReport6 = getPopReport6();
         PopReport7 = getPopReport7();
         PopReportStats = getPopReportStats();
-
+*/
         // Display results
 
-        //app.displayResults(Results1);
-//        app.displayResults(Results2);
-//        app.displayResults(Results3);
-//        app.displayResults(Results4);
-//        app.displayResults(Results5);
-//        app.displayResults(Results6);
-//        app.displayResults(Results7);
-//        app.displayResults(Results8);
-//        app.displayResults(Results9);
-//        app.displayResults(Results10);
-//        app.displayResults(Results11);
-//        app.displayResults(Results12);
-//        app.displayResults(Results13);
-//        app.displayResults(Results14);
-//        app.displayResults(Results15);
-//        app.displayResults(Results16);
-        //app.displayResults(Results17);
-        //app.displayResults(Results18);
-        //app.displayResults(Results19);
-        //app.displayResults(Results20);
-        //app.displayResults(Results21);
-        //app.displayResults(Results22);
-        //app.displayResults(Results23);
-        //app.displayResults(Results24);
-        //app.displayResults(Results25);
+        app.displayResults(Results1);
+        app.displayResults(Results2);
+        app.displayResults(Results3);
+        app.displayResults(Results4);
+        app.displayResults(Results5);
+        app.displayResults(Results6);
+        app.displayResults(Results7);
+        /*
+        app.displayResults(Results8);
+        app.displayResults(Results9);
+        app.displayResults(Results10);
+        app.displayResults(Results11);
+        app.displayResults(Results12);
+        app.displayResults(Results13);
+        app.displayResults(Results14);
+        app.displayResults(Results15);
+        app.displayResults(Results16);
+        app.displayResults(Results17);
+        app.displayResults(Results18);
+        app.displayResults(Results19);
+        app.displayResults(Results20);
+        app.displayResults(Results21);
+        app.displayResults(Results22);
+        app.displayResults(Results23);
+        app.displayResults(Results24);
+        app.displayResults(Results25);
 
         // World Reports
         app.displayResultsWR(PopReport1);
@@ -191,18 +216,16 @@ public class App {
         app.displayResultsWR(PopReport6);
         app.displayResultsWR(PopReport7);
         app.displayResultsWR(PopReportStats);
-
+        */
         // Disconnect from database
         app.disconnect();
     }
 
-
-    void printCountries(ArrayList<Country> countries)
-    {
+    void printCountries(ArrayList<Country> countries) {
         // Check countries is not null
         if (countries != null)
         {
-            System.out.println(String.format("%-10s %-15s %-20s", "Name", "Continent", "Population"));
+            //System.out.println(String.format("%-10s %-15s %-20s", "Name", "Continent", "Population"));
             for (Country country : countries)
             {
                 if (country == null)
@@ -211,16 +234,14 @@ public class App {
                 }
 
                 String country_string =
-                        String.format("%-10s %-15s %-20s",
-                                country.name, country.continent, country.population);
+                        String.format("%-10s %-15s %-20s",country.name, country.continent, country.population);
                 System.out.println(country_string);
             }
         }
         else {
-                System.out.println("No countries");
+                //System.out.println("No countries");
         }
     }
-
     private static String getCountryReport(String results, ResultSet set, String title) throws SQLException {
 
         String header = "Code:"  +"\t" + "Name:" + "\t" + "Continent:" + "\t" + "Region:" + "\t" + "Population:" + "\t" + "Capital:" + "\n";
@@ -240,11 +261,10 @@ public class App {
             String newRES =  wd.code + "\t" + wd.name  + "\t" + wd.continent  + "\t" + wd.region  + "\t" + wd.population  + "\t" + wd.capital + "\n";
 
             // Build Results
-            results = results.concat(newRES);
+            results.concat(newRES);
         }
         return "\n" + title + "\n" + header + results + "\n";
     }
-
     private static String getCityReport(String results, ResultSet set, String title) throws SQLException {
 
         String header = "Name:" + "\t" + "Country:"+ "\t" + "District:"+ "\t" + "Population:" + "\t";
@@ -262,21 +282,19 @@ public class App {
             String newRES = wd.name + "\t" + wd.country + "\t" + wd.district+ "\t" + wd.population +"\n";
 
             // Build Results
-            results = results.concat(newRES);
+            results.concat(newRES);
         }
         return "\n" + title + "\n" + header + "\n" + results + "\n";
     }
 
-    // REPORT 1: All the countries in the World organised by largest population to smallest.
-    public static String getReport1()
-    {
+
+     // REPORT 1: All the countries in the World organised by largest population to smallest.
+
+    public static String getReport1() {
         String results = "";
         try
         {
-
             // SELECT STATEMENT
-            // R1 - All the countries in the World organised by largest population to smallest.
-
             String strSelect = "SELECT Code, country.Name, Continent, Region, country.Population, (SELECT name FROM city WHERE ID = Capital) as Capital " +
                     "            FROM country\n" +
                     "            ORDER BY country.Population DESC ";
@@ -293,16 +311,14 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+            //System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
-
     // REPORT 2: list all the countries in a continent organised by largest population to smallest.
-    public static String getReport2()
-    {
+    public static String getReport2() {
         String results = "";
         try
         {
@@ -326,18 +342,16 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+            //System.out.println(e.getMessage());
+            
             return null;
         }
 
 
         return results;
     }
-
     // REPORT 3:
-    public static String getReport3()
-    {
+    public static String getReport3() {
         String results = "";
         try
         {
@@ -361,21 +375,19 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+            //System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
-
     // REPORT 4: produce a report listing the top N populated countries in the World where N is provided by the user
-    public static String getReport4(int userInput)
-    {
+    public static String getReport4(int userInput) {
         // Create user input variable
         //int userInput = 7;
         if (userInput <= 0)
         {
-            System.out.println("Number must be positive");
+            //System.out.println("Number must be positive");
             return "";
         }
 
@@ -403,17 +415,14 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+            //System.out.println(e.getMessage());
             return null;
         }
 
         return results;
     }
-
     // REPORT 5 : The top N populated countries in a continent where N is provided by the user.
-    public static String getReport5(Integer num)
-    {
+    public static String getReport5(Integer num) {
         String results = "";
         try
         {
@@ -439,16 +448,13 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+            //System.out.println(e.getMessage());
             return null;
         }
         return results;
     }
-
     // REPORT 6: produce a report listing the top N populated countries in a region where N is provided by the user
-    public static String getReport6()
-    {
+    public static String getReport6() {
         // Create user input variable
         int userInput = 7;
 
@@ -477,16 +483,13 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+           // System.out.println(e.getMessage());
             return null;
         }
         return results;
     }
-
     // REPORT 7 : All the cities in the World organised by largest population to smallest.
-    public static String getReport7()
-    {
+    public static String getReport7() {
         String results = "";
         try
         {
@@ -513,16 +516,14 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+            //System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
-
     // REPORT 8: produce a report listing all the cities in a continent organised by largest population to smallest
-    public static String getReport8()
-    {
+    public static String getReport8() {
         // Create user input variable
         // int userInput = 7;
 
@@ -551,16 +552,14 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+           // System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
-
     // REPORT 9: All the cities in a region organised by largest population to smallest.
-    public static String getReport9()
-    {
+    public static String getReport9() {
         String results = "";
         try
         {
@@ -587,16 +586,14 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+            //System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
-
     // REPORT 10: produce a report listing all the cities in a country organised by largest population to smallest
-    public static String getReport10()
-    {
+    public static String getReport10() {
         String results = "";
         try
         {
@@ -622,16 +619,14 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+           // System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
-
     // REPORT 11: All the cities in a district organised by largest population to smallest
-    public static String getReport11()
-    {
+    public static String getReport11() {
         String results = "";
         try
         {
@@ -659,16 +654,14 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+           //System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
-
     // REPORT 12: produce a report listing the top N populated cities in the World where N is provided by the user
-    public static String getReport12()
-    {
+    public static String getReport12() {
         // Create user input variable
         int userInput = 20;
 
@@ -696,16 +689,14 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+           // System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
-
     // REPORT 13: The top N populated cities in a continent where N is provided by the user.
-    public static String getReport13(Integer num)
-    {
+    public static String getReport13(Integer num) {
         String results = "";
         try
         {
@@ -733,16 +724,14 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+           // System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
-
     // REPORT 14:  produce a report listing the top N populated cities in a region where N is provided by the user
-    public static String getReport14()
-    {
+    public static String getReport14() {
         // Create user input variable
         int userInput = 10;
 
@@ -771,16 +760,14 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+            //System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
-
     // REPORT 15: The top N populated cities in a country where N is provided by the user.
-    public static String getReport15(Integer num)
-    {
+    public static String getReport15(Integer num) {
         String results = "";
         try
         {
@@ -806,15 +793,14 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+            //System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
     // REPORT 16:  produce a report listing the top N populated cities in a district where N is provided by the user
-    public static String getReport16()
-    {
+    public static String getReport16() {
         // Create user input variable
         int userInput = 5;
 
@@ -843,16 +829,14 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+            //System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
-
     // REPORT 17: fixed All the capital cities in the World organised by largest population to smallest.
-    public static String getReport17()
-    {
+    public static String getReport17() {
         String results = "";
         try
         {
@@ -872,7 +856,7 @@ public class App {
             ResultSet set = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "" + "\t" + "City:" + "\t" + "Country:"+ "\t" + "Population:" );
+            //System.out.println( "" + "\t" + "City:" + "\t" + "Country:"+ "\t" + "Population:" );
 
             while (set.next())
             {
@@ -885,7 +869,7 @@ public class App {
 
 
 
-                System.out.println( wd.name + "\t" + wd.country+ "\t" + wd.population );
+               // System.out.println( wd.name + "\t" + wd.country+ "\t" + wd.population );
                 String newRES =   wd.name + "\t" + wd.country+ "\t" + wd.population +"\n";
 
                 // Build Results
@@ -894,16 +878,14 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+            //System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
-
     // REPORT 18: produce a report listing all the capital cities in a continent organised by largest population to smallest
-    public static String getReport18()
-    {
+    public static String getReport18() {
         String results = "";
         try
         {
@@ -924,23 +906,21 @@ public class App {
             ResultSet set = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "\n" + "*** The most populated capital cities in Europe: ***" );
-            System.out.println( "City:" + "\t" + "Country:" + "\t" + "Population:" );
+            //System.out.println( "\n" + "*** The most populated capital cities in Europe: ***" );
+            //System.out.println( "City:" + "\t" + "Country:" + "\t" + "Population:" );
 
             results = getStringNameCountryPopulation(results, set);
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+            //System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
-
     // REPORT 19: : All the capital cities in a region organised by largest to smallest.
-    public static String getReport19()
-    {
+    public static String getReport19() {
         String results = "";
         try
         {
@@ -960,7 +940,7 @@ public class App {
             ResultSet set = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "Region" + "\t" + "City:" + "\t" + "Population:" );
+            //System.out.println( "Region" + "\t" + "City:" + "\t" + "Population:" );
 
             while (set.next())
             {
@@ -973,7 +953,7 @@ public class App {
 
 
 
-                System.out.println( wd.name + "\t" + wd.region+ "\t" + wd.population );
+                //System.out.println( wd.name + "\t" + wd.region+ "\t" + wd.population );
                 String newRES =   wd.name + "\t" + wd.region+ "\t" + wd.population +"\n";
 
                 // Build Results
@@ -982,16 +962,14 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+            //System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
-
     // REPORT 20: produce a report listing the top N populated capital cities in the World where N is provided by the user
-    public static String getReport20()
-    {
+    public static String getReport20() {
         // Create user input variable
         int userInput = 12;
 
@@ -1015,37 +993,37 @@ public class App {
             ResultSet set = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "\n" + "*** The top " + userInput + " most populated capital cities in the World: ***" );
-            System.out.println( "City:" + "\t" + "Country:" + "\t" + "Population:" );
+             // System.out.println( "City:" + "\t" + "Country:" + "\t" + "Population:" );
 
-            while (set.next())
-            {
-                World wd = new World();
-
-                // Fields to be shown
-                wd.name = set.getString("Name");
-                wd.country = set.getString("country.name");
-                wd.population = set.getString("Population");
-
-                System.out.println( wd.name + "\t" + wd.country + "\t" + wd.population );
-                String newRES =   wd.name + "\t" + wd.country + "\t" + wd.population +"\n";
-
-                // Build Results
-                results = results.concat(newRES);
-            }
+            results = getStringCityCountryPopulation(results, set);
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+            //System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
+    // helper methods
+    private static String getStringCityCountryPopulation(String results, ResultSet set) throws SQLException {
+        while (set.next()) {
+            World wd = new World();
 
+            // Fields to be shown
+            wd.name = set.getString("Name");
+            wd.country = set.getString("country.name");
+            wd.population = set.getString("Population");
+
+            String newRES = wd.name + "\t" + wd.country + "\t" + wd.population + "\n";
+
+            // Build Results
+            results.concat(newRES);
+        }
+        return results;
+    }
     // REPORT 21: As a service user I want to produce a report listing the top N populated capital cities in a continent where N is provided by the user
-    public static String getReport21( Integer num)
-    {
+    public static String getReport21( Integer num) {
         String results = "";
         try
         {
@@ -1067,7 +1045,7 @@ public class App {
             ResultSet set = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "City" + "\t" + "Country:" + "\t" + "District:"+ "\t" + "Population:" );
+           // System.out.println( "City" + "\t" + "Country:" + "\t" + "District:"+ "\t" + "Population:" );
 
             while (set.next())
             {
@@ -1079,9 +1057,6 @@ public class App {
                 wd.name = set.getString("Name");
                 wd.population = set.getString("Population");
 
-
-
-                System.out.println( wd.name + "\t" + wd.country + "\t" + wd.district + "\t" + wd.population  );
                 String newRES =     wd.name + "\t" + wd.country + "\t" + wd.district + "\t" + wd.population +"\n";
 
                 // Build Results
@@ -1090,16 +1065,14 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+            //System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
-
     // REPORT 22: produce a report listing the top N populated capital cities in a region where N is provided by the user
-    public static String getReport22()
-    {
+    public static String getReport22() {
         // Create user input variable
         int userInput = 8;
 
@@ -1124,20 +1097,19 @@ public class App {
             ResultSet set = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "\n" + "*** The top " + userInput + " most populated capital cities in the Caribbean: ***" );
-            System.out.println( "City:" + "\t" + "Country:" + "\t" + "Population:" );
+            // System.out.println( "City:" + "\t" + "Country:" + "\t" + "Population:" );
 
             results = getStringNameCountryPopulation(results, set);
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+            //System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
-
+    // Refactored method
     private static String getStringNameCountryPopulation(String results, ResultSet set) throws SQLException {
         while (set.next()) {
             World wd = new World();
@@ -1147,18 +1119,15 @@ public class App {
             wd.country = set.getString("country.name");
             wd.population = set.getString("Population");
 
-            System.out.println(wd.name + "\t" + wd.country + "\t" + wd.population);
-            String newRES = wd.name + "\t" + wd.country + "\t" + wd.population + "\n";
+              String newRES = wd.name + "\t" + wd.country + "\t" + wd.population + "\n";
 
             // Build Results
-            results = results.concat(newRES);
+            results.concat(newRES);
         }
         return results;
     }
-
     // REPORT 23: As a service user I want to produce a report listing the population of people, people living in cities, and people not living in cities in each continent
-    public static String getReport23()
-    {
+    public static String getReport23() {
         String results = "";
         try
         {
@@ -1181,7 +1150,7 @@ public class App {
             ResultSet set = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "Continent" + "\t" + "Total:" + "\t" + "City:" + "Urban" );
+            //System.out.println( "Continent" + "\t" + "Total:" + "\t" + "City:" + "Urban" );
 
             while (set.next())
             {
@@ -1195,10 +1164,7 @@ public class App {
                 //// wd.name = set.getString("Name");
                 //  wd.population = set.getString("Population");
 
-
-
-                System.out.println( wd.continent + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban );
-                String newRES =     wd.continent + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban +"\n";
+                  String newRES =     wd.continent + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban +"\n";
 
                 // Build Results
                 results = results.concat(newRES);
@@ -1206,16 +1172,14 @@ public class App {
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+            //System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
-
     // REPORT 24: produce a report listing the population of people, people living in cities, and people not living in cities in each region
-    public static String getReport24()
-    {
+    public static String getReport24() {
         String results = "";
 
         try
@@ -1238,8 +1202,8 @@ public class App {
             ResultSet set = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "\n" + "*** Region population, urban population and rural population: ***" );
-            System.out.println( "--Region--" + "\t--Total Population--" + "\t--Urban Population--" + "\t" + "--Rural Population--" );
+            //System.out.println( "\n" + "*** Region population, urban population and rural population: ***" );
+           // System.out.println( "--Region--" + "\t--Total Population--" + "\t--Urban Population--" + "\t" + "--Rural Population--" );
 
             while (set.next())
             {
@@ -1256,21 +1220,19 @@ public class App {
                 String newRES =    wd.region + "\t" + wd.total + "\t" + wd.urban + "(" + wd.urbanPercentage + "%)"  + "\t" + wd.rural + "(" + wd.ruralPercentage + "%)" + "\n";
 
                 // Build Results
-                results = results.concat(newRES);
+                results.concat(newRES);
             }
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+            //System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
-
     // 25. As a service user I want to produce a report listing the population of people, people living in cities, and people not living in cities in each country
-    public static String getReport25()
-    {
+    public static String getReport25() {
         String results = "";
         try
         {
@@ -1292,7 +1254,7 @@ public class App {
             ResultSet set = stmt.executeQuery(strSelect);
 
             // Check one is returned
-            System.out.println( "Country" + "\t" + "Total:" + "\t" + "City:" + "\t" +  "Urban:" );
+            //System.out.println( "Country" + "\t" + "Total:" + "\t" + "City:" + "\t" +  "Urban:" );
 
             while (set.next())
             {
@@ -1306,40 +1268,32 @@ public class App {
                 //// wd.name = set.getString("Name");
                 //  wd.population = set.getString("Population");
 
-
-
-                System.out.println( wd.country + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban );
+                //System.out.println( wd.country + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban );
                 String newRES =     wd.country + "\t" + wd.total + "\t" + wd.city + "\t" + wd.urban +"\n";
 
                 // Build Results
-                results = results.concat(newRES);
+                results.concat(newRES);
             }
         }
         catch (Exception e)
         {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get World details");
+            //System.out.println(e.getMessage());
+            
             return null;
         }
         return results;
     }
 
-
     // DON'T CHANGE
-    public void displayResults(String results)
-    {
+    public void displayResults(String results) {
         if (results != null) {
-            System.out.println(
-                    results + "\n");
-
+            System.out.println(results + "\n");
         }
     }
     // DON'T CHANGE
     private static void displayResultsWR(String results) {
         if (results != null) {
-            System.out.println(
-                    results + "\n");
-
+            System.out.println(results + "\n");
         }
     }
     /// WORLD POPULATION REPORT
@@ -1348,27 +1302,21 @@ public class App {
     private static String reportTotalPopulation() {
         return "SELECT SUM(CAST( Population AS UNSIGNED INTEGER )) AS TotalPopulation FROM country";
     }
-
     private static String reportTotalPopulationContinents() {
         return "select SUM(CAST( Population AS UNSIGNED INTEGER)) AS TotalPopulation, Continent from country group by Continent";
     }
-
     private static String reportTotalPopulationRegion() {
         return "select SUM(CAST( Population AS UNSIGNED INTEGER)) AS TotalPopulation, Region from country group by Region";
     }
-
     private static String reportTotalPopulationCountry() {
         return "select SUM(CAST( Population AS UNSIGNED INTEGER)) AS TotalPopulation, Name As Country from country group by Name";
     }
-
     private static String reportTotalPopulationDistrictsCity() {
         return "select SUM(CAST( Population AS UNSIGNED INTEGER)) AS TotalPopulation, District from city group by District ";
     }
-
     private static String reportTotalPopulationCountryCity() {
         return "select SUM(CAST( Population AS UNSIGNED INTEGER)) AS TotalPopulation, Name from city group by Name ";
     }
-
     private static String reportTotalPopulationLanguage() {
         return "SELECT Name ,Language ,SUM(Percentage) as Percentage " +
                 "  FROM countrylanguage " +
@@ -1389,14 +1337,12 @@ public class App {
                 " FROM city JOIN country ON country.Code=city.CountryCode " +
                 " GROUP BY Continent,Region, country.Name  ";
     }
-
     /* Exceptions */
     private static String getException(Exception e) {
         String Exception;
         Exception = (e.getMessage());
         return Exception;
     }
-
     // ********* REPORTS - WORLD POPULATION *********
     /* Population 1 Report */
     public static String getPopReport1() {
@@ -1438,7 +1384,6 @@ public class App {
         }
         return results;
     }
-
     /* Population 2 Report Continents */
     public static String getPopReport2() {
         String results = "";
@@ -1480,7 +1425,6 @@ public class App {
         }
         return results;
     }
-
     /* Population 3 Report Region */
     public static String getPopReport3() {
         String results = "";
@@ -1522,7 +1466,6 @@ public class App {
         }
         return results;
     }
-
     /* Population 4 Report Country */
     public static String getPopReport4() {
         String results = "";
@@ -1564,7 +1507,6 @@ public class App {
         }
         return results;
     }
-
     /* Population 5 Report District */
     public static String getPopReport5() {
         String results = "";
@@ -1606,7 +1548,6 @@ public class App {
         }
         return results;
     }
-
     /* Population 6 Report District */
     public static String getPopReport6() {
         String results = "";
@@ -1649,7 +1590,6 @@ public class App {
         }
         return results;
     }
-
     /* Population 7 Report District */
     public static String getPopReport7() {
         String results = "";
@@ -1697,7 +1637,6 @@ public class App {
         }
         return results;
     }
-
     public static String getPopReportStats() {
         String results = "";
         try {
@@ -1727,7 +1666,6 @@ public class App {
         }
         return results;
     }
-
     /* getStringWorld Method - this create the "string" of the results */
     private static String getStringWorld(ResultSet set, String title) throws SQLException {
 
@@ -1757,10 +1695,10 @@ public class App {
         }
 
         /* Depend if we have results will show one of two options */
-        if (results.equals("")) return title + "\n" + header + "No Results returned";
-        else {
+        if (!results.equals("")) {
             return "\n".concat(title).concat(header).concat(results);
         }
+        return "\n".concat(title).concat(header).concat(results);
     }
 }
 
