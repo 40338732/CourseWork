@@ -107,31 +107,34 @@ public class App {
         app.connect();
 
         // local variable
-        String Results1 ;
-        String Results3 ;
-        String Results5 ;
+        String Results1;
+        String Results2;
+        String Results3;
+        String Results4;
+        String Results5;
+        String Results6;
         String Results7;
-        String Results9;
-        String Results11;
-        String Results13 ;
-        String Results15;
-        String Results17 ;
-        String Results19;
-        String Results21 ;
-        String Results23 ;
-        String Results25 = "";
-        String Results2 ;
-        String Results4 ;
-        String Results6 ;
         String Results8;
+        String Results9;
         String Results10;
+
+        String Results11;
         String Results12;
-        String Results14 ;
+        String Results13;
+        String Results14;
+        String Results15;
         String Results16;
-        String Results18 ;
+        String Results17;
+        String Results18;
+        String Results19;
         String Results20;
-        String Results22 ;
-        String Results24 = "";
+
+        String Results21;
+        String Results22;
+        String Results23;
+        String Results24;
+        String Results25;
+
         String PopReport1;
         String PopReport2;
         String PopReport3;
